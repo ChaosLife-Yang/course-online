@@ -1,4 +1,4 @@
-package com.halayang.config.logconf;
+package com.halayang.config.log;
 
 import com.halayang.common.utils.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * copyright (C), 2020, 北京同创永益科技发展有限公司
+ * <p>
+ * 使用AOP打印日志
  *
  * @author YangYuDi
  * @version 1.0.0

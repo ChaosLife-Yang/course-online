@@ -3,16 +3,16 @@
         <el-button type="primary"
                    size="mini"
                    plain
-                   @click="add">添加大章
+                   @click="add">添加${moduleName}
         </el-button>
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
-            <el-form :rules="rules" ref="ruleForm" :model="chapterDto">
-                <el-input v-model="chapterDto.id" style="display: none"/>
-                <el-form-item label="大章名称" :label-width="formLabelWidth" prop="name">
-                    <el-input v-model="chapterDto.name" autocomplete="off"/>
+            <el-form :rules="rules" ref="ruleForm" :model="${domain}Dto">
+                <el-input v-model="${domain}Dto.id" style="display: none"/>
+                <el-form-item label="${moduleName}名称" :label-width="formLabelWidth" prop="name">
+                    <el-input v-model="${domain}Dto.name" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="所属课程" :label-width="formLabelWidth" prop="courseId">
-                    <el-input v-model="chapterDto.courseId" autocomplete="off"/>
+                    <el-input v-model="${domain}Dto.courseId" autocomplete="off"/>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -31,20 +31,20 @@
             </thead>
 
             <tbody>
-            <tr v-for="chapter in chapters">
-                <td>{{ chapter.id }}</td>
-                <td>{{ chapter.name }}</td>
-                <td>{{ chapter.courseId }}</td>
+            <tr v-for="${domain} in ${domain}s">
+                <td>{{ ${domain}.id }}</td>
+                <td>{{ ${domain}.name }}</td>
+                <td>{{ ${domain}.courseId }}</td>
                 <td>
                     <div class="btn-group">
                         <el-tooltip class="item" effect="dark" content="更新" placement="top">
-                            <el-button @click="get(chapter.id)"
+                            <el-button @click="get(${domain}.id)"
                                        type="primary"
                                        icon="el-icon-edit"
                                        size="mini"/>
                         </el-tooltip>
                         <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                            <el-button @click="remove(chapter.id)"
+                            <el-button @click="remove(${domain}.id)"
                                        type="danger"
                                        icon="el-icon-delete"
                                        size="mini"/>
@@ -72,24 +72,24 @@
 
 <script>
     export default {
-        name: "chapter",
+        name: "${domain}",
         data() {
             return {
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
-                title: "添加大章",
-                chapters: [], //数据显示列表
+                title: "添加${moduleName}",
+                ${domain}s: [], //数据显示列表
                 total: 0,
                 currentPage: 1,
                 size: 10,
-                chapterDto: {
+                ${domain}Dto: {
                     id: "",
                     name: "",
                     courseId: ""
                 },
                 rules: {
                     name: [
-                        {required: true, message: '请输入大章名称', trigger: 'blur'},
+                        {required: true, message: '请输入${moduleName}名称', trigger: 'blur'},
                     ],
                     courseId: [
                         {required: true, message: '请输入课程名称', trigger: 'blur'},
@@ -104,18 +104,18 @@
         methods: {
             add() {
                 this.dialogFormVisible = true;
-                this.chapterDto.id = "";
-                this.chapterDto.name = "";
-                this.chapterDto.courseId = "";
+                this.${domain}Dto.id = "";
+                this.${domain}Dto.name = "";
+                this.${domain}Dto.courseId = "";
             },
             remove(id) {
-                this.$confirm('此操作将永久删除该大章, 是否继续?', '提示', {
+                this.$confirm('此操作将永久删除该${moduleName}, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
                     this.$ajax
-                        .get(process.env.VUE_APP_SERVER + "/api/service/chapter/delete/" + id)
+                        .get(process.env.VUE_APP_SERVER + "/api/service/${domain}/delete/" + id)
                         .then((response) => {
                             this.list();
                             let result = response.data;
@@ -142,14 +142,14 @@
 
             },
             get(id) {
-                this.title = "修改大章信息";
+                this.title = "修改${moduleName}信息";
                 this.dialogFormVisible = true;
                 //获取要更新的对象
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/chapter/" + id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/${domain}/" + id)
                     .then((response) => {
                         let result = response.data;
-                        this.chapterDto = result.data;
+                        this.${domain}Dto = result.data;
                     })
                     .catch(error => {
                         this.$message({
@@ -163,10 +163,10 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$ajax
-                            .post(process.env.VUE_APP_SERVER + "/api/service/chapter/saveOrUpdate", this.chapterDto)
+                            .post(process.env.VUE_APP_SERVER + "/api/service/${domain}/saveOrUpdate", this.${domain}Dto)
                             .then((response) => {
                                 let result = response.data;
-                                this.chapterDto.id = "";
+                                this.${domain}Dto.id = "";
                                 this.$message({
                                     showClose: true,
                                     message: result.msg,
@@ -193,13 +193,13 @@
             //分页
             list() {
                 this.$ajax
-                    .post(process.env.VUE_APP_SERVER + "/api/service/chapter/list", {
+                    .post(process.env.VUE_APP_SERVER + "/api/service/${domain}/list", {
                         page: this.currentPage,
                         size: this.size
                     })
                     .then((response) => {
                         let result = response.data;
-                        this.chapters = result.data.list;
+                        this.${domain}s = result.data.list;
                         this.total = result.count;
                     })
                     .catch(error => {

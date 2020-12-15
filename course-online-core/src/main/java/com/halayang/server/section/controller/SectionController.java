@@ -1,4 +1,4 @@
-package com.halayang.server.chapter.controller;
+package com.halayang.server.section.controller;
 
 
 import com.github.pagehelper.PageHelper;
@@ -6,9 +6,9 @@ import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.chapter.dto.ChapterDTO;
-import com.halayang.server.chapter.po.ChapterPO;
-import com.halayang.server.chapter.service.ChapterService;
+import com.halayang.server.section.dto.SectionDTO;
+import com.halayang.server.section.po.SectionPO;
+import com.halayang.server.section.service.SectionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -16,49 +16,49 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- * 大章 前端控制器
+ * 小节 前端控制器
  * </p>
  *
  * @author YangYuDi
- * @since 2020-12-11
+ * @since 2020-12-15 15:54:51
  */
 @RestController
-@RequestMapping("/chapter")
-public class ChapterController {
+@RequestMapping("/section")
+public class SectionController {
 
     @Autowired
-    private ChapterService chapterService;
+    private SectionService sectionService;
 
     /**
-     * 获取大章对象信息
+     * 获取小节对象信息
      *
-     * @param id 大章id
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.chapter.po.ChapterPO>
+     * @param id 小节id
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.section.po.SectionPO>
      * @author YangYudi
-     * @date 2020/12/15 13:31
+     * @date 2020-12-15 15:54:51
      */
     @GetMapping("/{id}")
-    public ResponseObject<ChapterDTO> getOne(@PathVariable String id) {
-        ChapterPO po = chapterService.getById(id);
-        ChapterDTO chapterDTO = new ChapterDTO();
-        BeanUtils.copyProperties(po, chapterDTO);
-        return ResponseResult.success(chapterDTO);
+    public ResponseObject<SectionDTO> getOne(@PathVariable String id) {
+        SectionPO po = sectionService.getById(id);
+        SectionDTO sectionDTO = new SectionDTO();
+        BeanUtils.copyProperties(po, sectionDTO);
+        return ResponseResult.success(sectionDTO);
     }
 
     /**
-     * 章节分页查询
+     * 小节分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.chapter.po.ChapterPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.section.po.SectionPO>>
      * @author YangYudi
-     * @date 2020/12/13 16:38
+     * @date 2020-12-15 15:54:51
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<ChapterPO>> chapterList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<SectionPO>> sectionList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<ChapterPO> pageInfo = new PageInfo<>(chapterService.list());
-        PageDTO<ChapterPO> page = new PageDTO<ChapterPO>()
+        PageInfo<SectionPO> pageInfo = new PageInfo<>(sectionService.list());
+        PageDTO<SectionPO> page = new PageDTO<SectionPO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())
@@ -67,18 +67,18 @@ public class ChapterController {
     }
 
     /**
-     * 章节添加或更新
+     * 小节添加或更新
      *
-     * @param chapterDTO 请求参数
+     * @param sectionDTO 请求参数
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
-     * @date 2020/12/13 16:38
+     * @date 2020-12-15 15:54:51
      */
     @PostMapping("/saveOrUpdate")
-    public ResponseObject<String> saveOrUpdate(@RequestBody @Validated ChapterDTO chapterDTO) {
-        ChapterPO chapterPo = new ChapterPO();
-        BeanUtils.copyProperties(chapterDTO, chapterPo);
-        boolean option = chapterService.saveOrUpdate(chapterPo);
+    public ResponseObject<String> saveOrUpdate(@RequestBody @Validated SectionDTO sectionDTO) {
+        SectionPO sectionPo = new SectionPO();
+        BeanUtils.copyProperties(sectionDTO, sectionPo);
+        boolean option = sectionService.saveOrUpdate(sectionPo);
         if (option) {
             return ResponseResult.success();
         } else {
@@ -87,16 +87,16 @@ public class ChapterController {
     }
 
     /**
-     * 删除章节
+     * 删除小节
      *
-     * @param id 大章id
+     * @param id 小节id
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
-     * @date 2020/12/13 16:38
+     * @date 2020-12-15 15:54:51
      */
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable Long id) {
-        boolean option = chapterService.removeById(id);
+        boolean option = sectionService.removeById(id);
         if (option) {
             return ResponseResult.success("删除成功");
         } else {

@@ -1,11 +1,12 @@
 package com.halayang.common.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -28,10 +29,12 @@ public class PageDTO<T> {
     /**
      * 当前页
      */
+    @NotNull
     private Long page;
     /**
      * 当前页行数
      */
+    @NotNull
     private Long size;
 
     /**

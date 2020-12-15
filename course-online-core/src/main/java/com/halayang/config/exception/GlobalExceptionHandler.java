@@ -30,6 +30,14 @@ public class GlobalExceptionHandler {
         return ResponseResult.error(e.getMessage());
     }
 
+    /**
+     * 捕获NotBlank注解抛出的异常
+     *
+     * @param e MethodArgumentNotValidException
+     * @return com.halayang.common.utils.response.ResponseObject<java.lang.Object>
+     * @author YangYudi
+     * @date 2020/12/15 14:44
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseObject<Object> exceptionHandler(MethodArgumentNotValidException e) {
         String defaultMessage = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
