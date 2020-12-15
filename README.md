@@ -9,7 +9,7 @@
 |——course-online-file 			文件模块
 |——course-online-gateway		网关模块
 |——course-online-ui    	        前端工程
-   |——course-online-ui-admin
+   |——course-online-ui-admin    后台管理
 
 ```
 
