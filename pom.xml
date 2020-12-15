@@ -8,6 +8,7 @@
         <module>course-online-gateway</module>
         <module>course-online-auth</module>
         <module>course-online-file</module>
+        <module>generator</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -30,8 +31,6 @@
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
         <!-- jjwt自定义token解析版本配置 -->
         <jjwt.token.wersion>0.9.1</jjwt.token.wersion>
-        <!-- fastjson工具类配置 -->
-        <fastjson.version>1.2.60</fastjson.version>
         <!-- 斯瓦格api版本配置 -->
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <!-- 斯瓦格注解包版本配置 -->

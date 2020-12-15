@@ -9,6 +9,7 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.chapter.po.ChapterPO;
 import com.halayang.server.chapter.service.ChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,6 +27,14 @@ public class ChapterController {
     @Autowired
     private ChapterService chapterService;
 
+    /**
+     * 获取大章对象信息
+     *
+     * @param id 大章id
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.chapter.po.ChapterPO>
+     * @author YangYudi
+     * @date 2020/12/15 13:31
+     */
     @GetMapping("/{id}")
     public ResponseObject<ChapterPO> getOne(@PathVariable String id) {
         ChapterPO po = chapterService.getById(id);
@@ -35,7 +44,7 @@ public class ChapterController {
     /**
      * 章节分页查询
      *
-     * @param pageDTO
+     * @param pageDTO 分页数据
      * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.chapter.po.ChapterPO>>
      * @author YangYudi
      * @date 2020/12/13 16:38
@@ -54,15 +63,15 @@ public class ChapterController {
     }
 
     /**
-     * 章节添加
+     * 章节添加或更新
      *
-     * @param chapterPo
+     * @param chapterPo 请求参数
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
      * @date 2020/12/13 16:38
      */
     @PostMapping("/saveOrUpdate")
-    public ResponseObject<String> saveOrUpdate(@RequestBody ChapterPO chapterPo) {
+    public ResponseObject<String> saveOrUpdate(@RequestBody @Validated ChapterPO chapterPo) {
         boolean option = chapterService.saveOrUpdate(chapterPo);
         if (option) {
             return ResponseResult.success();
@@ -74,12 +83,12 @@ public class ChapterController {
     /**
      * 删除章节
      *
-     * @param id
+     * @param id 大章id
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
      * @date 2020/12/13 16:38
      */
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable Long id) {
         boolean option = chapterService.removeById(id);
         if (option) {

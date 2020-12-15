@@ -26,7 +26,7 @@ spring:
             - Path=/api/service/**
           # 路由重写
           filters:
-            - RewritePath=/api/service(?<segment>/?.*),/$\{segment}
+            - RewritePath=/api/service(?<segment>/?.*),$\{segment}
 
 logging:
   level:

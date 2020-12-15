@@ -34,12 +34,13 @@ mybatis-plus:
   global-config:
     db-config:
       # 逻辑删除插件
-      logic-delete-field: is_deleted
+      logic-delete-field: is_delete
       logic-delete-value: 1
       logic-not-delete-value: 0
   mapper-locations: classpath:/mapper/**/*.xml
   # 别名设置pojo类所处的包路径
   type-aliases-package: com.halayang.server.*.po
+# pagehelper配置
 pagehelper:
   helper-dialect: mysql
   pageSizeZero: true

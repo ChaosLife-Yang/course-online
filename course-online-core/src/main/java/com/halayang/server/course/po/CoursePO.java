@@ -2,6 +2,7 @@ package com.halayang.server.course.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -65,6 +66,7 @@ public class CoursePO implements Serializable {
 
     @ApiModelProperty(value = "逻辑删除")
     @TableLogic
+    @JsonIgnore
     private Integer isDelete;
 
     @ApiModelProperty(value = "创建时间")

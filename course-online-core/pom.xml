@@ -17,6 +17,11 @@
             <artifactId>halayang-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <!-- AOP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <!--nacos服务注册-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
