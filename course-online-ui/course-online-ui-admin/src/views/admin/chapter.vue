@@ -119,11 +119,19 @@
                         .then((response) => {
                             this.list();
                             let result = response.data;
-                            this.$message({
-                                showClose: true,
-                                type: 'success',
-                                message: result.data
-                            });
+                            if (result.code === 200){
+                                this.$message({
+                                    showClose: true,
+                                    type: 'success',
+                                    message: result.data
+                                });
+                            }else {
+                                this.$message({
+                                    showClose: true,
+                                    type: 'error',
+                                    message: result.data
+                                });
+                            }
                         })
                         .catch(error => {
                             this.$message({

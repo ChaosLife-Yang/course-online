@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 捕获NotBlank注解抛出的异常
+     * 捕获验证注解抛出的异常
      *
      * @param e MethodArgumentNotValidException
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.Object>

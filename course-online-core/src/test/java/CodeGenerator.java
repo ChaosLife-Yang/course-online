@@ -47,7 +47,7 @@ public class CodeGenerator {
         gc.setOpen(false);
 //        gc.setDateType(DateType.ONLY_DATE);
         //实体属性 Swagger2 注解
-        gc.setSwagger2(true);
+//        gc.setSwagger2(true);
         gc.setServiceName("%sService");
         gc.setServiceImplName("%sServiceImpl");
         gc.setEntityName("%sPO");

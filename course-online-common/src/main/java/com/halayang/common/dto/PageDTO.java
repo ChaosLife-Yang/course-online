@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -28,12 +29,14 @@ public class PageDTO<T> {
     /**
      * 当前页
      */
-    @NotEmpty
+    @NotNull
+    @Range(min = 1, message = "页码不小于1")
     private Long page;
     /**
      * 当前页行数
      */
-    @NotEmpty
+    @NotNull
+    @Range(min = 1, message = "每页行数不小于1")
     private Long size;
 
     /**

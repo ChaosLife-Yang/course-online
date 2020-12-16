@@ -49,14 +49,14 @@ public class ${classNamePrefix}Controller {
      * ${moduleName}分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.${domain}.po.${classNamePrefix}PO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.${domain}.po.${classNamePrefix}PO>>
      * @author YangYudi
      * @date ${time}
      */
     @PostMapping("/list")
     public ResponseObject<PageDTO<${classNamePrefix}PO>> ${domain}List(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
-        PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
+        PageHelper.startPage(pageDTO.getPage(), pageDTO.getSize());
         PageInfo<${classNamePrefix}PO> pageInfo = new PageInfo<>(${domain}Service.list());
         PageDTO<${classNamePrefix}PO> page = new PageDTO<${classNamePrefix}PO>()
                 .setPage(pageDTO.getPage())
