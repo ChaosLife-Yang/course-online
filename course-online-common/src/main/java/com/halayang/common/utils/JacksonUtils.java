@@ -2,6 +2,7 @@ package com.halayang.common.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class JacksonUtils {
     public static <T> T toBean(String json, Class<T> tClass) {
         try {
             return MAPPER.readValue(json, tClass);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             logger.error("json解析出错");
             return null;
         }

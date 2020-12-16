@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -29,12 +28,12 @@ public class PageDTO<T> {
     /**
      * 当前页
      */
-    @NotNull
+    @NotEmpty
     private Long page;
     /**
      * 当前页行数
      */
-    @NotNull
+    @NotEmpty
     private Long size;
 
     /**

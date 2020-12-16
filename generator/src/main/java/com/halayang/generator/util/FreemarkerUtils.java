@@ -25,12 +25,19 @@ import java.util.Map;
 public class FreemarkerUtils {
 
     /**
-     * 模板所在路径
+     * 模板所在的父目录
      */
     private static String ftlPath = "generator/src/main/java/com/halayang/generator/ftl/";
 
     private static Template temp;
 
+    /**
+     * 读取模板
+     *
+     * @param ftlName 模板名称
+     * @author YangYudi
+     * @date 2020/12/16 10:27
+     */
     public static void initConfig(String ftlName) throws IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
         File file = new File(ftlPath);
@@ -39,6 +46,14 @@ public class FreemarkerUtils {
         temp = cfg.getTemplate(ftlName);
     }
 
+    /**
+     * 根据模板名称生成文件
+     *
+     * @param fileName 目标路径
+     * @param map      参数集合map
+     * @author YangYudi
+     * @date 2020/12/16 10:28
+     */
     public static void generator(String fileName, Map<String, Object> map) throws IOException, TemplateException {
         FileWriter fw = new FileWriter(fileName);
         BufferedWriter bw = new BufferedWriter(fw);

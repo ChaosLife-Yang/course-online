@@ -45,16 +45,16 @@ public class LogAspect {
         HttpServletRequest request = attributes.getRequest();
         Signature signature = joinPoint.getSignature();
         String name = signature.getName();
-        log.info("请求地址: {} {}", request.getRequestURL().toString(), request.getMethod());
+        log.info("服务IP地址: {} {}", request.getRequestURL().toString(), request.getMethod());
         log.info("类名方法: {}.{}", signature.getDeclaringTypeName(), name);
-        log.info("远程地址: {}", request.getRemoteAddr());
+        log.info("请求IP地址: {}", request.getRemoteAddr());
     }
 
     @Around("controllerPointcut()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object[] args = joinPoint.getArgs();
-        log.info("请求参数:{}", JacksonUtils.toString(args));
+        log.info("请求参数: {}", JacksonUtils.toString(args));
         Object result = joinPoint.proceed(args);
         log.info("返回结果: {}", JacksonUtils.toString(result));
         log.info("------------- 结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
