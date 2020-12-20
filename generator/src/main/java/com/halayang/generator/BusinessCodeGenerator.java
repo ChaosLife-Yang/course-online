@@ -24,7 +24,6 @@ import java.util.*;
 public class BusinessCodeGenerator {
 
     private static String toPath = "course-online-core/src/main/java/com/halayang/server/";
-    private static String toDtoPath = "course-online-core/src/main/java/com/halayang/server/";
 
     /**
      * @param toPath          要生成的文件所在的父目录
@@ -47,6 +46,8 @@ public class BusinessCodeGenerator {
         map.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         FreemarkerUtils.generator(toPath + classNamePrefix + "Controller.java", map);
     }
+
+    private static String toDtoPath = "course-online-core/src/main/java/com/halayang/server/";
 
     /**
      * dto代码生成器
@@ -91,9 +92,21 @@ public class BusinessCodeGenerator {
         }
         return set;
     }
+    private static String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
+
+    public static void vueGenerator(String toPath, String domain, String tableName, String moduleName,String prefix) throws Exception {
+        FreemarkerUtils.initConfig("vue.ftl");
+        List<Field> fields = DbUtil.getColumnByTableName(tableName);
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("moduleName", moduleName);
+        map.put("fieldList", fields);
+        map.put("domain", domain);
+        FreemarkerUtils.generator(toPath + prefix + ".vue", map);
+    }
 
     public static void main(String[] args) throws Exception {
-        dtoGenerator(toDtoPath, "CourseCategory", "course", "course_category", "课程分类");
+//        vueGenerator(toVuePath,"section","section","小节","section");
+        controllerGenerator(toPath,"CourseCategory","course","courseCategory","课程分类");
     }
 
 }

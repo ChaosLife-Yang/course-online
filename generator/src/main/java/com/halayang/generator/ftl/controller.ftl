@@ -4,6 +4,7 @@ package com.halayang.server.${module}.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
+import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.${module}.dto.${classNamePrefix}DTO;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 /**
  * <p>
  * ${moduleName} 前端控制器
@@ -54,15 +56,17 @@ public class ${classNamePrefix}Controller {
      * @date ${time}
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<${classNamePrefix}PO>> ${domain}List(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<${classNamePrefix}DTO>> ${domain}List(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
-        PageHelper.startPage(pageDTO.getPage(), pageDTO.getSize());
+        PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<${classNamePrefix}PO> pageInfo = new PageInfo<>(${domain}Service.list());
-        PageDTO<${classNamePrefix}PO> page = new PageDTO<${classNamePrefix}PO>()
+        List<${classNamePrefix}PO> list = pageInfo.getList();
+        List<${classNamePrefix}DTO> dtoList = CopyUtils.copyList(list, ${classNamePrefix}DTO.class);
+        PageDTO<${classNamePrefix}DTO> page = new PageDTO<${classNamePrefix}DTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())
-                .setList(pageInfo.getList());
+                .setList(dtoList);
         return ResponseResult.success(pageInfo.getTotal(), page);
     }
 

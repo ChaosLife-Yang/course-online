@@ -1,4 +1,3 @@
-nacos-1.3.0
 HELP.md
 target/
 !**/src/main/**/target/
@@ -46,7 +45,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
+*.log
 *.suo
 *.ntvs*
 *.njsproj

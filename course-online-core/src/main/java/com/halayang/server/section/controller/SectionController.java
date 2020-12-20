@@ -4,6 +4,7 @@ package com.halayang.server.section.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
+import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.section.dto.SectionDTO;
@@ -14,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 小节 前端控制器
  * </p>
  *
  * @author YangYuDi
- * @since 2020-12-15 15:54:51
+ * @since 2020-12-20 12:28:51
  */
 @RestController
 @RequestMapping("/section")
@@ -35,7 +38,7 @@ public class SectionController {
      * @param id 小节id
      * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.section.po.SectionPO>
      * @author YangYudi
-     * @date 2020-12-15 15:54:51
+     * @date 2020-12-20 12:28:51
      */
     @GetMapping("/{id}")
     public ResponseObject<SectionDTO> getOne(@PathVariable String id) {
@@ -49,20 +52,22 @@ public class SectionController {
      * 小节分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.section.po.SectionPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.section.po.SectionPO>>
      * @author YangYudi
-     * @date 2020-12-15 15:54:51
+     * @date 2020-12-20 12:28:51
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<SectionPO>> sectionList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<SectionDTO>> sectionList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<SectionPO> pageInfo = new PageInfo<>(sectionService.list());
-        PageDTO<SectionPO> page = new PageDTO<SectionPO>()
+        List<SectionPO> list = pageInfo.getList();
+        List<SectionDTO> dtoList = CopyUtils.copyList(list, SectionDTO.class);
+        PageDTO<SectionDTO> page = new PageDTO<SectionDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())
-                .setList(pageInfo.getList());
+                .setList(dtoList);
         return ResponseResult.success(pageInfo.getTotal(), page);
     }
 
@@ -72,7 +77,7 @@ public class SectionController {
      * @param sectionDTO 请求参数
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
-     * @date 2020-12-15 15:54:51
+     * @date 2020-12-20 12:28:51
      */
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated SectionDTO sectionDTO) {
@@ -92,7 +97,7 @@ public class SectionController {
      * @param id 小节id
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
-     * @date 2020-12-15 15:54:51
+     * @date 2020-12-20 12:28:51
      */
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable Long id) {

@@ -4,6 +4,7 @@ package com.halayang.server.course.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
+import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.course.dto.CourseCategoryDTO;
@@ -14,13 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 /**
  * <p>
  * 课程分类 前端控制器
  * </p>
  *
  * @author YangYuDi
- * @since 2020-12-15 15:51:39
+ * @since 2020-12-20 15:39:06
  */
 @RestController
 @RequestMapping("/courseCategory")
@@ -35,7 +37,7 @@ public class CourseCategoryController {
      * @param id 课程分类id
      * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.courseCategory.po.CourseCategoryPO>
      * @author YangYudi
-     * @date 2020-12-15 15:51:39
+     * @date 2020-12-20 15:39:06
      */
     @GetMapping("/{id}")
     public ResponseObject<CourseCategoryDTO> getOne(@PathVariable String id) {
@@ -49,20 +51,22 @@ public class CourseCategoryController {
      * 课程分类分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.courseCategory.po.CourseCategoryPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.courseCategory.po.CourseCategoryPO>>
      * @author YangYudi
-     * @date 2020-12-15 15:51:39
+     * @date 2020-12-20 15:39:06
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<CourseCategoryPO>> courseCategoryList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<CourseCategoryDTO>> courseCategoryList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<CourseCategoryPO> pageInfo = new PageInfo<>(courseCategoryService.list());
-        PageDTO<CourseCategoryPO> page = new PageDTO<CourseCategoryPO>()
+        List<CourseCategoryPO> list = pageInfo.getList();
+        List<CourseCategoryDTO> dtoList = CopyUtils.copyList(list, CourseCategoryDTO.class);
+        PageDTO<CourseCategoryDTO> page = new PageDTO<CourseCategoryDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())
-                .setList(pageInfo.getList());
+                .setList(dtoList);
         return ResponseResult.success(pageInfo.getTotal(), page);
     }
 
@@ -72,7 +76,7 @@ public class CourseCategoryController {
      * @param courseCategoryDTO 请求参数
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
-     * @date 2020-12-15 15:51:39
+     * @date 2020-12-20 15:39:06
      */
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated CourseCategoryDTO courseCategoryDTO) {
@@ -92,7 +96,7 @@ public class CourseCategoryController {
      * @param id 课程分类id
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
-     * @date 2020-12-15 15:51:39
+     * @date 2020-12-20 15:39:06
      */
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable Long id) {

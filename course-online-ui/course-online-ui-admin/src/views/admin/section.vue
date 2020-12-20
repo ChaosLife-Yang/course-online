@@ -1,0 +1,270 @@
+<template>
+    <div>
+        <el-button type="primary"
+                   size="mini"
+                   plain
+                   @click="add">添加小节
+        </el-button>
+        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+            <el-form :rules="rules" ref="ruleForm" :model="sectionDto">
+                <el-input v-model="sectionDto.id" style="display: none"/>
+                <el-form-item label="标题" :label-width="formLabelWidth" prop="title">
+                    <el-input v-model="sectionDto.title" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="课程" :label-width="formLabelWidth" prop="courseId">
+                    <el-input v-model="sectionDto.courseId" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="大章" :label-width="formLabelWidth" prop="chapterId">
+                    <el-input v-model="sectionDto.chapterId" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="视频" :label-width="formLabelWidth" prop="video">
+                    <el-input v-model="sectionDto.video" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="时长" :label-width="formLabelWidth" prop="time">
+                    <el-input v-model="sectionDto.time" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="收费" :label-width="formLabelWidth" prop="charge">
+                    <el-select v-model="sectionDto.charge" placeholder="请选择">
+                        <el-option
+                                v-for="item in charge"
+                                :key="item.key"
+                                :label="item.value"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
+                    <el-input v-model="sectionDto.sort" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="vod" :label-width="formLabelWidth" prop="vod">
+                    <el-input v-model="sectionDto.vod" autocomplete="off"/>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
+            </div>
+        </el-dialog>
+        <table id="simple-table" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>标题</th>
+                <th>课程</th>
+                <th>大章</th>
+                <th>视频</th>
+                <th>时长</th>
+                <th>收费</th>
+                <th>顺序</th>
+                <th>创建时间</th>
+                <th>修改时间</th>
+                <th>vod</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr v-for="section in sections">
+                <th>{{ section.title}}</th>
+                <th>{{ section.courseId}}</th>
+                <th>{{ section.chapterId}}</th>
+                <th>{{ section.video}}</th>
+                <th>{{ section.time}}</th>
+                <th>{{ charge | optionKV(section.charge)}}</th>
+                <th>{{ section.sort}}</th>
+                <th>{{ section.createTime}}</th>
+                <th>{{ section.editTime}}</th>
+                <th>{{ section.vod}}</th>
+                <td>
+                    <div class="btn-group">
+                        <el-tooltip class="item" effect="dark" content="更新" placement="top">
+                            <el-button @click="get(section.id)"
+                                       type="primary"
+                                       icon="el-icon-edit"
+                                       size="mini"/>
+                        </el-tooltip>
+                        <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                            <el-button @click="remove(section.id)"
+                                       type="danger"
+                                       icon="el-icon-delete"
+                                       size="mini"/>
+                        </el-tooltip>
+                    </div>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="block">
+            <el-pagination
+                    background
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[5,10, 20, 50, 100]"
+                    :page-size="size"
+                    :page-count="7"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total"/>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "section",
+        data() {
+            return {
+                dialogFormVisible: false,
+                formLabelWidth: '80px',
+                title: "添加小节",
+                sections: [], //数据显示列表
+                total: 0,
+                currentPage: 1,
+                size: 10,
+                sectionDto: {},
+                charge: this.$charge,
+                rules: {
+                    title: [
+                        {required: true, message: '请输入标题', trigger: 'blur'},
+                    ],
+                    courseId: [
+                        {required: true, message: '请输入课程', trigger: 'blur'},
+                    ],
+                    chapterId: [
+                        {required: true, message: '请输入大章', trigger: 'blur'},
+                    ],
+                    video: [
+                        {required: true, message: '请输入视频', trigger: 'blur'},
+                    ],
+                    time: [
+                        {required: true, message: '请输入时长', trigger: 'blur'},
+                    ],
+                    charge: [
+                        {required: true, message: '请输入收费', trigger: 'blur'},
+                    ],
+                    sort: [
+                        {required: true, message: '请输入顺序', trigger: 'blur'},
+                    ],
+                    vod: [
+                        {required: true, message: '请输入vod', trigger: 'blur'},
+                    ],
+                },
+            }
+        },
+
+        created() {
+            this.list();
+        },
+        methods: {
+            msg(type, message) {
+                this.$message({
+                    showClose: true,
+                    type: type,
+                    message: message
+                });
+            },
+            add() {
+                this.dialogFormVisible = true;
+                this.sectionDto = {};
+            },
+            remove(id) {
+                this.$confirm('此操作将删除该小节, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$ajax
+                        .get(process.env.VUE_APP_SERVER + "/api/service/section/delete/" + id)
+                        .then((response) => {
+                            this.list();
+                            let result = response.data;
+                            if (result.code === 200) {
+                                this.msg('success', result.data);
+                            } else {
+                                this.msg('error', result.data);
+                            }
+                        })
+                        .catch(error => {
+                            this.msg('error', error);
+                        });
+                }).catch(() => {
+                    this.msg('info', '已取消删除');
+                });
+
+            },
+            //获取信息
+            get(id) {
+                this.title = "修改小节信息";
+                this.dialogFormVisible = true;
+                //获取要更新的对象
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/service/section/" + id)
+                    .then((response) => {
+                        let result = response.data;
+                        this.sectionDto = result.data;
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
+            },
+            //添加或更新
+            saveOrUpdate(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.$ajax
+                            .post(process.env.VUE_APP_SERVER + "/api/service/section/saveOrUpdate", this.sectionDto)
+                            .then((response) => {
+                                let result = response.data;
+                                this.sectionDto.id = "";
+                                this.msg('success', result.msg);
+                                this.dialogFormVisible = false;
+                                this.list();
+                            })
+                            .catch(error => {
+                                this.msg('error', error);
+                            });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+
+            },
+
+            //分页
+            list() {
+                this.$ajax
+                    .post(process.env.VUE_APP_SERVER + "/api/service/section/list", {
+                        page: this.currentPage,
+                        size: this.size
+                    })
+                    .then((response) => {
+                        let result = response.data;
+                        this.sections = result.data.list;
+                        this.total = result.count;
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
+
+            },
+            handleSizeChange(val) {
+                this.size = val;
+                this.list();
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val;
+                this.list();
+            },
+
+        },
+    };
+</script>
+
+<style scoped>
+    .el-input {
+        width: 80% !important;
+        margin: 0 5px !important;
+    }
+
+</style>

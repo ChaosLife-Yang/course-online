@@ -23,7 +23,6 @@
         <table id="simple-table" class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th>id</th>
                 <th>名称</th>
                 <th>课程id</th>
                 <th>操作</th>
@@ -32,7 +31,6 @@
 
             <tbody>
             <tr v-for="chapter in chapters">
-                <td>{{ chapter.id }}</td>
                 <td>{{ chapter.name }}</td>
                 <td>{{ chapter.courseId }}</td>
                 <td>
@@ -102,11 +100,16 @@
             this.list();
         },
         methods: {
+            msg(type, message) {
+                this.$message({
+                    showClose: true,
+                    type: type,
+                    message: message
+                });
+            },
             add() {
                 this.dialogFormVisible = true;
-                this.chapterDto.id = "";
-                this.chapterDto.name = "";
-                this.chapterDto.courseId = "";
+                this.chapterDto ={};
             },
             remove(id) {
                 this.$confirm('此操作将永久删除该大章, 是否继续?', '提示', {
@@ -119,36 +122,21 @@
                         .then((response) => {
                             this.list();
                             let result = response.data;
-                            if (result.code === 200){
-                                this.$message({
-                                    showClose: true,
-                                    type: 'success',
-                                    message: result.data
-                                });
-                            }else {
-                                this.$message({
-                                    showClose: true,
-                                    type: 'error',
-                                    message: result.data
-                                });
+                            if (result.code === 200) {
+                                this.msg('success', result.data);
+                            } else {
+                                this.msg('error', result.data);
                             }
                         })
                         .catch(error => {
-                            this.$message({
-                                showClose: true,
-                                message: error,
-                                type: 'error'
-                            });
+                            this.msg('error', error);
                         });
                 }).catch(() => {
-                    this.$message({
-                        showClose: true,
-                        type: 'info',
-                        message: '已取消删除'
-                    });
+                    this.msg('info', '已取消删除');
                 });
 
             },
+            //获取信息
             get(id) {
                 this.title = "修改大章信息";
                 this.dialogFormVisible = true;
@@ -160,13 +148,10 @@
                         this.chapterDto = result.data;
                     })
                     .catch(error => {
-                        this.$message({
-                            showClose: true,
-                            message: error,
-                            type: 'error'
-                        });
+                        this.msg('error', error);
                     });
             },
+            //添加或更新
             saveOrUpdate(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -175,20 +160,12 @@
                             .then((response) => {
                                 let result = response.data;
                                 this.chapterDto.id = "";
-                                this.$message({
-                                    showClose: true,
-                                    message: result.msg,
-                                    type: 'success'
-                                });
+                                this.msg('success', result.msg);
                                 this.dialogFormVisible = false;
                                 this.list();
                             })
                             .catch(error => {
-                                this.$message({
-                                    showClose: true,
-                                    message: error,
-                                    type: 'error'
-                                });
+                                this.msg('error', error);
                             });
                     } else {
                         console.log('error submit!!');
@@ -211,11 +188,7 @@
                         this.total = result.count;
                     })
                     .catch(error => {
-                        this.$message({
-                            showClose: true,
-                            message: error,
-                            type: 'error'
-                        });
+                        this.msg('error', error);
                     });
 
             },

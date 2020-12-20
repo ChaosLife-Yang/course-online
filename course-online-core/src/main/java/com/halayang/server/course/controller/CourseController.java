@@ -4,6 +4,7 @@ package com.halayang.server.course.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
+import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.course.dto.CourseDTO;
@@ -13,6 +14,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -54,15 +57,17 @@ public class CourseController {
      * @date 2020-12-15 16:07:35
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<CoursePO>> courseList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<CourseDTO>> courseList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<CoursePO> pageInfo = new PageInfo<>(courseService.list());
-        PageDTO<CoursePO> page = new PageDTO<CoursePO>()
+        List<CoursePO> list = pageInfo.getList();
+        List<CourseDTO> dtoList = CopyUtils.copyList(list, CourseDTO.class);
+        PageDTO<CourseDTO> page = new PageDTO<CourseDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())
-                .setList(pageInfo.getList());
+                .setList(dtoList);
         return ResponseResult.success(pageInfo.getTotal(), page);
     }
 

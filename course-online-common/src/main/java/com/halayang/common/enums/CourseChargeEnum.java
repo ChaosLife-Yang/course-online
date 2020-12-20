@@ -1,5 +1,8 @@
 package com.halayang.common.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum CourseChargeEnum {
     /**
      * 课程是否收费
@@ -20,15 +23,22 @@ public enum CourseChargeEnum {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getDesc() {
         return desc;
     }
+
+    static class Container {
+        private static Map<String, CourseChargeEnum> map = new HashMap<>(2);
+
+        static {
+            map.put(CHARGE.getCode(), CHARGE);
+            map.put(FREE.getCode(), FREE);
+        }
+
+        public CourseChargeEnum getCourseChargeEnum(String key) {
+            return map.get(key);
+        }
+    }
+
+
 }

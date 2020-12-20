@@ -4,6 +4,9 @@ import Login from "./views/login.vue"
 import Admin from "./views/admin.vue"
 import Welcome from "./views/admin/welcome"
 import Chapter from "./views/admin/chapter"
+import Course from "./views/admin/course"
+import Section from "./views/admin/section"
+
 
 Vue.use(Router);
 
@@ -32,6 +35,16 @@ export default new Router({
                     path: 'business/chapter',
                     name: 'business/chapter',
                     component: Chapter,
+                }, {
+                    //子路由不用加斜杠
+                    path: 'business/course',
+                    name: 'business/course',
+                    component: Course,
+                },{
+                    //子路由不用加斜杠
+                    path: 'business/section',
+                    name: 'business/section',
+                    component: Section,
                 },
             ]
         },

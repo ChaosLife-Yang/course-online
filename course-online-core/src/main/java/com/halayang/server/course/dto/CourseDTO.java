@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 课程DTO对象
  *
@@ -33,6 +35,7 @@ public class CourseDTO implements Serializable {
     * 名称
     */
     @ApiModelProperty(value = "名称")
+    @NotBlank(message = "名称不为空")
     private String name;
     /**
     * 概述

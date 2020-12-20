@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 大章DTO对象
  *
@@ -33,11 +35,13 @@ public class ChapterDTO implements Serializable {
      * 课程id
      */
     @ApiModelProperty(value = "课程id")
+    @NotBlank(message = "课程不为空")
     private String courseId;
     /**
      * 名称
      */
     @ApiModelProperty(value = "名称")
+    @NotBlank(message = "名称不为空")
     private String name;
     /**
      * 创建时间
