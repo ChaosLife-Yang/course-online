@@ -1,7 +1,7 @@
-# 基于SpringCloud + Vue 实现的在线课程平台
+# 在线课程平台
 
 ## 项目结构说明
-
+基于spring cloud vue的前后端分离架构
 ```
 |——course-online-common    		通用模块
 |——course-online-core 			核心模块
