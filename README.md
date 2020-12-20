@@ -10,6 +10,8 @@
 |——course-online-gateway		网关模块
 |——course-online-ui    	        前端工程
    |——course-online-ui-admin    后台管理
+|——generator                    代码生成器
+|——nacos-1.3.0                  项目所用nacos,内含一些配置文件
 
 ```
 
