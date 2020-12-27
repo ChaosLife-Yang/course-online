@@ -8,7 +8,7 @@
         </el-button>
         <h4 class="lighter">
             <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
-            {{course.name}} —— {{chapter.name}}
+            {{course.name}} / {{chapter.name}}
         </h4>
         <el-button type="primary"
                    size="mini"
@@ -22,10 +22,10 @@
                     <el-input v-model="sectionDto.title" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="课程" :label-width="formLabelWidth" prop="courseId">
-                    <el-input v-model="sectionDto.courseId" autocomplete="off"/>
+                    {{course.name}}
                 </el-form-item>
                 <el-form-item label="大章" :label-width="formLabelWidth" prop="chapterId">
-                    <el-input v-model="sectionDto.chapterId" autocomplete="off"/>
+                    {{chapter.name}}
                 </el-form-item>
                 <el-form-item label="视频" :label-width="formLabelWidth" prop="video">
                     <el-input v-model="sectionDto.video" autocomplete="off"/>
@@ -75,8 +75,8 @@
             <tbody>
             <tr v-for="section in sections">
                 <th>{{ section.title}}</th>
-                <th>{{ section.courseId}}</th>
-                <th>{{ section.chapterId}}</th>
+                <th>{{ course.name}}</th>
+                <th>{{ chapter.name}}</th>
                 <th>{{ section.video}}</th>
                 <th>{{ section.time}}</th>
                 <th>{{ charge | optionKV(section.charge)}}</th>
@@ -139,12 +139,6 @@
                     title: [
                         {required: true, message: '请输入标题', trigger: 'blur'},
                     ],
-                    courseId: [
-                        {required: true, message: '请输入课程', trigger: 'blur'},
-                    ],
-                    chapterId: [
-                        {required: true, message: '请输入大章', trigger: 'blur'},
-                    ],
                     video: [
                         {required: true, message: '请输入视频', trigger: 'blur'},
                     ],
@@ -169,10 +163,12 @@
             if (this.course==={}){
                 this.$router.push("/business/course");
             }
+            this.sectionDto.courseId=this.course.id;
             this.chapter = SessionStorage.get(SESSION_KEY_CHAPTER) || {};
             if (this.chapter==={}){
                 this.$router.push("/business/chapter");
             }
+            this.sectionDto.chapterId=this.chapter.id;
             this.list();
         },
         methods: {
@@ -186,6 +182,8 @@
             add() {
                 this.dialogFormVisible = true;
                 this.sectionDto = {};
+                this.sectionDto.courseId=this.course.id;
+                this.sectionDto.chapterId=this.chapter.id;
             },
             remove(id) {
                 this.$confirm('此操作将删除该小节, 是否继续?', '提示', {
@@ -255,6 +253,8 @@
             list() {
                 this.$ajax
                     .post(process.env.VUE_APP_SERVER + "/api/service/section/list", {
+                        courseId:this.sectionDto.courseId,
+                        chapterId:this.sectionDto.chapterId,
                         page: this.currentPage,
                         size: this.size
                     })

@@ -1,6 +1,7 @@
 package com.halayang.server.section.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
@@ -8,6 +9,7 @@ import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.section.dto.SectionDTO;
+import com.halayang.server.section.dto.SectionPageDTO;
 import com.halayang.server.section.po.SectionPO;
 import com.halayang.server.section.service.SectionService;
 import org.springframework.beans.BeanUtils;
@@ -57,10 +59,13 @@ public class SectionController {
      * @date 2020-12-20 12:28:51
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<SectionDTO>> sectionList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<SectionDTO>> sectionList(@RequestBody @Validated SectionPageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<SectionPO> pageInfo = new PageInfo<>(sectionService.list());
+        LambdaQueryWrapper<SectionPO> wrapper = new LambdaQueryWrapper<SectionPO>()
+                .eq(SectionPO::getChapterId, pageDTO.getChapterId())
+                .eq(SectionPO::getCourseId, pageDTO.getCourseId());
+        PageInfo<SectionPO> pageInfo = new PageInfo<>(sectionService.list(wrapper));
         List<SectionPO> list = pageInfo.getList();
         List<SectionDTO> dtoList = CopyUtils.copyList(list, SectionDTO.class);
         PageDTO<SectionDTO> page = new PageDTO<SectionDTO>()
