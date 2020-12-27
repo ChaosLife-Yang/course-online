@@ -23,23 +23,41 @@
                 <el-form-item label="封面" :label-width="formLabelWidth" prop="image">
                     <el-input v-model="courseDto.image" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="级别" :label-width="formLabelWidth" prop="level">
-                    <el-input v-model="courseDto.level" autocomplete="off"/>
-                </el-form-item>
                 <el-form-item label="收费" :label-width="formLabelWidth" prop="charge">
-                    <el-input v-model="courseDto.charge" autocomplete="off"/>
+                    <el-select v-model="courseDto.charge" placeholder="请选择">
+                        <el-option
+                                v-for="item in COURSE_CHARGE"
+                                :key="item.key"
+                                :label="item.value"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="等级" :label-width="formLabelWidth" prop="level">
+                    <el-select v-model="courseDto.level" placeholder="请选择">
+                        <el-option
+                                v-for="item in COURSE_LEVEL"
+                                :key="item.key"
+                                :label="item.value"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="状态" :label-width="formLabelWidth" prop="status">
-                    <el-input v-model="courseDto.status" autocomplete="off"/>
+                    <el-select v-model="courseDto.status" placeholder="请选择">
+                        <el-option
+                                v-for="item in COURSE_STATUS"
+                                :key="item.key"
+                                :label="item.value"
+                                :value="item.key">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="报名数" :label-width="formLabelWidth" prop="enroll">
                     <el-input v-model="courseDto.enroll" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
                     <el-input v-model="courseDto.sort" autocomplete="off"/>
-                </el-form-item>
-                <el-form-item label="逻辑删除" :label-width="formLabelWidth" prop="isDelete">
-                    <el-input v-model="courseDto.isDelete" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="讲师" :label-width="formLabelWidth" prop="teacherId">
                     <el-input v-model="courseDto.teacherId" autocomplete="off"/>
@@ -50,61 +68,51 @@
                 <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
             </div>
         </el-dialog>
-        <table id="simple-table" class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th>名称</th>
-                <th>概述</th>
-                <th>时长</th>
-                <th>价格（元）</th>
-                <th>封面</th>
-                <th>级别</th>
-                <th>收费</th>
-                <th>状态</th>
-                <th>报名数</th>
-                <th>顺序</th>
-                <th>创建时间</th>
-                <th>修改时间</th>
-                <th>讲师</th>
-                <th>操作</th>
-            </tr>
-            </thead>
+        <div class="row">
+            <div v-for="course in courses" class="col-xs-6 col-sm-4 col-md-3">
+                <div class="thumbnail search-thumbnail">
+                    <img v-show="!course.image" class="media-object" src="@/assets/demo-course.jpg"/>
+                    <img v-show="course.image" class="media-object" :src="course.image"/>
+                    <div class="caption">
+                        <div class="clearfix">
+                        <span class="pull-right label label-danger info-label">
+                            {{COURSE_LEVEL | optionKV(course.level)}}
+                        </span>
+                            <span class="pull-right label label-primary info-label">
+                            {{COURSE_CHARGE | optionKV(course.charge)}}
+                        </span>
+                            <span class="pull-right label label-default info-label">
+                            {{COURSE_STATUS | optionKV(course.status)}}
+                        </span>
+                        </div>
 
-            <tbody>
-            <tr v-for="course in courses">
-                <th>{{ course.name}}</th>
-                <th>{{ course.summary}}</th>
-                <th>{{ course.time}}</th>
-                <th>{{ course.price}}</th>
-                <th>{{ course.image}}</th>
-                <th>{{ course.level}}</th>
-                <th>{{ course.charge}}</th>
-                <th>{{ course.status}}</th>
-                <th>{{ course.enroll}}</th>
-                <th>{{ course.sort}}</th>
-                <th>{{ course.createTime}}</th>
-                <th>{{ course.editTime}}</th>
-                <th>{{ course.teacherId}}</th>
-                <td>
-                    <div class="btn-group">
-                        <el-tooltip class="item" effect="dark" content="更新" placement="top">
-                            <el-button @click="get(course.id)"
-                                       type="primary"
-                                       icon="el-icon-edit"
-                                       size="mini"/>
-                        </el-tooltip>
-                        <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                            <el-button @click="remove(course.id)"
-                                       type="danger"
-                                       icon="el-icon-delete"
-                                       size="mini"/>
-                        </el-tooltip>
+                        <h3 class="search-title">
+                            <a href="#" class="blue">{{ course.name }}</a>
+                        </h3>
+                        <p>
+                            <span class="blue bolder bigger-150">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
+                        </p>
+                        <p>{{ course.summary}}</p>
+                        <p>
+                            <el-button type="primary" @click="toChapter(course)" size="mini" plain>大章</el-button>
+                            <el-tooltip class="item" effect="dark" content="更新" placement="top">
+                                <el-button @click="get(course.id)"
+                                           type="primary"
+                                           icon="el-icon-edit"
+                                           size="mini"/>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                                <el-button @click="remove(course.id)"
+                                           type="danger"
+                                           icon="el-icon-delete"
+                                           size="mini"/>
+                            </el-tooltip>
+                        </p>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                </td>
-            </tr>
-            </tbody>
-        </table>
         <div class="block">
             <el-pagination
                     background
@@ -125,6 +133,9 @@
         name: "course",
         data() {
             return {
+                COURSE_LEVEL: this.$COURSE_LEVEL,
+                COURSE_CHARGE: this.$COURSE_CHARGE,
+                COURSE_STATUS: this.$COURSE_STATUS,
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
                 title: "添加课程",
@@ -146,9 +157,6 @@
                     price: [
                         {required: true, message: '请输入价格（元）', trigger: 'blur'},
                     ],
-                    image: [
-                        {required: true, message: '请输入封面', trigger: 'blur'},
-                    ],
                     level: [
                         {required: true, message: '请输入级别', trigger: 'blur'},
                     ],
@@ -164,9 +172,6 @@
                     sort: [
                         {required: true, message: '请输入顺序', trigger: 'blur'},
                     ],
-                    isDelete: [
-                        {required: true, message: '请输入逻辑删除', trigger: 'blur'},
-                    ],
                     teacherId: [
                         {required: true, message: '请输入讲师', trigger: 'blur'},
                     ],
@@ -178,6 +183,10 @@
             this.list();
         },
         methods: {
+            toChapter(course) {
+                SessionStorage.set(SESSION_KEY_COURSE, course);
+                this.$router.push("/business/chapter");
+            },
             msg(type, message) {
                 this.$message({
                     showClose: true,

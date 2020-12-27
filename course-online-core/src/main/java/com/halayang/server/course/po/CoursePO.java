@@ -57,10 +57,12 @@ public class CoursePO implements Serializable {
     private Integer isDelete;
 
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date editTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime editTime;
 
     private String teacherId;
 

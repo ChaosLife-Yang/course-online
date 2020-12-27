@@ -1,5 +1,15 @@
 <template>
     <div>
+        <el-button size="mini" plain>
+            <router-link to="/business/chapter">
+                <i class="ace-icon fa fa-arrow-left"></i>
+                返回章节目录
+            </router-link>
+        </el-button>
+        <h4 class="lighter">
+            <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+            {{course.name}} —— {{chapter.name}}
+        </h4>
         <el-button type="primary"
                    size="mini"
                    plain
@@ -116,13 +126,15 @@
             return {
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
+                course: {},
+                chapter: {},
                 title: "添加小节",
                 sections: [], //数据显示列表
                 total: 0,
                 currentPage: 1,
                 size: 10,
                 sectionDto: {},
-                charge: this.$charge,
+                charge: this.$SECTION_CHARGE,
                 rules: {
                     title: [
                         {required: true, message: '请输入标题', trigger: 'blur'},
@@ -153,6 +165,14 @@
         },
 
         created() {
+            this.course = SessionStorage.get(SESSION_KEY_COURSE) || {};
+            if (this.course==={}){
+                this.$router.push("/business/course");
+            }
+            this.chapter = SessionStorage.get(SESSION_KEY_CHAPTER) || {};
+            if (this.chapter==={}){
+                this.$router.push("/business/chapter");
+            }
             this.list();
         },
         methods: {

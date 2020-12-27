@@ -1,6 +1,7 @@
 package com.halayang.server.chapter.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
@@ -8,6 +9,7 @@ import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.chapter.dto.ChapterDTO;
+import com.halayang.server.chapter.dto.ChapterPageDTO;
 import com.halayang.server.chapter.po.ChapterPO;
 import com.halayang.server.chapter.service.ChapterService;
 import org.springframework.beans.BeanUtils;
@@ -56,10 +58,12 @@ public class ChapterController {
      * @date 2020-12-20 12:34:23
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<ChapterDTO>> chapterList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<ChapterDTO>> chapterList(@RequestBody @Validated ChapterPageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<ChapterPO> pageInfo = new PageInfo<>(chapterService.list());
+        //根据courseId查询
+        LambdaQueryWrapper<ChapterPO> wrapper = new LambdaQueryWrapper<ChapterPO>().eq(ChapterPO::getCourseId, pageDTO.getCourseId());
+        PageInfo<ChapterPO> pageInfo = new PageInfo<>(chapterService.list(wrapper));
         List<ChapterPO> list = pageInfo.getList();
         List<ChapterDTO> dtoList = CopyUtils.copyList(list, ChapterDTO.class);
         PageDTO<ChapterDTO> page = new PageDTO<ChapterDTO>()

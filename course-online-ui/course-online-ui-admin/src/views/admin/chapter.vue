@@ -1,5 +1,16 @@
 <template>
     <div>
+        <el-button size="mini" plain>
+            <router-link to="/business/course">
+                <i class="ace-icon fa fa-arrow-left"></i>
+                返回课程列表
+            </router-link>
+        </el-button>
+        <h4 class="lighter">
+            <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+             {{course.name}}
+        </h4>
+
         <el-button type="primary"
                    size="mini"
                    plain
@@ -12,7 +23,7 @@
                     <el-input v-model="chapterDto.name" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="所属课程" :label-width="formLabelWidth" prop="courseId">
-                    <el-input v-model="chapterDto.courseId" autocomplete="off"/>
+                    <p class="form-control-static">{{course.name}}</p>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -24,7 +35,7 @@
             <thead>
             <tr>
                 <th>名称</th>
-                <th>课程id</th>
+                <th>课程</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -32,9 +43,14 @@
             <tbody>
             <tr v-for="chapter in chapters">
                 <td>{{ chapter.name }}</td>
-                <td>{{ chapter.courseId }}</td>
+                <td>{{ course.name }}</td>
                 <td>
                     <div class="btn-group">
+                        <el-button @click="toSection(chapter)"
+                                   type="primary"
+                                   plain
+                                   size="mini">小节
+                        </el-button>
                         <el-tooltip class="item" effect="dark" content="更新" placement="top">
                             <el-button @click="get(chapter.id)"
                                        type="primary"
@@ -73,6 +89,7 @@
         name: "chapter",
         data() {
             return {
+                course: {},
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
                 title: "添加大章",
@@ -89,17 +106,27 @@
                     name: [
                         {required: true, message: '请输入大章名称', trigger: 'blur'},
                     ],
-                    courseId: [
-                        {required: true, message: '请输入课程名称', trigger: 'blur'},
-                    ],
                 },
             }
         },
 
         created() {
+            this.course = SessionStorage.get(SESSION_KEY_COURSE) || {};
+            if (this.course==={}){
+                this.$router.push("/business/course");
+            }
+            this.chapterDto.courseId = this.course.id;
             this.list();
         },
         methods: {
+            /**
+             * 点击【小节】
+             */
+            toSection(chapter) {
+                let _this = this;
+                SessionStorage.set(SESSION_KEY_CHAPTER, chapter);
+                _this.$router.push("/business/section");
+            },
             msg(type, message) {
                 this.$message({
                     showClose: true,
@@ -109,7 +136,7 @@
             },
             add() {
                 this.dialogFormVisible = true;
-                this.chapterDto ={};
+                this.chapterDto.name = "";
             },
             remove(id) {
                 this.$confirm('此操作将永久删除该大章, 是否继续?', '提示', {
@@ -160,7 +187,11 @@
                             .then((response) => {
                                 let result = response.data;
                                 this.chapterDto.id = "";
-                                this.msg('success', result.msg);
+                                if (result.code === 200) {
+                                    this.msg('success', result.msg);
+                                } else {
+                                    this.msg('error', result.msg);
+                                }
                                 this.dialogFormVisible = false;
                                 this.list();
                             })
@@ -179,6 +210,7 @@
             list() {
                 this.$ajax
                     .post(process.env.VUE_APP_SERVER + "/api/service/chapter/list", {
+                        courseId: this.chapterDto.courseId,
                         page: this.currentPage,
                         size: this.size
                     })
