@@ -45,6 +45,11 @@ public class PageDTO<T> {
     private Integer pages;
 
     /**
+     * 总条数
+     */
+    private Long total;
+
+    /**
      * 数据
      */
     private List<T> list;

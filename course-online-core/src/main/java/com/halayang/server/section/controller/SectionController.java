@@ -72,8 +72,9 @@ public class SectionController {
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())
+                .setTotal(pageInfo.getTotal())
                 .setList(dtoList);
-        return ResponseResult.success(pageInfo.getTotal(), page);
+        return ResponseResult.success(page.getTotal(), page);
     }
 
     /**
@@ -89,6 +90,7 @@ public class SectionController {
         SectionPO sectionPo = new SectionPO();
         BeanUtils.copyProperties(sectionDTO, sectionPo);
         boolean option = sectionService.saveOrUpdate(sectionPo);
+        sectionService.updateCourseTime(sectionPo.getCourseId());
         if (option) {
             return ResponseResult.success();
         } else {

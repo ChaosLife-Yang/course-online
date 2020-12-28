@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.halayang.server.course.mapper.CourseMapper">
 
+    <update id="updateCourseTime">
+        update course c
+        set time=(select sum(time) from section where course_id=#{id})
+        where c.id=#{id}
+    </update>
+
+
 </mapper>
