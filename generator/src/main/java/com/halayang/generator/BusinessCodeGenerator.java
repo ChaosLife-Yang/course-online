@@ -92,9 +92,22 @@ public class BusinessCodeGenerator {
         }
         return set;
     }
+
     private static String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
 
-    public static void vueGenerator(String toPath, String domain, String tableName, String moduleName,String prefix) throws Exception {
+    /**
+     * vue页面生成器
+     *
+     * @param toPath     vue路径
+     * @param domain     实体名
+     * @param tableName  表名
+     * @param moduleName 模块中文名
+     * @param prefix     前缀
+     * @return void
+     * @author YangYudi
+     * @date 2020/12/28 15:23
+     */
+    public static void vueGenerator(String toPath, String domain, String tableName, String moduleName, String prefix) throws Exception {
         FreemarkerUtils.initConfig("vue.ftl");
         List<Field> fields = DbUtil.getColumnByTableName(tableName);
         Map<String, Object> map = new HashMap<>(4);
@@ -105,8 +118,9 @@ public class BusinessCodeGenerator {
     }
 
     public static void main(String[] args) throws Exception {
+        dtoGenerator(toDtoPath, "Category", "category", "category", "Category");
+        controllerGenerator(toPath, "Category", "category", "category", "课程分类");
 //        vueGenerator(toVuePath,"section","section","小节","section");
-        controllerGenerator(toPath,"CourseCategory","course","courseCategory","课程分类");
     }
 
 }
