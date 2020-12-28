@@ -1,5 +1,6 @@
 package com.halayang.server.section.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.halayang.server.course.mapper.CourseMapper;
 import com.halayang.server.section.po.SectionPO;
 import com.halayang.server.section.mapper.SectionMapper;
@@ -26,7 +27,10 @@ public class SectionServiceImpl extends ServiceImpl<SectionMapper, SectionPO> im
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateCourseTime(String id) {
-        courseMapper.updateCourseTime(id);
+        int count = this.count(new LambdaQueryWrapper<SectionPO>().eq(SectionPO::getCourseId, id));
+        if (count > 0) {
+            courseMapper.updateCourseTime(id);
+        }
     }
 
 }

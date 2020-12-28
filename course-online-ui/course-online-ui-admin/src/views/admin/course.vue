@@ -87,10 +87,13 @@
                         </div>
 
                         <h3 class="search-title">
-                            <a href="#" class="blue">{{ course.name }}</a>
+                            <span class="blue">{{ course.name }}</span>
                         </h3>
+                        <span class="pull-right label label-grey info-label">
+                            {{course.time | formatSecond}}
+                        </span>
                         <p>
-                            <span class="blue bolder bigger-150">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
+                            <span class="bigger-120">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
                         </p>
                         <p>{{ course.summary}}</p>
                         <p>
@@ -150,9 +153,6 @@
                     ],
                     summary: [
                         {required: true, message: '请输入概述', trigger: 'blur'},
-                    ],
-                    time: [
-                        {required: true, message: '请输入时长', trigger: 'blur'},
                     ],
                     price: [
                         {required: true, message: '请输入价格（元）', trigger: 'blur'},

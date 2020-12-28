@@ -78,7 +78,7 @@
                 <th>{{ course.name}}</th>
                 <th>{{ chapter.name}}</th>
                 <th>{{ section.video}}</th>
-                <th>{{ section.time}}</th>
+                <th>{{ section.time | formatSecond}}</th>
                 <th>{{ charge | optionKV(section.charge)}}</th>
                 <th>{{ section.sort}}</th>
                 <th>{{ section.createTime}}</th>
