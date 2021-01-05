@@ -7,8 +7,17 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * List DTO转VO对象复制工具类
+ *
+ * @author YangYudi
+ * @date 2020/12/11 16:30
+ */
 @Slf4j
 public class CopyUtils {
+
+    private CopyUtils() {
+    }
 
     public static <T> List<T> copyList(List source, Class<T> clazz) {
         List<T> target = new ArrayList<>();

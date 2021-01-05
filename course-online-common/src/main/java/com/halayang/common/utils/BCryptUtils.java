@@ -17,7 +17,7 @@ public class BCryptUtils {
      * 加密
      *
      * @param password 输入密码
-     * @return
+     * @return String
      */
     public static String encode(String password) {
         return BCrypt.withDefaults().hashToString(10, password.toCharArray());
@@ -28,7 +28,7 @@ public class BCryptUtils {
      *
      * @param password       输入密码
      * @param encodePassword 数据库中已经加密好的密码
-     * @return
+     * @return boolean
      */
     public static boolean verify(String password, String encodePassword) {
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), encodePassword);

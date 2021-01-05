@@ -2,7 +2,6 @@ package com.halayang.common.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,9 @@ public class JacksonUtils {
 
     public static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private static final Logger logger = LoggerFactory.getLogger(JacksonUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(JacksonUtils.class);
+
+    private static final String ERROR_MSG = "json序列化出错";
 
     private JacksonUtils() {
     }
@@ -44,7 +45,7 @@ public class JacksonUtils {
         try {
             return MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            logger.error("json序列化出错");
+            log.error(ERROR_MSG);
             return null;
         }
     }
@@ -61,7 +62,7 @@ public class JacksonUtils {
         try {
             return MAPPER.readValue(json, tClass);
         } catch (JsonProcessingException e) {
-            logger.error("json解析出错");
+            log.error(ERROR_MSG);
             return null;
         }
     }
@@ -78,7 +79,7 @@ public class JacksonUtils {
         try {
             return MAPPER.readValue(json, MAPPER.getTypeFactory().constructCollectionType(List.class, eClass));
         } catch (IOException e) {
-            logger.error("json解析出错");
+            log.error(ERROR_MSG);
         }
         return new ArrayList<>();
     }
@@ -97,7 +98,7 @@ public class JacksonUtils {
         try {
             return MAPPER.readValue(json, MAPPER.getTypeFactory().constructMapType(Map.class, kClass, vClass));
         } catch (IOException e) {
-            logger.error("json解析出错");
+            log.error(ERROR_MSG);
             return null;
         }
     }
@@ -113,10 +114,9 @@ public class JacksonUtils {
      */
     public static <T> T nativeRead(String json, TypeReference<T> type) {
         try {
-
             return MAPPER.readValue(json, type);
         } catch (IOException e) {
-            logger.error("json解析出错");
+            log.error(ERROR_MSG);
             return null;
         }
     }

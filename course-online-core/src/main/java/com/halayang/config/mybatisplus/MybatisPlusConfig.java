@@ -37,8 +37,9 @@ public class MybatisPlusConfig implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
-        this.setFieldValByName("editTime", LocalDateTime.now(), metaObject);
+        LocalDateTime now = LocalDateTime.now();
+        this.setFieldValByName("createTime", now, metaObject);
+        this.setFieldValByName("editTime", now, metaObject);
 
         this.setFieldValByName("version", 1L, metaObject);
     }
@@ -50,7 +51,8 @@ public class MybatisPlusConfig implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("editTime", LocalDateTime.now(), metaObject);
+        LocalDateTime now = LocalDateTime.now();
+        this.setFieldValByName("editTime", now, metaObject);
     }
 
 }
