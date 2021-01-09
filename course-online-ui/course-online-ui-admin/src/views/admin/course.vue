@@ -8,6 +8,16 @@
         <el-dialog :title="title" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="ruleForm" :model="courseDto">
                 <el-input v-model="courseDto.id" style="display: none"/>
+                <el-form-item label="分类" :label-width="formLabelWidth" prop="categoryId">
+                    <el-tree
+                            :data="categoryList"
+                            show-checkbox
+                            node-key="id"
+                            ref="tree"
+                            highlight-current
+                            :props="defaultProps">
+                    </el-tree>
+                </el-form-item>
                 <el-form-item label="名称" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="courseDto.name" autocomplete="off"/>
                 </el-form-item>
@@ -55,9 +65,6 @@
                 </el-form-item>
                 <el-form-item label="报名数" :label-width="formLabelWidth" prop="enroll">
                     <el-input v-model="courseDto.enroll" autocomplete="off"/>
-                </el-form-item>
-                <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
-                    <el-input v-model="courseDto.sort" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="讲师" :label-width="formLabelWidth" prop="teacherId">
                     <el-input v-model="courseDto.teacherId" autocomplete="off"/>
@@ -147,6 +154,12 @@
                 currentPage: 1,
                 size: 10,
                 courseDto: {},
+                courseCategoryDto: {},
+                categoryList: [],
+                defaultProps: {
+                    children: 'children',
+                    label: 'name'
+                },
                 rules: {
                     name: [
                         {required: true, message: '请输入名称', trigger: 'blur'},
@@ -168,9 +181,6 @@
                     ],
                     enroll: [
                         {required: true, message: '请输入报名数', trigger: 'blur'},
-                    ],
-                    sort: [
-                        {required: true, message: '请输入顺序', trigger: 'blur'},
                     ],
                     teacherId: [
                         {required: true, message: '请输入讲师', trigger: 'blur'},
@@ -197,6 +207,7 @@
             add() {
                 this.dialogFormVisible = true;
                 this.courseDto = {};
+                this.$refs.tree.setCheckedKeys([]);
             },
             remove(id) {
                 this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
@@ -237,28 +248,53 @@
                     .catch(error => {
                         this.msg('error', error);
                     });
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/service/courseCategory/" + id)
+                    .then((response) => {
+                        let result = response.data;
+                        if (result.data!=null){
+                            this.$refs.tree.setCheckedKeys(result.data);
+                        }else{
+                            this.$refs.tree.setCheckedKeys([]);
+                        }
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
             },
             //添加或更新
             saveOrUpdate(formName) {
+                //添加课程
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$ajax
                             .post(process.env.VUE_APP_SERVER + "/api/service/course/saveOrUpdate", this.courseDto)
-                            .then((response) => {
-                                let result = response.data;
-                                this.courseDto.id = "";
-                                this.msg('success', result.msg);
-                                this.dialogFormVisible = false;
-                                this.list();
-                            })
-                            .catch(error => {
-                                this.msg('error', error);
-                            });
+                            .then((response1) => {
+                                let courseId = response1.data.data;
+                                //添加课程与分类关联
+                                this.$ajax.post(process.env.VUE_APP_SERVER + "/api/service/courseCategory/saveOrUpdate",
+                                    {
+                                        courseId: courseId,
+                                        categoryId: this.$refs.tree.getCheckedKeys()
+                                    }).then((response2) => {
+                                    let result = response2.data;
+                                    this.msg('success', result.msg);
+                                    this.courseDto.id = "";
+                                    this.dialogFormVisible = false;
+                                    this.list();
+                                }).catch(error => {
+                                    this.msg('error', error);
+                                });
+
+                            }).catch(error => {
+                            this.msg('error', error);
+                        });
                     } else {
                         console.log('error submit!!');
                         return false;
                     }
                 });
+
 
             },
 
@@ -273,6 +309,15 @@
                         let result = response.data;
                         this.courses = result.data.list;
                         this.total = result.count;
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/service/category/list")
+                    .then((response) => {
+                        let result = response.data;
+                        this.categoryList = result.data;
                     })
                     .catch(error => {
                         this.msg('error', error);

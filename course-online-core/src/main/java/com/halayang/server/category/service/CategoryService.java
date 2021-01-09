@@ -1,7 +1,10 @@
 package com.halayang.server.category.service;
 
-import com.halayang.server.category.po.CategoryPO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.halayang.server.category.dto.CategoryDTO;
+import com.halayang.server.category.po.CategoryPO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-12-28
  */
 public interface CategoryService extends IService<CategoryPO> {
+
+    List<CategoryDTO> getCategoryList();
 
 }

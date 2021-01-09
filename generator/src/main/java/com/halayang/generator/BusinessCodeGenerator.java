@@ -6,7 +6,6 @@ import com.halayang.generator.util.FreemarkerUtils;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -26,6 +25,8 @@ public class BusinessCodeGenerator {
     private static String toPath = "course-online-core/src/main/java/com/halayang/server/";
 
     /**
+     * controller代码生成器
+     *
      * @param toPath          要生成的文件所在的父目录
      * @param classNamePrefix 类名前缀
      * @param module          模块名
@@ -118,9 +119,9 @@ public class BusinessCodeGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        dtoGenerator(toDtoPath, "Category", "category", "category", "Category");
-        controllerGenerator(toPath, "Category", "category", "category", "课程分类");
-//        vueGenerator(toVuePath,"section","section","小节","section");
+//        dtoGenerator(toDtoPath, "Category", "category", "category", "Category");
+//        controllerGenerator(toPath, "Category", "category", "category", "课程分类");
+        vueGenerator(toVuePath,"category","category","分类","category");
     }
 
 }

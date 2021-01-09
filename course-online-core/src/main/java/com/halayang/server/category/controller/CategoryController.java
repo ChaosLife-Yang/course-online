@@ -1,10 +1,6 @@
 package com.halayang.server.category.controller;
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.category.dto.CategoryDTO;
@@ -48,26 +44,16 @@ public class CategoryController {
     }
 
     /**
-     * 课程分类分页查询
+     * 课程分类查询
      *
-     * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.category.po.CategoryPO>>
+     * @return ResponseObject<List<CategoryDTO>>
      * @author YangYudi
      * @date 2020-12-28 15:22:50
      */
-    @PostMapping("/list")
-    public ResponseObject<PageDTO<CategoryDTO>> categoryList(@RequestBody @Validated PageDTO pageDTO) {
-        //startPage方法往下遇到的第一个sql语句执行分页操作
-        PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<CategoryPO> pageInfo = new PageInfo<>(categoryService.list());
-        List<CategoryPO> list = pageInfo.getList();
-        List<CategoryDTO> dtoList = CopyUtils.copyList(list, CategoryDTO.class);
-        PageDTO<CategoryDTO> page = new PageDTO<CategoryDTO>()
-                .setPage(pageDTO.getPage())
-                .setSize(pageDTO.getSize())
-                .setPages(pageInfo.getPages())
-                .setList(dtoList);
-        return ResponseResult.success(pageInfo.getTotal(), page);
+    @GetMapping("/list")
+    public ResponseObject<List<CategoryDTO>> categoryList() {
+        List<CategoryDTO> dtoList = categoryService.getCategoryList();
+        return ResponseResult.success(dtoList);
     }
 
     /**

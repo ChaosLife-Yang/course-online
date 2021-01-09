@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * CategoryDTO对象
@@ -44,6 +45,9 @@ public class CategoryDTO implements Serializable {
     */
     @ApiModelProperty(value = "顺序")
     private Integer sort;
+
+    @ApiModelProperty(value = "子分类")
+    private List<CategoryDTO> children;
     /**
     * 创建时间
     */

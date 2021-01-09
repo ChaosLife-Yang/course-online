@@ -6,8 +6,7 @@
                         type="button"
                         class="navbar-toggle menu-toggler pull-left"
                         id="menu-toggler"
-                        data-target="#sidebar"
-                >
+                        data-target="#sidebar">
                     <span class="sr-only">Toggle sidebar</span>
 
                     <span class="icon-bar"></span>
@@ -459,6 +458,14 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
+                            <li class="" id="business-category-sidebar">
+                                <router-link to="/business/category">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    分类管理
+                                </router-link>
+
+                                <b class="arrow"></b>
+                            </li>
                             <li class="" id="business-course-sidebar">
                                 <router-link to="/business/course">
                                     <i class="menu-icon fa fa-caret-right"></i>

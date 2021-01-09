@@ -1,6 +1,7 @@
 package com.halayang.server.course.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
@@ -10,12 +11,13 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.course.dto.CourseCategoryDTO;
 import com.halayang.server.course.po.CourseCategoryPO;
 import com.halayang.server.course.service.CourseCategoryService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  * 课程分类 前端控制器
@@ -32,26 +34,28 @@ public class CourseCategoryController {
     private CourseCategoryService courseCategoryService;
 
     /**
-     * 获取课程分类对象信息
+     * 通过课程id获取分类id列表
      *
      * @param id 课程分类id
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.courseCategory.po.CourseCategoryPO>
+     * @return ResponseObject<List < String>>
      * @author YangYudi
      * @date 2020-12-20 15:39:06
      */
     @GetMapping("/{id}")
-    public ResponseObject<CourseCategoryDTO> getOne(@PathVariable String id) {
-        CourseCategoryPO po = courseCategoryService.getById(id);
-        CourseCategoryDTO courseCategoryDTO = new CourseCategoryDTO();
-        BeanUtils.copyProperties(po, courseCategoryDTO);
-        return ResponseResult.success(courseCategoryDTO);
+    public ResponseObject<List<String>> getOne(@PathVariable String id) {
+        List<String> collect = courseCategoryService.list(new LambdaQueryWrapper<CourseCategoryPO>()
+                .eq(CourseCategoryPO::getCourseId, id))
+                .stream()
+                .map(CourseCategoryPO::getCategoryId)
+                .collect(Collectors.toList());
+        return ResponseResult.success(collect);
     }
 
     /**
      * 课程分类分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.courseCategory.po.CourseCategoryPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.courseCategory.po.CourseCategoryPO>>
      * @author YangYudi
      * @date 2020-12-20 15:39:06
      */
@@ -80,9 +84,7 @@ public class CourseCategoryController {
      */
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated CourseCategoryDTO courseCategoryDTO) {
-        CourseCategoryPO courseCategoryPo = new CourseCategoryPO();
-        BeanUtils.copyProperties(courseCategoryDTO, courseCategoryPo);
-        boolean option = courseCategoryService.saveOrUpdate(courseCategoryPo);
+        boolean option = courseCategoryService.saveOrUpdateCourseCategories(courseCategoryDTO);
         if (option) {
             return ResponseResult.success();
         } else {

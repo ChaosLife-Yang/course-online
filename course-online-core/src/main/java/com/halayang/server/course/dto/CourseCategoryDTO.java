@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 课程分类DTO对象
@@ -38,7 +39,8 @@ public class CourseCategoryDTO implements Serializable {
     * 分类|category.id
     */
     @ApiModelProperty(value = "分类|category.id")
-    private String categoryId;
+    private List<String> categoryId;
+
     /**
     * 创建时间
     */

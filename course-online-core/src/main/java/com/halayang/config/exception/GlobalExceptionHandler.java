@@ -27,6 +27,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseObject<Object> error(RuntimeException e) {
         log.error(e.getMessage());
+        e.printStackTrace();
         return ResponseResult.error(e.getMessage());
     }
 

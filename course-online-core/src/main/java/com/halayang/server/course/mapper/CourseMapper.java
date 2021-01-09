@@ -1,7 +1,7 @@
 package com.halayang.server.course.mapper;
 
-import com.halayang.server.course.po.CoursePO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.halayang.server.course.po.CoursePO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -23,5 +23,6 @@ public interface CourseMapper extends BaseMapper<CoursePO> {
      * @return int
      */
     int updateCourseTime(@Param("id") String id);
+
 
 }

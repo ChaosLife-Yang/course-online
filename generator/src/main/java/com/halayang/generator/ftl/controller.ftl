@@ -59,7 +59,7 @@ public class ${classNamePrefix}Controller {
     public ResponseObject<PageDTO<${classNamePrefix}DTO>> ${domain}List(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<${classNamePrefix}PO> pageInfo = new PageInfo<>(${domain}Service.list());
+        PageInfo<${classNamePrefix}PO> pageInfo = new PageInfo<>(${domain}Service.list(new LambdaQueryWrapper<${classNamePrefix}PO>().orderByDesc(${classNamePrefix}PO::getId));
         List<${classNamePrefix}PO> list = pageInfo.getList();
         List<${classNamePrefix}DTO> dtoList = CopyUtils.copyList(list, ${classNamePrefix}DTO.class);
         PageDTO<${classNamePrefix}DTO> page = new PageDTO<${classNamePrefix}DTO>()

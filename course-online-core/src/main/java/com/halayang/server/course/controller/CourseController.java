@@ -73,7 +73,6 @@ public class CourseController {
 
     /**
      * 课程添加或更新
-     *
      * @param courseDTO 请求参数
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi
@@ -85,7 +84,7 @@ public class CourseController {
         BeanUtils.copyProperties(courseDTO, coursePo);
         boolean option = courseService.saveOrUpdate(coursePo);
         if (option) {
-            return ResponseResult.success();
+            return ResponseResult.success(coursePo.getId());
         } else {
             return ResponseResult.error();
         }
@@ -108,6 +107,5 @@ public class CourseController {
             return ResponseResult.error();
         }
     }
-
 
 }
