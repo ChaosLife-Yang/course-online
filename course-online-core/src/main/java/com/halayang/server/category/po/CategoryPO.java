@@ -57,6 +57,4 @@ public class CategoryPO implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime editTime;
 
-
-
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 15/12/2020 14:16:47
+ Date: 09/01/2021 20:32:25
 */
 
 SET NAMES utf8mb4;
@@ -23,64 +23,75 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`  (
   `id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'id',
-  `parent` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '父id',
+  `parent` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '父id',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   `sort` int(11) NULL DEFAULT NULL COMMENT '顺序',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
-  `is_delete` int(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '分类' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('00000100', NULL, '前端技术', 100, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000101', '00000100', 'html/css', 101, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000102', '00000100', 'javascript', 102, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000103', '00000100', 'vue.js', 103, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000104', '00000100', 'react.js', 104, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000105', '00000100', 'angular', 105, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000106', '00000100', 'node.js', 106, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000107', '00000100', 'jquery', 107, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000108', '00000100', '小程序', 108, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000200', '00000000', '后端技术', 200, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000201', '00000200', 'java', 201, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000202', '00000200', 'springboot', 202, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000203', '00000200', 'spring cloud', 203, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000204', '00000200', 'ssm', 204, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000205', '00000200', 'python', 205, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000206', '00000200', '爬虫', 206, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000300', '00000000', '移动开发', 300, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000301', '00000300', 'android', 301, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000302', '00000300', 'ios', 302, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000303', '00000300', 'react native', 303, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000304', '00000300', 'ionic', 304, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000400', '00000000', '前沿技术', 400, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000401', '00000400', '微服务', 401, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000402', '00000400', '区块链', 402, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000403', '00000400', '机器学习', 403, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000404', '00000400', '深度学习', 404, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000405', '00000400', '数据分析&挖掘', 405, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000500', '00000000', '云计算&大数据', 500, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000501', '00000500', '大数据', 501, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000502', '00000500', 'hadoop', 502, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000503', '00000500', 'spark', 503, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000504', '00000500', 'hbase', 504, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000505', '00000500', '阿里云', 505, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000506', '00000500', 'docker', 506, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000507', '00000500', 'kubernetes', 507, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000600', '00000000', '运维&测试', 600, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000601', '00000600', '运维', 601, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000602', '00000600', '自动化运维', 602, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000603', '00000600', '中间件', 603, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000604', '00000600', 'linux', 604, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000605', '00000600', '测试', 605, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000606', '00000600', '自动化测试', 606, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000700', '00000000', '数据库', 700, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000701', '00000700', 'mysql', 701, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000702', '00000700', 'redis', 702, NULL, NULL, 0);
-INSERT INTO `category` VALUES ('00000703', '00000700', 'mongodb', 703, NULL, NULL, 0);
+INSERT INTO `category` VALUES ('00000100', NULL, '前端技术', 100, NULL, '2021-01-09 11:16:39');
+INSERT INTO `category` VALUES ('00000101', '00000100', 'html/css', 101, NULL, NULL);
+INSERT INTO `category` VALUES ('00000102', '00000100', 'javascript', 102, NULL, NULL);
+INSERT INTO `category` VALUES ('00000103', '00000100', 'vue.js', 103, NULL, NULL);
+INSERT INTO `category` VALUES ('00000104', '00000100', 'react.js', 104, NULL, NULL);
+INSERT INTO `category` VALUES ('00000105', '00000100', 'angular', 105, NULL, NULL);
+INSERT INTO `category` VALUES ('00000106', '00000100', 'node.js', 106, NULL, NULL);
+INSERT INTO `category` VALUES ('00000107', '00000100', 'jquery', 107, NULL, NULL);
+INSERT INTO `category` VALUES ('00000108', '00000100', '小程序', 108, NULL, NULL);
+INSERT INTO `category` VALUES ('00000200', '', '后端技术', 200, NULL, '2020-12-28 15:16:48');
+INSERT INTO `category` VALUES ('00000201', '00000200', 'java', 201, NULL, NULL);
+INSERT INTO `category` VALUES ('00000202', '00000200', 'springboot', 202, NULL, '2021-01-09 15:43:46');
+INSERT INTO `category` VALUES ('00000205', '00000200', 'python', 205, NULL, NULL);
+INSERT INTO `category` VALUES ('00000206', '00000200', '爬虫', 206, NULL, NULL);
+INSERT INTO `category` VALUES ('00000300', '', '移动开发', 300, NULL, '2020-12-28 15:17:03');
+INSERT INTO `category` VALUES ('00000301', '00000300', 'android', 301, NULL, NULL);
+INSERT INTO `category` VALUES ('00000302', '00000300', 'ios', 302, NULL, NULL);
+INSERT INTO `category` VALUES ('00000303', '00000300', 'react native', 303, NULL, NULL);
+INSERT INTO `category` VALUES ('00000304', '00000300', 'ionic', 304, NULL, NULL);
+INSERT INTO `category` VALUES ('00000400', NULL, '前沿技术', 400, NULL, '2021-01-09 14:45:55');
+INSERT INTO `category` VALUES ('00000401', '00000400', '微服务', 401, NULL, NULL);
+INSERT INTO `category` VALUES ('00000402', '00000400', '区块链', 402, NULL, NULL);
+INSERT INTO `category` VALUES ('00000403', '00000400', '机器学习', 403, NULL, NULL);
+INSERT INTO `category` VALUES ('00000404', '00000400', '深度学习', 404, NULL, NULL);
+INSERT INTO `category` VALUES ('00000405', '00000400', '数据挖掘', 405, NULL, '2021-01-09 15:54:09');
+INSERT INTO `category` VALUES ('00000500', NULL, '云计算&大数据', 500, NULL, '2020-12-28 15:17:39');
+INSERT INTO `category` VALUES ('00000501', '00000500', '大数据', 501, NULL, NULL);
+INSERT INTO `category` VALUES ('00000502', '00000500', 'hadoop', 502, NULL, NULL);
+INSERT INTO `category` VALUES ('00000503', '00000500', 'spark', 503, NULL, NULL);
+INSERT INTO `category` VALUES ('00000504', '00000500', 'hbase', 504, NULL, NULL);
+INSERT INTO `category` VALUES ('00000505', '00000500', '阿里云', 505, NULL, NULL);
+INSERT INTO `category` VALUES ('00000506', '00000500', 'docker', 506, NULL, NULL);
+INSERT INTO `category` VALUES ('00000507', '00000500', 'kubernetes', 507, NULL, NULL);
+INSERT INTO `category` VALUES ('00000600', NULL, '运维&测试', 600, NULL, '2020-12-28 15:17:39');
+INSERT INTO `category` VALUES ('00000601', '00000600', '运维', 601, NULL, '2021-01-09 15:39:54');
+INSERT INTO `category` VALUES ('00000602', '00000600', '自动化运维', 602, NULL, NULL);
+INSERT INTO `category` VALUES ('00000603', '00000600', '中间件', 603, NULL, '2021-01-09 15:39:46');
+INSERT INTO `category` VALUES ('00000604', '00000600', 'linux', 604, NULL, NULL);
+INSERT INTO `category` VALUES ('00000605', '00000600', '测试', 605, NULL, '2021-01-09 15:39:42');
+INSERT INTO `category` VALUES ('00000606', '00000600', '自动化测试', 606, NULL, NULL);
+INSERT INTO `category` VALUES ('00000700', NULL, '数据库', 700, NULL, '2020-12-28 15:17:39');
+INSERT INTO `category` VALUES ('00000701', '00000700', 'mysql', 701, NULL, NULL);
+INSERT INTO `category` VALUES ('00000702', '00000700', 'redis', 702, NULL, NULL);
+INSERT INTO `category` VALUES ('00000703', '00000700', 'mongodb', 703, NULL, '2021-01-09 15:20:46');
+INSERT INTO `category` VALUES ('1347743751056924674', '00000100', 'typescript', NULL, '2021-01-09 11:15:25', '2021-01-09 11:15:25');
+INSERT INTO `category` VALUES ('1347795498152505346', '', '中间件', NULL, '2021-01-09 14:41:02', '2021-01-09 14:41:02');
+INSERT INTO `category` VALUES ('1347795741317279745', '00000200', 'go', NULL, '2021-01-09 14:42:00', '2021-01-09 14:42:00');
+INSERT INTO `category` VALUES ('1347800117612130305', '00000200', '支付技术', NULL, '2021-01-09 14:59:24', '2021-01-09 14:59:24');
+INSERT INTO `category` VALUES ('1347805835912294402', '00000700', 'mongodb', NULL, '2021-01-09 15:22:07', '2021-01-09 15:22:07');
+INSERT INTO `category` VALUES ('1347810222948757505', '1347795498152505346', 'rocketmq', NULL, '2021-01-09 15:39:33', '2021-01-09 15:39:33');
+INSERT INTO `category` VALUES ('1347810245128237057', '00000600', 'k8s', NULL, '2021-01-09 15:39:38', '2021-01-09 15:41:56');
+INSERT INTO `category` VALUES ('1347810351441260546', '00000600', 'selenium', NULL, '2021-01-09 15:40:04', '2021-01-09 15:40:04');
+INSERT INTO `category` VALUES ('1347810882482089986', '00000600', 'ansible', NULL, '2021-01-09 15:42:10', '2021-01-09 15:42:10');
+INSERT INTO `category` VALUES ('1347815177990451202', '00000600', 'saltstack', NULL, '2021-01-09 15:59:14', '2021-01-09 15:59:14');
+INSERT INTO `category` VALUES ('1347826684526604290', '00000700', 'oracle', NULL, '2021-01-09 16:44:58', '2021-01-09 16:44:58');
+INSERT INTO `category` VALUES ('1347882057077907458', '1347795498152505346', 'rabbitmq', NULL, '2021-01-09 20:25:00', '2021-01-09 20:25:00');
+INSERT INTO `category` VALUES ('1347882076388483074', '1347795498152505346', 'kafka', NULL, '2021-01-09 20:25:04', '2021-01-09 20:25:04');
+INSERT INTO `category` VALUES ('1347882666032128002', '00000200', '微服务', NULL, '2021-01-09 20:27:25', '2021-01-09 20:27:25');
 
 -- ----------------------------
 -- Table structure for chapter
@@ -94,7 +105,7 @@ CREATE TABLE `chapter`  (
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `is_delete` int(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '大章' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '大章' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of chapter
@@ -102,23 +113,28 @@ CREATE TABLE `chapter`  (
 INSERT INTO `chapter` VALUES ('00000001', '11111111', '测试大章01', NULL, '2020-12-14 21:39:18', 1);
 INSERT INTO `chapter` VALUES ('00000002', '123123213', '测试大章02', NULL, '2020-12-14 21:33:47', 1);
 INSERT INTO `chapter` VALUES ('00000003', '00000000', '测试大章03', NULL, NULL, 1);
-INSERT INTO `chapter` VALUES ('00000004', '123123123', '测试大章04', NULL, '2020-12-15 09:45:21', 0);
-INSERT INTO `chapter` VALUES ('00000005', '00000000', '测试大章05', NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000006', '00000000', '测试大章06', NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000007', '00000000', '测试大章07', NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000008', '00000000', '测试大章08', NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000009', '00000000', '测试大章09', NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000010', '00000000', '测试大章10', NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000011', '00000000', '测试大章11', NULL, NULL, 0);
+INSERT INTO `chapter` VALUES ('00000004', '1343041788956405761', '测试大章04', NULL, '2020-12-20 11:13:05', 0);
+INSERT INTO `chapter` VALUES ('00000005', '1343041788956405761', '测试大章05', NULL, NULL, 0);
+INSERT INTO `chapter` VALUES ('00000006', '1343041788956405761', '测试大章06', NULL, NULL, 0);
+INSERT INTO `chapter` VALUES ('00000007', '1343041788956405761', '测试大章07', NULL, NULL, 1);
+INSERT INTO `chapter` VALUES ('00000008', '1343041788956405761', '测试大章08', NULL, NULL, 0);
+INSERT INTO `chapter` VALUES ('00000009', '1343041788956405761', '测试大章09', NULL, NULL, 0);
+INSERT INTO `chapter` VALUES ('00000010', '1343041788956405761', '测试大章10', NULL, NULL, 0);
+INSERT INTO `chapter` VALUES ('00000011', '1343041788956405761', '测试大章11', NULL, NULL, 0);
 INSERT INTO `chapter` VALUES ('00000012', '123213132213', '测试大章12', NULL, '2020-12-14 21:39:25', 0);
-INSERT INTO `chapter` VALUES ('00000013', '00000000', '测试大章13', NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000014', '00000000', '测试大章14', NULL, NULL, 1);
-INSERT INTO `chapter` VALUES ('1338468722569986049', '12323213', '1111111', '2020-12-14 20:59:46', '2020-12-14 21:00:39', 0);
-INSERT INTO `chapter` VALUES ('1338477928027037697', '123', 'aaaaa', '2020-12-14 21:36:20', '2020-12-14 21:36:20', 0);
-INSERT INTO `chapter` VALUES ('1338478637887823874', '21213', 'qqweqwe', '2020-12-14 21:39:10', '2020-12-14 21:39:10', 0);
-INSERT INTO `chapter` VALUES ('1338661445444935682', '123123123', 'ceshi123', '2020-12-15 09:45:34', '2020-12-15 09:45:34', 0);
-INSERT INTO `chapter` VALUES ('1338682718074019841', '', '', '2020-12-15 11:10:06', '2020-12-15 11:10:06', 1);
-INSERT INTO `chapter` VALUES ('1338687023719960577', '123', '123', '2020-12-15 11:27:13', '2020-12-15 11:27:13', 0);
+INSERT INTO `chapter` VALUES ('00000013', '1343094701405794305', '测试大章13', NULL, '2020-12-15 15:36:26', 0);
+INSERT INTO `chapter` VALUES ('00000014', '1343094701405794305', '测试大章14', NULL, NULL, 1);
+INSERT INTO `chapter` VALUES ('1338468722569986049', '00000001', '1111111', '2020-12-14 20:59:46', '2020-12-14 21:00:39', 0);
+INSERT INTO `chapter` VALUES ('1338477928027037697', '00000001', 'aaaaa', '2020-12-14 21:36:20', '2020-12-14 21:36:20', 0);
+INSERT INTO `chapter` VALUES ('1338478637887823874', '00000001', 'qqweqwe', '2020-12-14 21:39:10', '2020-12-14 21:39:10', 0);
+INSERT INTO `chapter` VALUES ('1338661445444935682', '00000001', 'ceshi123', '2020-12-15 09:45:34', '2020-12-15 09:45:34', 0);
+INSERT INTO `chapter` VALUES ('1338687023719960577', '00000001', '123', '2020-12-15 11:27:13', '2020-12-15 11:27:13', 0);
+INSERT INTO `chapter` VALUES ('1338748459397775361', '00000001', '123123', '2020-12-15 15:31:20', '2020-12-15 15:31:20', 0);
+INSERT INTO `chapter` VALUES ('1338748531288145922', '00000001', '123', '2020-12-15 15:31:37', '2020-12-15 15:31:37', 0);
+INSERT INTO `chapter` VALUES ('1340505698831720450', '1343040305078759425', '123', '2020-12-20 11:53:59', '2020-12-20 11:53:59', 1);
+INSERT INTO `chapter` VALUES ('1343094701405794305', '1343040305078759425', '123123', '2020-12-27 15:21:45', '2020-12-27 15:21:45', 0);
+INSERT INTO `chapter` VALUES ('1343100259013857281', '00000001', '123', '2020-12-27 15:43:50', '2020-12-27 15:43:50', 0);
+INSERT INTO `chapter` VALUES ('1343100290047512578', '1343040305078759425', '123aaaa', '2020-12-27 15:43:57', '2020-12-27 15:44:15', 0);
 
 -- ----------------------------
 -- Table structure for course
@@ -141,12 +157,15 @@ CREATE TABLE `course`  (
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `teacher_id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '讲师|teacher.id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '课程' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '课程' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES ('00000001', '测试课程01', '这是一门测试课程', 7200, 19.90, '', '1', 'C', 'P', 100, 0, NULL, '2020-11-29 13:33:54', '2020-11-29 13:33:54', NULL);
+INSERT INTO `course` VALUES ('00000001', '测试课程0123', '这是一门测试课程', 223, 19.90, '', '2', 'C', 'P', 100, 0, 0, '2020-11-29 13:33:54', '2021-01-09 19:20:35', '123');
+INSERT INTO `course` VALUES ('000012123', '测试课程01', '这是一门测试课程', 7200, 19.90, '', '1', 'C', 'P', 100, 0, 0, '2020-11-29 13:33:54', '2021-01-09 20:27:35', '123');
+INSERT INTO `course` VALUES ('1343040305078759425', '123123', '123213', 623, 123.00, NULL, '1', 'F', 'P', 123, 123, 0, '2020-12-27 11:45:36', '2021-01-09 19:50:52', '123');
+INSERT INTO `course` VALUES ('1347880545798942721', '123', '123', 0, 123.00, '', '1', 'F', 'D', 123, NULL, 0, '2021-01-09 20:18:59', '2021-01-09 20:19:34', '123');
 
 -- ----------------------------
 -- Table structure for course_category
@@ -156,15 +175,18 @@ CREATE TABLE `course_category`  (
   `id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'id',
   `course_id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '课程|course.id',
   `category_id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分类|category.id',
-  `is_delete` int(1) NULL DEFAULT 0 COMMENT '逻辑删除',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '课程分类' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_course_id`(`course_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '课程分类' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of course_category
 -- ----------------------------
+INSERT INTO `course_category` VALUES ('1347882709493506049', '000012123', '1347882666032128002', '2021-01-09 20:27:35', '2021-01-09 20:27:35');
+INSERT INTO `course_category` VALUES ('1347882709493506050', '000012123', '00000202', '2021-01-09 20:27:35', '2021-01-09 20:27:35');
+INSERT INTO `course_category` VALUES ('1347882709493506051', '000012123', '00000201', '2021-01-09 20:27:35', '2021-01-09 20:27:35');
 
 -- ----------------------------
 -- Table structure for course_content
@@ -177,7 +199,7 @@ CREATE TABLE `course_content`  (
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '课程内容' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '课程内容' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of course_content
@@ -197,7 +219,7 @@ CREATE TABLE `course_content_file`  (
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   `is_delete` int(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '课程内容文件' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '课程内容文件' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of course_content_file
@@ -225,7 +247,7 @@ CREATE TABLE `file`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `path_unique`(`path`) USING BTREE,
   UNIQUE INDEX `key_unique`(`key`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '文件' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of file
@@ -388,7 +410,11 @@ CREATE TABLE `section`  (
 -- ----------------------------
 -- Records of section
 -- ----------------------------
-INSERT INTO `section` VALUES ('00000001', '测试小节01', '00000001', '00000000', '', 500, 'f', 1, '2020-11-29 13:33:54', '2020-11-29 13:33:54', NULL);
+INSERT INTO `section` VALUES ('00000001', '测试小节01', '1343040305078759425', '1343100290047512578', '123', 500, 'C', 1, '2020-11-29 13:33:54', '2020-12-20 13:19:11', '123');
+INSERT INTO `section` VALUES ('1343162641283145730', '123123123', '00000001', '1338468722569986049', '123', 123, 'C', 123, '2020-12-27 19:51:43', '2020-12-27 19:54:13', '123');
+INSERT INTO `section` VALUES ('1343162951296737282', '123', '1343041788956405761', '00000004', '123', 123, 'F', 123, '2020-12-27 19:52:57', '2020-12-27 19:52:57', '123');
+INSERT INTO `section` VALUES ('1343454009268129793', 'asdasda', '00000001', '1338468722569986049', '123123', 100, 'F', 123, '2020-12-28 15:09:31', '2020-12-28 15:09:31', '123');
+INSERT INTO `section` VALUES ('1347740905058082817', '123', '1343040305078759425', '1343094701405794305', '123', 123, 'F', 123, '2021-01-09 11:04:06', '2021-01-09 11:04:06', '123');
 
 -- ----------------------------
 -- Table structure for sms
@@ -445,7 +471,7 @@ CREATE TABLE `user`  (
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `login_name_unique`(`login_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
