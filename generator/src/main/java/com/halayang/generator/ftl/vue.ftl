@@ -5,11 +5,11 @@
                    plain
                    @click="add">添加${moduleName}
         </el-button>
-        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+        <el-dialog :before-close="handleClose" :title="title" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="ruleForm" :model="${domain}Dto">
                 <el-input v-model="${domain}Dto.id" style="display: none"/>
                 <#list fieldList as field>
-                <#if field.nameHump!="id" && field.nameHump!="createTime" && field.nameHump!="editTime">
+                <#if field.nameHump!="id" && field.nameHump!="createTime" && field.nameHump!="editTime" && field.nameHump!="isDelete">
                 <el-form-item label="${field.nameCn}" :label-width="formLabelWidth" prop="${field.nameHump}">
                     <el-input v-model="${domain}Dto.${field.nameHump}" autocomplete="off"/>
                 </el-form-item>
@@ -17,8 +17,7 @@
                 </#list>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
+                <el-button type="primary" @click="saveOrUpdate('ruleForm')">提 交</el-button>
             </div>
         </el-dialog>
         <table id="simple-table" class="table table-bordered table-hover">
@@ -90,7 +89,7 @@
                 ${domain}Dto: {},
                 rules: {
                     <#list fieldList as field>
-                    <#if field.nameHump!="id" && field.nameHump!="createTime" && field.nameHump!="editTime">
+                    <#if field.nameHump!="id" && field.nameHump!="createTime" && field.nameHump!="editTime" && field.nameHump!="isDelete">
                     ${field.nameHump}: [
                         {required: true, message: '请输入${field.nameCn}', trigger: 'blur'},
                     ],
@@ -208,6 +207,13 @@
                 this.currentPage = val;
                 this.list();
             },
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                    })
+                    .catch(_ => {});
+            }
 
         },
     };

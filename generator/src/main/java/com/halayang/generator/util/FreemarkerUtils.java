@@ -55,6 +55,10 @@ public class FreemarkerUtils {
      * @date 2020/12/16 10:28
      */
     public static void generator(String fileName, Map<String, Object> map) throws IOException, TemplateException {
+        File file = new File(fileName);
+        if (!file.getParentFile().exists()){
+            file.getParentFile().mkdirs();
+        }
         FileWriter fw = new FileWriter(fileName);
         BufferedWriter bw = new BufferedWriter(fw);
         temp.process(map, bw);

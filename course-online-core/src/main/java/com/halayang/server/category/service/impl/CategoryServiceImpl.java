@@ -33,10 +33,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryPO>
         ArrayList<CategoryDTO> children;
         CategoryDTO parentDto;
         CategoryDTO childDto;
+        //遍历所有节点找出一级节点
         for (CategoryPO parentPo : list) {
             children = new ArrayList<>();
             parentDto = new CategoryDTO();
             BeanUtils.copyProperties(parentPo, parentDto);
+            //再遍历一遍所有节点找出一级节点的子节点
             for (CategoryPO childPo : list) {
                 //设置子节点
                 if (!StringUtils.isEmpty(childPo.getParent()) &&

@@ -2,16 +2,16 @@ package com.halayang.server.${module}.dto;
 
 import java.io.Serializable;
 <#list typeSet as type>
-<#if type=='Date'>
-import java.util.Date;
+<#if type=='LocalDateTime'>
+import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 </#if>
 <#if type=='BigDecimal'>
 import java.math.BigDecimal;
 </#if>
 </#list>
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -35,7 +35,7 @@ public class ${Domain}DTO implements Serializable {
     /**
     * ${field.comment}
     */
-    <#if field.javaType=='Date'>
+    <#if field.javaType=='LocalDateTime'>
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     </#if>
     @ApiModelProperty(value = "${field.comment}")

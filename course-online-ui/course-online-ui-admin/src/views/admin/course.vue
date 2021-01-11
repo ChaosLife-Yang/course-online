@@ -5,10 +5,10 @@
                    plain
                    @click="add">添加课程
         </el-button>
-        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+        <el-dialog :before-close="handleClose" :title="title" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="ruleForm" :model="courseDto">
                 <el-input v-model="courseDto.id" style="display: none"/>
-                <el-form-item label="分类" :label-width="formLabelWidth" prop="categoryId">
+                <el-form-item label="分类" :label-width="formLabelWidth">
                     <el-tree
                             :data="categoryList"
                             show-checkbox
@@ -24,7 +24,7 @@
                 <el-form-item label="概述" :label-width="formLabelWidth" prop="summary">
                     <el-input v-model="courseDto.summary" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="价格（元）" :label-width="formLabelWidth" prop="price">
+                <el-form-item label="价格/元" :label-width="formLabelWidth" prop="price">
                     <el-input v-model="courseDto.price" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="封面" :label-width="formLabelWidth" prop="image">
@@ -61,19 +61,24 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="讲师" :label-width="formLabelWidth" prop="teacherId">
-                    <el-input v-model="courseDto.teacherId" autocomplete="off"/>
+                    <el-select v-model="courseDto.teacherId" autocomplete="off">
+                        <el-option
+                                v-for="item in teachers"
+                                :key="item.id"
+                                :label="item.nickname"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
+                <el-button type="primary" @click="saveOrUpdate('ruleForm')">提 交</el-button>
             </div>
         </el-dialog>
-        <el-dialog :title="contentTitle + '——' + title" :visible.sync="dialogContentFormVisible">
+        <el-dialog :before-close="handleClose" :title="contentTitle + '——' + title" :visible.sync="dialogContentFormVisible">
             <div slot="footer" class="dialog-footer">
                 <froala :tag="'textarea'" :config="froalaConfig" v-model="courseContentDto.content"></froala>
                 <br/>
-                <el-button @click="dialogContentFormVisible = false">取 消</el-button>
                 <el-button type="primary" @click="addContent">提 交</el-button>
             </div>
         </el-dialog>
@@ -162,12 +167,13 @@
                 contentTitle: "",
                 courseContentDto: {id: "", content: ""},
                 categoryList: [],
+                teachers: [],
                 defaultProps: {
                     children: 'children',
                     label: 'name'
                 },
                 froalaConfig: {
-                    toolbarButtons: ['undo', 'redo', 'clearFormatting', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', '|', 'print', 'spellChecker', 'help', '|', 'fullscreen'],
+                    toolbarButtons: ['undo', 'redo', 'clearFormatting', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', '|',  'html', 'fullscreen', '|','help'],
                     //['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
                     theme: "dark",//主题
                     placeholder: "请填写内容...",
@@ -182,7 +188,7 @@
                     zIndex: 99999,
                     events: {
                         'froalaEditor.initialized': function () {
-                            console.log('initialized')
+                            console.log('froalaEditor initialized')
                         }
                     },
                 },
@@ -326,6 +332,9 @@
             saveOrUpdate(formName) {
                 //添加课程
                 this.$refs[formName].validate((valid) => {
+                    if (Tool.isEmpty(this.$refs.tree.getCheckedKeys())){
+                        this.msg('error', "请选择分类");
+                    }
                     if (valid) {
                         this.$ajax
                             .post(process.env.VUE_APP_SERVER + "/api/service/course/saveOrUpdate", this.courseDto)
@@ -386,7 +395,16 @@
                     .catch(error => {
                         this.msg('error', error);
                     });
-
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/service/teacher/all")
+                    .then((response) => {
+                        let result = response.data;
+                        this.teachers = result.data;
+                        this.total = result.count;
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
             },
             handleSizeChange(val) {
                 this.size = val;
@@ -396,7 +414,13 @@
                 this.currentPage = val;
                 this.list();
             },
-
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                    })
+                    .catch(_ => {});
+            }
         },
     };
 </script>

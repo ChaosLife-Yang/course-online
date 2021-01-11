@@ -1,6 +1,7 @@
 package com.halayang.server.course.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
@@ -64,7 +65,7 @@ public class CourseController {
     public ResponseObject<PageDTO<CourseDTO>> courseList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<CoursePO> pageInfo = new PageInfo<>(courseService.list());
+        PageInfo<CoursePO> pageInfo = new PageInfo<>(courseService.list(new LambdaQueryWrapper<CoursePO>().orderByDesc(CoursePO::getId)));
         List<CoursePO> list = pageInfo.getList();
         List<CourseDTO> dtoList = CopyUtils.copyList(list, CourseDTO.class);
         PageDTO<CourseDTO> page = new PageDTO<CourseDTO>()

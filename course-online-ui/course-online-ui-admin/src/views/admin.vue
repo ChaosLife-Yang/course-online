@@ -340,9 +340,7 @@
                                 <i class="ace-icon fa fa-caret-down"></i>
                             </a>
 
-                            <ul
-                                    class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"
-                            >
+                            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                                 <li>
                                     <a href="#">
                                         <i class="ace-icon fa fa-cog"></i>
@@ -474,6 +472,14 @@
 
                                 <b class="arrow"></b>
                             </li>
+                            <li class="" id="business-teacher-sidebar">
+                                <router-link to="/business/teacher">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    教师管理
+                                </router-link>
+
+                                <b class="arrow"></b>
+                            </li>
 
                         </ul>
                     </li>
@@ -482,12 +488,10 @@
                 <!-- /.nav-list -->
 
                 <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-                    <i
-                            id="sidebar-toggle-icon"
-                            class="ace-icon fa fa-angle-double-right ace-save-state"
-                            data-icon1="ace-icon fa fa-angle-double-left"
-                            data-icon2="ace-icon fa fa-angle-double-right"
-                    ></i>
+                    <i id="sidebar-toggle-icon"
+                       class="ace-icon fa fa-angle-double-right ace-save-state"
+                       data-icon1="ace-icon fa fa-angle-double-left"
+                       data-icon2="ace-icon fa fa-angle-double-right"></i>
                 </div>
             </div>
 
@@ -512,19 +516,17 @@
             <div class="footer">
                 <div class="footer-inner">
                     <div class="footer-content">
-            <span class="bigger-120">
-              <span class="blue bolder">Ace-YUDI</span>
-              在线课程管理控台 &copy; 2020-2021
-            </span>
+                        <span class="bigger-120">
+                          <span class="blue bolder">Ace-YUDI</span>
+                          在线课程管理控台 &copy; 2020-2021
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <a
-                    href="#"
-                    id="btn-scroll-up"
-                    class="btn-scroll-up btn btn-sm btn-inverse"
-            >
+            <a href="#"
+               id="btn-scroll-up"
+               class="btn-scroll-up btn btn-sm btn-inverse">
                 <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
             </a>
         </div>

@@ -143,7 +143,7 @@ public class DbUtil {
                 || sqlType.toUpperCase().contains("text".toUpperCase())) {
             return "String";
         } else if (sqlType.toUpperCase().contains("datetime".toUpperCase())) {
-            return "Date";
+            return "LocalDateTime";
         } else if (sqlType.toUpperCase().contains("int".toUpperCase())) {
             return "Integer";
         } else if (sqlType.toUpperCase().contains("long".toUpperCase())) {

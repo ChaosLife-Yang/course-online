@@ -6,15 +6,14 @@ import filter from './filter/filter'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-// Import and use Vue Froala lib.
-import VueFroala from 'vue-froala-wysiwyg'
 
+import VueFroala from 'vue-froala-wysiwyg'
+// Import and use Vue Froala lib.
 import 'froala-editor/css/froala_editor.pkgd.min.css'
 import 'froala-editor/css/froala_style.min.css'
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/js/languages/zh_cn.js'
 import 'froala-editor/js/plugins.pkgd.min.js'
-
 
 Vue.use(VueFroala);
 

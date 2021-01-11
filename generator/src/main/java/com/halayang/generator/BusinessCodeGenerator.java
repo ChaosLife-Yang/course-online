@@ -119,9 +119,9 @@ public class BusinessCodeGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        dtoGenerator(toDtoPath, "CourseContent", "course", "course_content", "Course");
-        controllerGenerator(toPath, "CourseContent", "course", "courseContent", "课程内容");
-//        vueGenerator(toVuePath,"category","category","分类","category");
+        dtoGenerator(toDtoPath, "Teacher", "teacher", "teacher", "teacher");
+//        controllerGenerator(toPath, "Teacher", "teacher", "teacher", "教师管理");
+//        vueGenerator(toVuePath,"teacher","teacher","教师","teacher");
     }
 
 }

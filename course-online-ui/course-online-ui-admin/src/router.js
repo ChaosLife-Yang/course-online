@@ -7,6 +7,7 @@ import Chapter from "./views/admin/chapter"
 import Course from "./views/admin/course"
 import Section from "./views/admin/section"
 import Category from "./views/admin/category"
+import Teacher from "./views/admin/teacher"
 
 Vue.use(Router);
 
@@ -50,6 +51,11 @@ export default new Router({
                     path: 'business/category',
                     name: 'business/category',
                     component: Category,
+                },{
+                    //子路由不用加斜杠
+                    path: 'business/teacher',
+                    name: 'business/teacher',
+                    component: Teacher,
                 },
             ]
         },
