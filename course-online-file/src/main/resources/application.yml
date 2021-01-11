@@ -1,0 +1,53 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: course-online-file
+  datasource:
+    address: jdbc:mysql://localhost:3306/course-online
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${spring.datasource.address}?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: 1234
+    hikari:
+      connection-timeout: 30000
+      minimum-idle: 5
+      maximum-pool-size: 30
+      idle-timeout: 30000
+      max-lifetime: 120000
+      auto-commit: true
+      connection-test-query: SELECT 1
+
+mybatis-plus:
+  configuration:
+    # 开启缓存
+    cache-enabled: true
+    # 开启懒加载
+    lazy-loading-enabled: true
+    # 开启驼峰命名规则映射
+    map-underscore-to-camel-case: true
+    # 不映射空值的列
+    call-setters-on-nulls: false
+  global-config:
+    db-config:
+      # 逻辑删除插件
+      logic-delete-field: is_delete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath:/mapper/**/*.xml
+  # 别名设置pojo类所处的包路径
+  type-aliases-package: com.halayang.server.*.po
+# pagehelper配置
+pagehelper:
+  helper-dialect: mysql
+  pageSizeZero: true
+  params: count=countSql
+  reasonable: true
+  support-methods-arguments: true
+
+logging:
+  level:
+    com.halayang: debug
+  file:
+    path: ./logs/${spring.application.name}/${spring.application.name}.log

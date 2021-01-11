@@ -53,14 +53,14 @@
                     <div class="text-left">
 
                     <span href="javascript:" class="text-info bigger-110" v-bind:title="teacher.motto">
-                        座右铭：
-                        <h4 class="lighter"> {{teacher.motto}}</h4>
+                        <h4>座右铭：</h4>
+                        <p class="black"> {{teacher.motto}}</p>
                     </span>
                 </div>
                     <div class="text-left">
                     <span href="javascript:" class="text-info bigger-110" v-bind:title="teacher.motto">
-                        简介：
-                        <h4 class="lighter"> {{teacher.intro}}</h4>
+                        <h4>简介：</h4>
+                        <p class="black"> {{teacher.intro}}</p>
                     </span>
                 </div>
 
