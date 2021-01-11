@@ -1,11 +1,11 @@
-package com.halayang.server.section.service.impl;
+package com.halayang.server.course.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.halayang.server.course.mapper.CourseMapper;
-import com.halayang.server.section.po.SectionPO;
-import com.halayang.server.section.mapper.SectionMapper;
-import com.halayang.server.section.service.SectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.halayang.server.course.mapper.CourseMapper;
+import com.halayang.server.course.mapper.SectionMapper;
+import com.halayang.server.course.po.SectionPO;
+import com.halayang.server.course.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
 package com.halayang.server.${module}.controller;
 
-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
@@ -59,7 +59,7 @@ public class ${classNamePrefix}Controller {
     public ResponseObject<PageDTO<${classNamePrefix}DTO>> ${domain}List(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<${classNamePrefix}PO> pageInfo = new PageInfo<>(${domain}Service.list(new LambdaQueryWrapper<${classNamePrefix}PO>().orderByDesc(${classNamePrefix}PO::getId));
+        PageInfo<${classNamePrefix}PO> pageInfo = new PageInfo<>(${domain}Service.list(new LambdaQueryWrapper<${classNamePrefix}PO>().orderByDesc(${classNamePrefix}PO::getId)));
         List<${classNamePrefix}PO> list = pageInfo.getList();
         List<${classNamePrefix}DTO> dtoList = CopyUtils.copyList(list, ${classNamePrefix}DTO.class);
         PageDTO<${classNamePrefix}DTO> page = new PageDTO<${classNamePrefix}DTO>()
@@ -99,10 +99,10 @@ public class ${classNamePrefix}Controller {
      * @date ${time}
      */
     @GetMapping("/delete/{id}")
-    public ResponseObject<String> delete(@PathVariable Long id) {
+    public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = ${domain}Service.removeById(id);
         if (option) {
-            return ResponseResult.success("删除成功");
+            return ResponseResult.success();
         } else {
             return ResponseResult.error();
         }

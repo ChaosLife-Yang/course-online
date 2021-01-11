@@ -150,9 +150,9 @@
                             this.list();
                             let result = response.data;
                             if (result.code === 200) {
-                                this.msg('success', result.data);
-                            } else {
-                                this.msg('error', result.data);
+                                this.msg('success', result.msg);
+                            }else {
+                                this.msg('error', result.msg);
                             }
                         })
                         .catch(error => {

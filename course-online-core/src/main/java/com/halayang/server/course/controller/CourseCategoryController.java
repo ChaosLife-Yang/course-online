@@ -36,7 +36,7 @@ public class CourseCategoryController {
     /**
      * 通过课程id获取分类id列表
      *
-     * @param id 课程分类id
+     * @param id 课程id
      * @return ResponseObject<List < String>>
      * @author YangYudi
      * @date 2020-12-20 15:39:06
@@ -101,7 +101,7 @@ public class CourseCategoryController {
      * @date 2020-12-20 15:39:06
      */
     @GetMapping("/delete/{id}")
-    public ResponseObject<String> delete(@PathVariable Long id) {
+    public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = courseCategoryService.removeById(id);
         if (option) {
             return ResponseResult.success("删除成功");

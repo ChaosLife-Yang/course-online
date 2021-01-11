@@ -46,7 +46,7 @@ public class CodeGenerator {
         gc.setAuthor("YangYuDi");
         gc.setIdType(IdType.ASSIGN_ID);
         gc.setOpen(false);
-        gc.setDateType(DateType.ONLY_DATE);
+        gc.setDateType(DateType.TIME_PACK);
         //实体属性 Swagger2 注解
 //        gc.setSwagger2(true);
         gc.setServiceName("%sService");

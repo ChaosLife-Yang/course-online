@@ -99,7 +99,7 @@ public class CourseController {
      * @date 2020-12-15 16:07:35
      */
     @GetMapping("/delete/{id}")
-    public ResponseObject<String> delete(@PathVariable Long id) {
+    public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = courseService.removeById(id);
         if (option) {
             return ResponseResult.success("删除成功");

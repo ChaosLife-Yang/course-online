@@ -1,4 +1,4 @@
-package com.halayang.server.section.controller;
+package com.halayang.server.course.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -8,10 +8,10 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.section.dto.SectionDTO;
-import com.halayang.server.section.dto.SectionPageDTO;
-import com.halayang.server.section.po.SectionPO;
-import com.halayang.server.section.service.SectionService;
+import com.halayang.server.course.dto.SectionDTO;
+import com.halayang.server.course.dto.SectionPageDTO;
+import com.halayang.server.course.po.SectionPO;
+import com.halayang.server.course.service.SectionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +38,7 @@ public class SectionController {
      * 获取小节对象信息
      *
      * @param id 小节id
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.section.po.SectionPO>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.course.po.SectionPO>
      * @author YangYudi
      * @date 2020-12-20 12:28:51
      */
@@ -54,7 +54,7 @@ public class SectionController {
      * 小节分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.section.po.SectionPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.course.po.SectionPO>>
      * @author YangYudi
      * @date 2020-12-20 12:28:51
      */
@@ -107,7 +107,7 @@ public class SectionController {
      * @date 2020-12-20 12:28:51
      */
     @GetMapping("/delete/{id}")
-    public ResponseObject<String> delete(@PathVariable Long id) {
+    public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = sectionService.removeById(id);
         if (option) {
             return ResponseResult.success("删除成功");

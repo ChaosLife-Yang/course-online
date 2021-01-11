@@ -166,10 +166,10 @@
                         .then((response) => {
                             let result = response.data;
                             if (result.code === 200) {
-                                this.msg('success', result.data);
+                                this.msg('success', result.msg);
                                 this.list();
                             } else {
-                                this.msg('error', result.data);
+                                this.msg('error', result.msg);
                             }
                         })
                         .catch(error => {
@@ -204,7 +204,11 @@
                             .then((response) => {
                                 let result = response.data;
                                 this.categoryDto.id = "";
-                                this.msg('success', result.msg);
+                                if (result.code === 200) {
+                                    this.msg('success', result.msg);
+                                }else {
+                                    this.msg('error', result.msg);
+                                }
                                 this.dialogFormVisible = false;
                                 this.list();
                             })

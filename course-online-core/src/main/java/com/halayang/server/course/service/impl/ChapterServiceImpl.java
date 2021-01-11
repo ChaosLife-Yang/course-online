@@ -1,9 +1,9 @@
-package com.halayang.server.chapter.service.impl;
+package com.halayang.server.course.service.impl;
 
-import com.halayang.server.chapter.po.ChapterPO;
-import com.halayang.server.chapter.mapper.ChapterMapper;
-import com.halayang.server.chapter.service.ChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.halayang.server.course.mapper.ChapterMapper;
+import com.halayang.server.course.po.ChapterPO;
+import com.halayang.server.course.service.ChapterService;
 import org.springframework.stereotype.Service;
 
 /**

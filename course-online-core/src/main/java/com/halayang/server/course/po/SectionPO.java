@@ -1,4 +1,4 @@
-package com.halayang.server.section.po;
+package com.halayang.server.course.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

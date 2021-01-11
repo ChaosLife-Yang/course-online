@@ -1,7 +1,7 @@
-package com.halayang.server.section.mapper;
+package com.halayang.server.course.mapper;
 
-import com.halayang.server.section.po.SectionPO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.halayang.server.course.po.SectionPO;
 
 /**
  * <p>

@@ -1,17 +1,21 @@
 package com.halayang.server.category.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.category.dto.CategoryDTO;
 import com.halayang.server.category.po.CategoryPO;
 import com.halayang.server.category.service.CategoryService;
+import com.halayang.server.course.po.CourseCategoryPO;
+import com.halayang.server.course.service.CourseCategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * <p>
  * 课程分类 前端控制器
@@ -26,6 +30,8 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CourseCategoryService courseCategoryService;
 
     /**
      * 获取课程分类对象信息
@@ -46,7 +52,7 @@ public class CategoryController {
     /**
      * 课程分类查询
      *
-     * @return ResponseObject<List<CategoryDTO>>
+     * @return ResponseObject<List < CategoryDTO>>
      * @author YangYudi
      * @date 2020-12-28 15:22:50
      */
@@ -85,10 +91,12 @@ public class CategoryController {
      * @date 2020-12-28 15:22:50
      */
     @GetMapping("/delete/{id}")
-    public ResponseObject<String> delete(@PathVariable Long id) {
+    public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = categoryService.removeById(id);
+        courseCategoryService.remove(new LambdaQueryWrapper<CourseCategoryPO>()
+                .eq(CourseCategoryPO::getCategoryId, id));
         if (option) {
-            return ResponseResult.success("删除成功");
+            return ResponseResult.success();
         } else {
             return ResponseResult.error();
         }

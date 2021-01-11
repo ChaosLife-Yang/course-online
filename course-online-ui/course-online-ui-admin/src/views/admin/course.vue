@@ -24,9 +24,6 @@
                 <el-form-item label="概述" :label-width="formLabelWidth" prop="summary">
                     <el-input v-model="courseDto.summary" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="时长" :label-width="formLabelWidth" prop="time">
-                    <el-input v-model="courseDto.time" autocomplete="off"/>
-                </el-form-item>
                 <el-form-item label="价格（元）" :label-width="formLabelWidth" prop="price">
                     <el-input v-model="courseDto.price" autocomplete="off"/>
                 </el-form-item>
@@ -63,9 +60,6 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="报名数" :label-width="formLabelWidth" prop="enroll">
-                    <el-input v-model="courseDto.enroll" autocomplete="off"/>
-                </el-form-item>
                 <el-form-item label="讲师" :label-width="formLabelWidth" prop="teacherId">
                     <el-input v-model="courseDto.teacherId" autocomplete="off"/>
                 </el-form-item>
@@ -73,6 +67,13 @@
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog :title="title" :visible.sync="dialogContentFormVisible">
+            <div id="summernote"></div>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogContentFormVisible = false">取 消</el-button>
+                <el-button type="primary" id="content-submit">提 交</el-button>
             </div>
         </el-dialog>
         <div class="row">
@@ -105,6 +106,7 @@
                         <p>{{ course.summary}}</p>
                         <p>
                             <el-button type="primary" @click="toChapter(course)" size="mini" plain>大章</el-button>
+                            <el-button type="primary" @click="editContent(course)" size="mini" plain>内容</el-button>
                             <el-tooltip class="item" effect="dark" content="更新" placement="top">
                                 <el-button @click="get(course.id)"
                                            type="primary"
@@ -147,6 +149,7 @@
                 COURSE_CHARGE: this.$COURSE_CHARGE,
                 COURSE_STATUS: this.$COURSE_STATUS,
                 dialogFormVisible: false,
+                dialogContentFormVisible: false,
                 formLabelWidth: '80px',
                 title: "添加课程",
                 courses: [], //数据显示列表
@@ -179,16 +182,12 @@
                     status: [
                         {required: true, message: '请输入状态', trigger: 'blur'},
                     ],
-                    enroll: [
-                        {required: true, message: '请输入报名数', trigger: 'blur'},
-                    ],
                     teacherId: [
                         {required: true, message: '请输入讲师', trigger: 'blur'},
                     ],
                 },
             }
         },
-
         created() {
             this.list();
         },
@@ -196,6 +195,56 @@
             toChapter(course) {
                 SessionStorage.set(SESSION_KEY_COURSE, course);
                 this.$router.push("/business/chapter");
+            },
+            editContent(course) {
+                this.dialogContentFormVisible = true;
+                this.title = "课程内容";
+
+                $('#summernote').summernote({
+                    lang: 'zh-CN',
+                    placeholder: '请输入课程内容',
+                    tabsize: 2,
+                    focus: true,
+                    htmlMode: true,
+                    height: 300
+                });
+                $('#summernote').summernote('code', '');
+                //查找
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/service/courseContent/" + id)
+                    .then((response) => {
+                        let result = response.data;
+                        if (result.code === 200) {
+                            this.msg('success', result.msg);
+                            $('#summernote').summernote('code', response.data.data.content);
+                        } else {
+                            this.msg('error', result.msg);
+                        }
+
+                    }).catch(error => {
+                    this.msg('error', error);
+                });
+
+                //新增or更新
+                $('#content-submit').click(() => {
+                    this.$ajax
+                        .post(process.env.VUE_APP_SERVER + "/api/service/courseContent/saveOrUpdate",
+                            {
+                                id: course.id,
+                                content: $('#summernote').summernote('code')
+                            })
+                        .then((response) => {
+                            let result = response.data;
+                            if (result.code === 200) {
+                                this.msg('success', result.msg);
+                            } else {
+                                this.msg('error', result.msg);
+                            }
+
+                        }).catch(error => {
+                        this.msg('error', error);
+                    });
+                })
             },
             msg(type, message) {
                 this.$message({
@@ -221,9 +270,9 @@
                             this.list();
                             let result = response.data;
                             if (result.code === 200) {
-                                this.msg('success', result.data);
+                                this.msg('success', result.msg);
                             } else {
-                                this.msg('error', result.data);
+                                this.msg('error', result.msg);
                             }
                         })
                         .catch(error => {
@@ -252,9 +301,9 @@
                     .get(process.env.VUE_APP_SERVER + "/api/service/courseCategory/" + id)
                     .then((response) => {
                         let result = response.data;
-                        if (result.data!=null){
+                        if (result.data != null) {
                             this.$refs.tree.setCheckedKeys(result.data);
-                        }else{
+                        } else {
                             this.$refs.tree.setCheckedKeys([]);
                         }
                     })
@@ -278,7 +327,11 @@
                                         categoryId: this.$refs.tree.getCheckedKeys()
                                     }).then((response2) => {
                                     let result = response2.data;
-                                    this.msg('success', result.msg);
+                                    if (result.code === 200) {
+                                        this.msg('success', result.msg);
+                                    } else {
+                                        this.msg('error', result.msg);
+                                    }
                                     this.courseDto.id = "";
                                     this.dialogFormVisible = false;
                                     this.list();

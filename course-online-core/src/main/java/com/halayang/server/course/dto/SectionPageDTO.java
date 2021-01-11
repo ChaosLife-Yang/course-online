@@ -1,6 +1,6 @@
-package com.halayang.server.chapter.dto;
+package com.halayang.server.course.dto;
 
-import com.halayang.server.chapter.po.ChapterPO;
+import com.halayang.server.course.po.SectionPO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,22 +17,28 @@ import java.util.List;
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
- * YangYuDi               2020/12/27 15:24           1.0
+ * YangYuDi               2020/12/27 19:45           1.0
  * @program course-online
  * @description
- * @create 2020/12/27 15:24
+ * @create 2020/12/27 19:45
  */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChapterPageDTO {
+public class SectionPageDTO {
 
     /**
      * 课程id
      */
     @NotBlank(message = "课程不为空")
     private String courseId;
+
+    /**
+     * 大章id
+     */
+    @NotBlank(message = "课程大章不为空")
+    private String chapterId;
 
     /**
      * 当前页
@@ -55,5 +61,5 @@ public class ChapterPageDTO {
     /**
      * 数据
      */
-    private List<ChapterPO> list;
+    private List<SectionPO> list;
 }

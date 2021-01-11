@@ -1,7 +1,7 @@
 package com.halayang.server.category.mapper;
 
-import com.halayang.server.category.po.CategoryPO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.halayang.server.category.po.CategoryPO;
 
 /**
  * <p>

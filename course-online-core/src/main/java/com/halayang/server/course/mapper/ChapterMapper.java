@@ -1,7 +1,7 @@
-package com.halayang.server.chapter.mapper;
+package com.halayang.server.course.mapper;
 
-import com.halayang.server.chapter.po.ChapterPO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.halayang.server.course.po.ChapterPO;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package com.halayang.server.chapter.controller;
+package com.halayang.server.course.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -8,10 +8,10 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.chapter.dto.ChapterDTO;
-import com.halayang.server.chapter.dto.ChapterPageDTO;
-import com.halayang.server.chapter.po.ChapterPO;
-import com.halayang.server.chapter.service.ChapterService;
+import com.halayang.server.course.dto.ChapterDTO;
+import com.halayang.server.course.dto.ChapterPageDTO;
+import com.halayang.server.course.po.ChapterPO;
+import com.halayang.server.course.service.ChapterService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +37,7 @@ public class ChapterController {
      * 获取大章对象信息
      *
      * @param id 大章id
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.chapter.po.ChapterPO>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.course.po.ChapterPO>
      * @author YangYudi
      * @date 2020-12-20 12:34:23
      */
@@ -53,7 +53,7 @@ public class ChapterController {
      * 大章分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.chapter.po.ChapterPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.course.po.ChapterPO>>
      * @author YangYudi
      * @date 2020-12-20 12:34:23
      */
@@ -103,7 +103,7 @@ public class ChapterController {
      * @date 2020-12-20 12:34:23
      */
     @GetMapping("/delete/{id}")
-    public ResponseObject<String> delete(@PathVariable Long id) {
+    public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = chapterService.removeById(id);
         if (option) {
             return ResponseResult.success("删除成功");

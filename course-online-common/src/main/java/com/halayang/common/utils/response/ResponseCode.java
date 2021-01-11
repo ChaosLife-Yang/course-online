@@ -45,7 +45,7 @@ public enum ResponseCode {
     private final Integer code;
     private final String message;
 
-    private ResponseCode(Integer code, String message) {
+    ResponseCode(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

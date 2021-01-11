@@ -1,7 +1,7 @@
-package com.halayang.server.section.service;
+package com.halayang.server.course.service;
 
-import com.halayang.server.section.po.SectionPO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.halayang.server.course.po.SectionPO;
 
 /**
  * <p>
