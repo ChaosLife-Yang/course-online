@@ -6,7 +6,17 @@ import filter from './filter/filter'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+// Import and use Vue Froala lib.
+import VueFroala from 'vue-froala-wysiwyg'
 
+import 'froala-editor/css/froala_editor.pkgd.min.css'
+import 'froala-editor/css/froala_style.min.css'
+import 'froala-editor/js/froala_editor.pkgd.min.js'
+import 'froala-editor/js/languages/zh_cn.js'
+import 'froala-editor/js/plugins.pkgd.min.js'
+
+
+Vue.use(VueFroala);
 
 Vue.use(ElementUI);
 Vue.prototype.$ajax = axios;
@@ -21,12 +31,14 @@ axios.interceptors.request.use(function (config) {
     console.log("请求：", config);
     return config;
 }, error => {
+    console.log(error);
 });
 
 axios.interceptors.response.use(function (response) {
     console.log("返回结果：", response);
     return response;
 }, error => {
+    console.log(error);
 });
 
 // 全局过滤器

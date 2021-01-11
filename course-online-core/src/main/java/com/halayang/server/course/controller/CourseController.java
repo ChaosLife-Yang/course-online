@@ -9,6 +9,7 @@ import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.course.dto.CourseDTO;
 import com.halayang.server.course.po.CoursePO;
+import com.halayang.server.course.service.CourseContentService;
 import com.halayang.server.course.service.CourseService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private CourseContentService courseContentService;
 
     /**
      * 获取课程对象信息
@@ -101,6 +105,7 @@ public class CourseController {
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = courseService.removeById(id);
+        courseContentService.removeById(id);
         if (option) {
             return ResponseResult.success("删除成功");
         } else {

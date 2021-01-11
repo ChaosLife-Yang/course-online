@@ -69,11 +69,12 @@
                 <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
             </div>
         </el-dialog>
-        <el-dialog :title="title" :visible.sync="dialogContentFormVisible">
-            <div id="summernote"></div>
+        <el-dialog :title="contentTitle + '——' + title" :visible.sync="dialogContentFormVisible">
             <div slot="footer" class="dialog-footer">
+                <froala :tag="'textarea'" :config="froalaConfig" v-model="courseContentDto.content"></froala>
+                <br/>
                 <el-button @click="dialogContentFormVisible = false">取 消</el-button>
-                <el-button type="primary" id="content-submit">提 交</el-button>
+                <el-button type="primary" @click="addContent">提 交</el-button>
             </div>
         </el-dialog>
         <div class="row">
@@ -131,7 +132,7 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage"
-                    :page-sizes="[5,10, 20, 50, 100]"
+                    :page-sizes="[8, 16, 24, 56, 104]"
                     :page-size="size"
                     :page-count="7"
                     layout="total, sizes, prev, pager, next, jumper"
@@ -158,10 +159,32 @@
                 size: 10,
                 courseDto: {},
                 courseCategoryDto: {},
+                contentTitle: "",
+                courseContentDto: {id: "", content: ""},
                 categoryList: [],
                 defaultProps: {
                     children: 'children',
                     label: 'name'
+                },
+                froalaConfig: {
+                    toolbarButtons: ['undo', 'redo', 'clearFormatting', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', '|', 'print', 'spellChecker', 'help', '|', 'fullscreen'],
+                    //['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
+                    theme: "dark",//主题
+                    placeholder: "请填写内容...",
+                    language: "zh_cn",//国际化
+                    imageUploadURL: "http://i.froala.com/upload",//上传url
+                    fileUploadURL: "http://i.froala.com/upload",//上传url 更多上传介绍 请访问https://www.froala.com/wysiwyg-editor/docs/options
+                    quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],//快速插入项
+                    // toolbarVisibleWithoutSelection: true,//是否开启 不选中模式
+                    // disableRightClick: true,//是否屏蔽右击
+                    colorsHEXInput: false,//关闭16进制色值
+                    toolbarSticky: true,//操作栏是否自动吸顶
+                    zIndex: 99999,
+                    events: {
+                        'froalaEditor.initialized': function () {
+                            console.log('initialized')
+                        }
+                    },
                 },
                 rules: {
                     name: [
@@ -197,54 +220,41 @@
                 this.$router.push("/business/chapter");
             },
             editContent(course) {
+                this.title = "课程内容介绍";
                 this.dialogContentFormVisible = true;
-                this.title = "课程内容";
-
-                $('#summernote').summernote({
-                    lang: 'zh-CN',
-                    placeholder: '请输入课程内容',
-                    tabsize: 2,
-                    focus: true,
-                    htmlMode: true,
-                    height: 300
-                });
-                $('#summernote').summernote('code', '');
-                //查找
+                this.courseContentDto.id = course.id;
+                this.contentTitle = course.name;
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/courseContent/" + id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/courseContent/" + course.id)
+                    .then((response) => {
+                        let result = response.data;
+                        if (result.data != null) {
+                            this.courseContentDto.content = result.data.content;
+                        } else {
+                            this.courseContentDto.content = "";
+                        }
+                        if (result.code !== 200) {
+                            this.msg('error', result.msg);
+                        }
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
+            },
+            addContent() {
+                this.$ajax
+                    .post(process.env.VUE_APP_SERVER + "/api/service/courseContent/saveOrUpdate", this.courseContentDto)
                     .then((response) => {
                         let result = response.data;
                         if (result.code === 200) {
                             this.msg('success', result.msg);
-                            $('#summernote').summernote('code', response.data.data.content);
                         } else {
                             this.msg('error', result.msg);
                         }
-
-                    }).catch(error => {
-                    this.msg('error', error);
-                });
-
-                //新增or更新
-                $('#content-submit').click(() => {
-                    this.$ajax
-                        .post(process.env.VUE_APP_SERVER + "/api/service/courseContent/saveOrUpdate",
-                            {
-                                id: course.id,
-                                content: $('#summernote').summernote('code')
-                            })
-                        .then((response) => {
-                            let result = response.data;
-                            if (result.code === 200) {
-                                this.msg('success', result.msg);
-                            } else {
-                                this.msg('error', result.msg);
-                            }
-
-                        }).catch(error => {
+                    })
+                    .catch(error => {
                         this.msg('error', error);
                     });
-                })
             },
             msg(type, message) {
                 this.$message({
@@ -254,6 +264,7 @@
                 });
             },
             add() {
+                this.title = "添加课程";
                 this.dialogFormVisible = true;
                 this.courseDto = {};
                 this.$refs.tree.setCheckedKeys([]);

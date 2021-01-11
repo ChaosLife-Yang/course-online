@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * <p>
  * 课程内容 前端控制器
@@ -42,8 +43,11 @@ public class CourseContentController {
     @GetMapping("/{id}")
     public ResponseObject<CourseContentDTO> getOne(@PathVariable String id) {
         CourseContentPO po = courseContentService.getById(id);
-        CourseContentDTO courseContentDTO = new CourseContentDTO();
-        BeanUtils.copyProperties(po, courseContentDTO);
+        CourseContentDTO courseContentDTO = null;
+        if (po != null) {
+            courseContentDTO = new CourseContentDTO();
+            BeanUtils.copyProperties(po, courseContentDTO);
+        }
         return ResponseResult.success(courseContentDTO);
     }
 
@@ -51,7 +55,7 @@ public class CourseContentController {
      * 课程内容分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.courseContent.po.CourseContentPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.courseContent.po.CourseContentPO>>
      * @author YangYudi
      * @date 2021-01-09 21:59:29
      */
