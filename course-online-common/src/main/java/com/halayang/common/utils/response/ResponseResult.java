@@ -19,7 +19,7 @@ public class ResponseResult {
     }
 
     public static <T> ResponseObject<T> error() {
-        return (new ResponseObject<T>(ResponseCode.REQUEST_ERROR)).count(0L).msg(ResponseCode.REQUEST_ERROR.message());
+        return (new ResponseObject<>(ResponseCode.REQUEST_ERROR));
     }
 
     public static <T> ResponseObject<T> error(ResponseCode responseCode) {
