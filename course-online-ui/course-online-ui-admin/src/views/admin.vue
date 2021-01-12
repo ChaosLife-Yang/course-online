@@ -32,10 +32,7 @@
                                 <i class="ace-icon fa fa-tasks"></i>
                                 <span class="badge badge-grey">4</span>
                             </a>
-
-                            <ul
-                                    class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close"
-                            >
+                            <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
                                 <li class="dropdown-header">
                                     <i class="ace-icon fa fa-check"></i>
                                     4 Tasks to complete
@@ -123,9 +120,7 @@
                                 <span class="badge badge-important">8</span>
                             </a>
 
-                            <ul
-                                    class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close"
-                            >
+                            <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
                                 <li class="dropdown-header">
                                     <i class="ace-icon fa fa-exclamation-triangle"></i>
                                     8 Notifications
@@ -137,9 +132,7 @@
                                             <a href="#">
                                                 <div class="clearfix">
                           <span class="pull-left">
-                            <i
-                                    class="btn btn-xs no-hover btn-pink fa fa-comment"
-                            ></i>
+                            <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
                             New Comments
                           </span>
                                                     <span class="pull-right badge badge-info">+12</span>
@@ -416,37 +409,6 @@
 
                     <li class="">
                         <a href="javascript:" class="dropdown-toggle">
-                            <i class="menu-icon fa fa-list"></i>
-                            <span class="menu-text"> 系统管理 </span>
-
-                            <b class="arrow fa fa-angle-down"></b>
-                        </a>
-
-                        <b class="arrow"></b>
-
-                        <ul class="submenu">
-                            <li class="">
-                                <a href="tables.html">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    用户管理
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-
-                            <li class="">
-                                <a href="jqgrid.html">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    权限管理
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="">
-                        <a href="javascript:" class="dropdown-toggle">
                             <i class="menu-icon fa fa-pencil-square-o"></i>
                             <span class="menu-text"> 业务管理 </span>
 
@@ -483,7 +445,65 @@
 
                         </ul>
                     </li>
+                    <li class="">
+                        <a href="javascript:" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-list"></i>
+                            <span class="menu-text"> 权限管理 </span>
 
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="tables.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    用户管理
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="tables.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    角色管理
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="jqgrid.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    资源管理
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="javascript:" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-file-o"></i>
+                            <span class="menu-text"> 系统管理 </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="tables.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    文件管理
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- /.nav-list -->
 

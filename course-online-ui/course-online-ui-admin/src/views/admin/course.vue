@@ -28,7 +28,16 @@
                     <el-input v-model="courseDto.price" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="封面" :label-width="formLabelWidth" prop="image">
-                    <el-input v-model="courseDto.image" autocomplete="off"/>
+                    <el-upload
+                            id="el-up"
+                            class="avatar-uploader"
+                            :action="gateway+'/api/file/upload'"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
                 </el-form-item>
                 <el-form-item label="收费" :label-width="formLabelWidth" prop="charge">
                     <el-select v-model="courseDto.charge" placeholder="请选择">
@@ -75,7 +84,8 @@
                 <el-button type="primary" @click="saveOrUpdate('ruleForm')">提 交</el-button>
             </div>
         </el-dialog>
-        <el-dialog :before-close="handleClose" :title="contentTitle + '——' + title" :visible.sync="dialogContentFormVisible">
+        <el-dialog :before-close="handleClose" :title="contentTitle + '——' + title"
+                   :visible.sync="dialogContentFormVisible">
             <div slot="footer" class="dialog-footer">
                 <froala :tag="'textarea'" :config="froalaConfig" v-model="courseContentDto.content"></froala>
                 <br/>
@@ -151,6 +161,8 @@
         name: "course",
         data() {
             return {
+                gateway: process.env.VUE_APP_SERVER,
+                imageUrl: '',
                 COURSE_LEVEL: this.$COURSE_LEVEL,
                 COURSE_CHARGE: this.$COURSE_CHARGE,
                 COURSE_STATUS: this.$COURSE_STATUS,
@@ -173,13 +185,13 @@
                     label: 'name'
                 },
                 froalaConfig: {
-                    toolbarButtons: ['undo', 'redo', 'clearFormatting', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', '|',  'html', 'fullscreen', '|','help'],
+                    toolbarButtons: ['undo', 'redo', 'clearFormatting', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertFile', 'insertTable', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'html', 'fullscreen', 'help'],
                     //['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
                     theme: "dark",//主题
                     placeholder: "请填写内容...",
                     language: "zh_cn",//国际化
-                    imageUploadURL: "http://i.froala.com/upload",//上传url
-                    fileUploadURL: "http://i.froala.com/upload",//上传url 更多上传介绍 请访问https://www.froala.com/wysiwyg-editor/docs/options
+                    imageUploadURL: process.env.VUE_APP_SERVER + "/api/file/contentUpload",//上传url
+                    fileUploadURL:  process.env.VUE_APP_SERVER + "/api/file/contentUpload",//上传url 更多上传介绍 请访问https://www.froala.com/wysiwyg-editor/docs/options
                     quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],//快速插入项
                     // toolbarVisibleWithoutSelection: true,//是否开启 不选中模式
                     // disableRightClick: true,//是否屏蔽右击
@@ -273,6 +285,7 @@
                 this.title = "添加课程";
                 this.dialogFormVisible = true;
                 this.courseDto = {};
+                this.imageUrl = "";
                 this.$refs.tree.setCheckedKeys([]);
             },
             remove(id) {
@@ -310,6 +323,11 @@
                     .then((response) => {
                         let result = response.data;
                         this.courseDto = result.data;
+                        if (this.courseDto.image != null) {
+                            this.imageUrl = this.courseDto.image;
+                        } else {
+                            this.imageUrl = "";
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -332,7 +350,7 @@
             saveOrUpdate(formName) {
                 //添加课程
                 this.$refs[formName].validate((valid) => {
-                    if (Tool.isEmpty(this.$refs.tree.getCheckedKeys())){
+                    if (Tool.isEmpty(this.$refs.tree.getCheckedKeys())) {
                         this.msg('error', "请选择分类");
                     }
                     if (valid) {
@@ -419,7 +437,24 @@
                     .then(_ => {
                         done();
                     })
-                    .catch(_ => {});
+                    .catch(_ => {
+                    });
+            },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = file.response;
+                this.courseDto.image = file.response;
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
             }
         },
     };
@@ -430,5 +465,4 @@
         width: 80% !important;
         margin: 0 5px !important;
     }
-
 </style>

@@ -1,13 +1,13 @@
-package com.halayang.server.category.controller;
+package com.halayang.server.course.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.category.dto.CategoryDTO;
-import com.halayang.server.category.po.CategoryPO;
-import com.halayang.server.category.service.CategoryService;
+import com.halayang.server.course.dto.CategoryDTO;
+import com.halayang.server.course.po.CategoryPO;
 import com.halayang.server.course.po.CourseCategoryPO;
+import com.halayang.server.course.service.CategoryService;
 import com.halayang.server.course.service.CourseCategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class CategoryController {
      * 获取课程分类对象信息
      *
      * @param id 课程分类id
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.category.po.CategoryPO>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.server.course.po.CategoryPO>
      * @author YangYudi
      * @date 2020-12-28 15:22:50
      */

@@ -15,7 +15,16 @@
                     <el-input v-model="teacherDto.nickname" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="头像" :label-width="formLabelWidth" prop="image">
-                    <el-input v-model="teacherDto.image" autocomplete="off"/>
+                    <el-upload
+                            id="el-up"
+                            class="avatar-uploader"
+                            :action="gateway+'/api/file/upload'"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
                 </el-form-item>
                 <el-form-item label="职位" :label-width="formLabelWidth" prop="position">
                     <el-input v-model="teacherDto.position" autocomplete="off"/>
@@ -35,51 +44,42 @@
             <div v-for="teacher in teachers" class="col-md-3 col-sm-6">
                 <div class="thumbnail search-thumbnail">
                     <span class="profile-picture">
-                      <img v-show="!teacher.image" class="editable img-responsive editable-click editable-empty" src="@/assets/讲师默认头像.jpg" v-bind:title="teacher.intro"/>
-                      <img v-show="teacher.image" class="editable img-responsive editable-click editable-empty" v-bind:src="teacher.image" v-bind:title="teacher.intro"/>
+                      <img v-show="!teacher.image" class="editable img-responsive editable-click editable-empty"
+                           src="@/assets/讲师默认头像.jpg" v-bind:title="teacher.intro"/>
+                      <img v-show="teacher.image" class="editable img-responsive editable-click editable-empty"
+                           v-bind:src="teacher.image" v-bind:title="teacher.intro"/>
                     </span>
                     <div class="space-4"></div>
-                    <span href="javascript:" class="label label-primary arrowed-in-right label-lg" data-toggle="dropdown">
+                    <span href="javascript:" class="label label-primary arrowed-in-right label-lg"
+                          data-toggle="dropdown">
                         <span class="white">{{teacher.position}}</span>
                     </span>
 
-                <div class="space-6"></div>
+                    <div class="space-6"></div>
 
-                <div class="text-center">
+                    <div class="text-center">
                     <span href="javascript:" class="text-info bigger-110" v-bind:title="teacher.motto">
-                        <h4 class="lighter"> {{teacher.nickname}}【{{teacher.name}}】</h4>
+                        <h4 class="lighter"> <i
+                                class="el-icon-user-solid"></i>{{teacher.nickname}}【{{teacher.name}}】</h4>
                     </span>
-                </div>
-                    <div class="text-left">
+                    </div>
 
-                    <span href="javascript:" class="text-info bigger-110" v-bind:title="teacher.motto">
-                        <h4>座右铭：</h4>
-                        <p class="black"> {{teacher.motto}}</p>
-                    </span>
-                </div>
-                    <div class="text-left">
-                    <span href="javascript:" class="text-info bigger-110" v-bind:title="teacher.motto">
-                        <h4>简介：</h4>
-                        <p class="black"> {{teacher.intro}}</p>
-                    </span>
-                </div>
+                    <div class="space-6"></div>
 
-                <div class="space-6"></div>
-
-                <div class="profile-social-links align-center">
-                    <el-tooltip class="item" effect="dark" content="更新" placement="top">
-                        <el-button @click="get(teacher.id)"
-                                   type="primary"
-                                   icon="el-icon-edit"
-                                   size="mini"/>
-                    </el-tooltip>
-                    <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                        <el-button @click="remove(teacher.id)"
-                                   type="danger"
-                                   icon="el-icon-delete"
-                                   size="mini"/>
-                    </el-tooltip>
-                </div>
+                    <div class="profile-social-links align-center">
+                        <el-tooltip class="item" effect="dark" content="更新" placement="top">
+                            <el-button @click="get(teacher.id)"
+                                       type="primary"
+                                       icon="el-icon-edit"
+                                       size="mini"/>
+                        </el-tooltip>
+                        <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                            <el-button @click="remove(teacher.id)"
+                                       type="danger"
+                                       icon="el-icon-delete"
+                                       size="mini"/>
+                        </el-tooltip>
+                    </div>
 
                 </div>
             </div>
@@ -104,6 +104,7 @@
         name: "teacher",
         data() {
             return {
+                gateway: process.env.VUE_APP_SERVER,
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
                 title: "添加教师",
@@ -111,6 +112,7 @@
                 total: 0,
                 currentPage: 1,
                 size: 10,
+                imageUrl: '',
                 teacherDto: {},
                 rules: {
                     name: [
@@ -146,6 +148,7 @@
             add() {
                 this.dialogFormVisible = true;
                 this.teacherDto = {};
+                this.imageUrl = "";
             },
             remove(id) {
                 this.$confirm('此操作将删除该教师, 是否继续?', '提示', {
@@ -160,7 +163,7 @@
                             let result = response.data;
                             if (result.code === 200) {
                                 this.msg('success', result.msg);
-                            }else {
+                            } else {
                                 this.msg('error', result.msg);
                             }
                         })
@@ -182,6 +185,11 @@
                     .then((response) => {
                         let result = response.data;
                         this.teacherDto = result.data;
+                        if (this.teacherDto.image != null) {
+                            this.imageUrl = this.teacherDto.image;
+                        } else {
+                            this.imageUrl = "";
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -200,7 +208,7 @@
                                     this.msg('success', result.msg);
                                     this.dialogFormVisible = false;
                                     this.list();
-                                }else {
+                                } else {
                                     this.msg('error', result.msg);
                                     this.dialogFormVisible = true;
                                 }
@@ -246,17 +254,66 @@
                     .then(_ => {
                         done();
                     })
-                    .catch(_ => {});
-            }
+                    .catch(_ => {
+                    });
+            },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = file.response;
+                this.teacherDto.image = this.imageUrl;
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+                const isLt2M = file.size / 1024 / 1024 < 2;
 
-        },
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            }
+        }
+
     };
 </script>
 
-<style scoped>
+<style>
     .el-input {
         width: 80% !important;
         margin: 0 5px !important;
     }
 
+    #el-up input {
+        display: none !important;
+    }
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 103px;
+        line-height: 178px;
+        text-align: center;
+        display: block;
+        margin-top: 75px;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 </style>

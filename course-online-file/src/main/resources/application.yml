@@ -18,6 +18,10 @@ spring:
       max-lifetime: 120000
       auto-commit: true
       connection-test-query: SELECT 1
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 mybatis-plus:
   configuration:
@@ -51,3 +55,10 @@ logging:
     com.halayang: debug
   file:
     path: ./logs/${spring.application.name}/${spring.application.name}.log
+
+file:
+  upload:
+    # 文件保存到磁盘的地址
+    path: D:/file/
+    # 用于页面展示的地址父路径
+    show: http://localhost:9000/api/file/show/

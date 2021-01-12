@@ -1,8 +1,8 @@
-package com.halayang.server.category.service;
+package com.halayang.server.course.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.halayang.server.category.dto.CategoryDTO;
-import com.halayang.server.category.po.CategoryPO;
+import com.halayang.server.course.dto.CategoryDTO;
+import com.halayang.server.course.po.CategoryPO;
 
 import java.util.List;
 

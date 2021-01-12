@@ -17,7 +17,7 @@ spring:
           enabled: true
       # 路由匹配规则
       routes:
-        # 设置路由id
+        # 设置路由id 核心服务
         - id: course-online-core
           # 设置路由uri lb://nacos中注册的服务名
           uri: lb://${spring.cloud.gateway.routes[0].id}
@@ -27,7 +27,7 @@ spring:
           # 路由重写
           filters:
             - RewritePath=/api/service(?<segment>/?.*),$\{segment}
-        # 设置路由id
+        # 设置路由id 文件服务
         - id: course-online-file
           # 设置路由uri lb://nacos中注册的服务名
           uri: lb://${spring.cloud.gateway.routes[1].id}
