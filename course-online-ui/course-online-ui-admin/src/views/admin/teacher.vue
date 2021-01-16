@@ -18,7 +18,7 @@
                     <el-upload
                             id="el-up"
                             class="avatar-uploader"
-                            :action="gateway+'/api/file/upload'"
+                            :action="gateway+'/api/file/local/uploadTeacherFile'"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">

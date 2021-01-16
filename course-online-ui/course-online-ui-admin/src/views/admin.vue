@@ -495,10 +495,10 @@
 
                         <ul class="submenu">
                             <li class="">
-                                <a href="tables.html">
+                                <router-link to="/system/file">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     文件管理
-                                </a>
+                                </router-link>
 
                                 <b class="arrow"></b>
                             </li>

@@ -121,7 +121,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.$ajax
-                        .get(process.env.VUE_APP_SERVER + "/api/service/${domain}/delete/" + id)
+                        .get(process.env.VUE_APP_SERVER + "${gateway}/${domain}/delete/" + id)
                         .then((response) => {
                             this.list();
                             let result = response.data;
@@ -145,7 +145,7 @@
                 this.dialogFormVisible = true;
                 //获取要更新的对象
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/${domain}/" + id)
+                    .get(process.env.VUE_APP_SERVER + "${gateway}/${domain}/" + id)
                     .then((response) => {
                         let result = response.data;
                         this.${domain}Dto = result.data;
@@ -159,7 +159,7 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$ajax
-                            .post(process.env.VUE_APP_SERVER + "/api/service/${domain}/saveOrUpdate", this.${domain}Dto)
+                            .post(process.env.VUE_APP_SERVER + "${gateway}/${domain}/saveOrUpdate", this.${domain}Dto)
                             .then((response) => {
                                 let result = response.data;
                                 this.${domain}Dto.id = "";
@@ -185,7 +185,7 @@
             //分页
             list() {
                 this.$ajax
-                    .post(process.env.VUE_APP_SERVER + "/api/service/${domain}/list", {
+                    .post(process.env.VUE_APP_SERVER + "${gateway}/${domain}/list", {
                         page: this.currentPage,
                         size: this.size
                     })

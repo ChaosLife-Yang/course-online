@@ -19,8 +19,6 @@ Vue.use(VueFroala);
 
 Vue.use(ElementUI);
 Vue.prototype.$ajax = axios;
-Vue.prototype.$charge = [{key: "C", value: "收费"}, {key: "F", value: "免费"}];
-
 Vue.config.productionTip = false;
 
 /**

@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class BusinessCodeGenerator {
 
-    private static String toPath = "course-online-core/src/main/java/com/halayang/server/";
+    private static String toPath = "course-online-file/src/main/java/com/halayang/server/";
 
     /**
      * controller代码生成器
@@ -48,7 +48,7 @@ public class BusinessCodeGenerator {
         FreemarkerUtils.generator(toPath + classNamePrefix + "Controller.java", map);
     }
 
-    private static String toDtoPath = "course-online-core/src/main/java/com/halayang/server/";
+    private static String toDtoPath = "course-online-file/src/main/java/com/halayang/server/";
 
     /**
      * dto代码生成器
@@ -100,6 +100,7 @@ public class BusinessCodeGenerator {
      * vue页面生成器
      *
      * @param toPath     vue路径
+     * @param gateway    网关前缀
      * @param domain     实体名
      * @param tableName  表名
      * @param moduleName 模块中文名
@@ -108,20 +109,21 @@ public class BusinessCodeGenerator {
      * @author YangYudi
      * @date 2020/12/28 15:23
      */
-    public static void vueGenerator(String toPath, String domain, String tableName, String moduleName, String prefix) throws Exception {
+    public static void vueGenerator(String toPath, String gateway, String domain, String tableName, String moduleName, String prefix) throws Exception {
         FreemarkerUtils.initConfig("vue.ftl");
         List<Field> fields = DbUtil.getColumnByTableName(tableName);
         Map<String, Object> map = new HashMap<>(4);
         map.put("moduleName", moduleName);
         map.put("fieldList", fields);
+        map.put("gateway", gateway);
         map.put("domain", domain);
         FreemarkerUtils.generator(toPath + prefix + ".vue", map);
     }
 
     public static void main(String[] args) throws Exception {
-        dtoGenerator(toDtoPath, "Teacher", "teacher", "teacher", "teacher");
-//        controllerGenerator(toPath, "Teacher", "teacher", "teacher", "教师管理");
-//        vueGenerator(toVuePath,"teacher","teacher","教师","teacher");
+//        dtoGenerator(toDtoPath, "File", "file", "file", "file");
+        controllerGenerator(toPath, "File", "file", "file", "文件管理");
+        vueGenerator(toVuePath, "/api/file", "file", "file", "文件", "file");
     }
 
 }
