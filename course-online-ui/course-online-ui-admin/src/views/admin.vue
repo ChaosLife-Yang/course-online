@@ -198,7 +198,7 @@
                                     <ul class="dropdown-menu dropdown-navbar">
                                         <li>
                                             <a href="#" class="clearfix">
-                                                <img src="../../public/ace/assets/images/avatars/avatar.png"
+                                                <img :src="baseUrl+'ace/assets/images/avatars/avatar.png'"
                                                      class="msg-photo"
                                                      alt="Alex's Avatar"/>
                                                 <span class="msg-body">
@@ -217,7 +217,7 @@
 
                                         <li>
                                             <a href="#" class="clearfix">
-                                                <img src="../../public/ace/assets/images/avatars/avatar3.png"
+                                                <img :src="baseUrl+'ace/assets/images/avatars/avatar3.png'"
                                                      class="msg-photo"
                                                      alt="Susan's Avatar"/>
                                                 <span class="msg-body">
@@ -236,7 +236,7 @@
 
                                         <li>
                                             <a href="#" class="clearfix">
-                                                <img src="../../public/ace/assets/images/avatars/avatar4.png"
+                                                <img :src="baseUrl+'ace/assets/images/avatars/avatar4.png'"
                                                      class="msg-photo"
                                                      alt="Bob's Avatar"/>
                                                 <span class="msg-body">
@@ -255,7 +255,7 @@
 
                                         <li>
                                             <a href="#" class="clearfix">
-                                                <img src="../../public/ace/assets/images/avatars/avatar2.png"
+                                                <img :src="baseUrl+'ace/assets/images/avatars/avatar2.png'"
                                                      class="msg-photo"
                                                      alt="Kate's Avatar"/>
                                                 <span class="msg-body">
@@ -274,7 +274,7 @@
 
                                         <li>
                                             <a href="#" class="clearfix">
-                                                <img src="../../public/ace/assets/images/avatars/avatar5.png"
+                                                <img :src="baseUrl+'ace/assets/images/avatars/avatar5.png'"
                                                      class="msg-photo"
                                                      alt="Fred's Avatar"/>
                                                 <span class="msg-body">
@@ -305,7 +305,7 @@
                         <li class="light-blue dropdown-modal">
                             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                                 <img class="nav-user-photo"
-                                     src="../../public/ace/../../public/ace/assets/images/avatars/user.jpg"
+                                     :src="baseUrl+'ace/assets/images/avatars/user.jpg'"
                                      alt="Jason's Photo"/>
                                 <span class="user-info">
                                   <small>Welcome,</small>
@@ -540,6 +540,11 @@
 
     export default {
         name: "admin",
+        data(){
+            return {
+                baseUrl : process.env.BASE_URL
+            }
+        },
         mounted() {
             let _this = this;
             $("body").removeClass("login-layout blur-login");
