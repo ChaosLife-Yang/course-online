@@ -31,6 +31,8 @@ public class ChapterPO implements Serializable {
 
     private String name;
 
+    private Integer sort;
+
     @TableLogic
     private Integer isDelete;
 

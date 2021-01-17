@@ -10,6 +10,7 @@ import Category from "./views/admin/category"
 import Teacher from "./views/admin/teacher"
 import File from "./views/admin/file"
 import User from "./views/admin/user"
+import Test from "./views/test"
 
 Vue.use(Router);
 
@@ -22,6 +23,9 @@ export default new Router({
         }, {
             path: "/login",
             component: Login,
+        }, {
+            path: "/test",
+            component: Test,
         }, {
             path: "/",
             name: "admin",
@@ -43,27 +47,27 @@ export default new Router({
                     path: 'business/course',
                     name: 'business/course',
                     component: Course,
-                },{
+                }, {
                     //子路由不用加斜杠
                     path: 'business/section',
                     name: 'business/section',
                     component: Section,
-                },{
+                }, {
                     //子路由不用加斜杠
                     path: 'business/category',
                     name: 'business/category',
                     component: Category,
-                },{
+                }, {
                     //子路由不用加斜杠
                     path: 'business/teacher',
                     name: 'business/teacher',
                     component: Teacher,
-                },{
+                }, {
                     //子路由不用加斜杠
                     path: 'system/file',
                     name: 'system/file',
                     component: File,
-                },{
+                }, {
                     //子路由不用加斜杠
                     path: 'business/user',
                     name: 'business/user',

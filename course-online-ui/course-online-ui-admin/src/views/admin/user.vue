@@ -15,7 +15,7 @@
                     <el-input v-model="userDto.name" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-                    <el-input v-model="userDto.password" autocomplete="off"/>
+                    <el-input placeholder="请输入密码" v-model="userDto.password" show-password></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -27,9 +27,7 @@
             <tr>
                 <th>登陆名</th>
                 <th>昵称</th>
-                <th>密码</th>
                 <th>创建时间</th>
-                <th>修改时间</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -38,9 +36,7 @@
             <tr v-for="user in users">
                 <th>{{ user.loginName}}</th>
                 <th>{{ user.name}}</th>
-                <th>{{ user.password}}</th>
                 <th>{{ user.createTime}}</th>
-                <th>{{ user.editTime}}</th>
                 <td>
                     <div class="btn-group">
                         <el-tooltip class="item" effect="dark" content="更新" placement="top">
@@ -169,11 +165,11 @@
                                 this.userDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
+                                    this.dialogFormVisible = false;
+                                    this.list();
                                 }else {
                                     this.msg('error', result.msg);
                                 }
-                                this.dialogFormVisible = false;
-                                this.list();
                             })
                             .catch(error => {
                                 this.msg('error', error);

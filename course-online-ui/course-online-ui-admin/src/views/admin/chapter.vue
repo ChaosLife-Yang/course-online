@@ -22,6 +22,9 @@
                 <el-form-item label="大章名称" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="chapterDto.name" autocomplete="off"/>
                 </el-form-item>
+                <el-form-item label="大章顺序" :label-width="formLabelWidth" prop="sort">
+                    <el-input v-model="chapterDto.sort" autocomplete="off"/>
+                </el-form-item>
                 <el-form-item label="所属课程" :label-width="formLabelWidth" prop="courseId">
                     <p class="form-control-static">{{course.name}}</p>
                 </el-form-item>
@@ -36,6 +39,7 @@
             <tr>
                 <th>名称</th>
                 <th>课程</th>
+                <th>顺序</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -44,6 +48,7 @@
             <tr v-for="chapter in chapters">
                 <td>{{ chapter.name }}</td>
                 <td>{{ course.name }}</td>
+                <td>{{ chapter.sort }}</td>
                 <td>
                     <div class="btn-group">
                         <el-button @click="toSection(chapter)"
@@ -105,6 +110,9 @@
                 rules: {
                     name: [
                         {required: true, message: '请输入大章名称', trigger: 'blur'},
+                    ],
+                    sort: [
+                        {required: true, message: '请输入大章顺序', trigger: 'blur'},
                     ],
                 },
             }

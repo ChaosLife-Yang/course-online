@@ -62,7 +62,9 @@ public class ChapterController {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         //根据courseId查询
-        LambdaQueryWrapper<ChapterPO> wrapper = new LambdaQueryWrapper<ChapterPO>().eq(ChapterPO::getCourseId, pageDTO.getCourseId());
+        LambdaQueryWrapper<ChapterPO> wrapper = new LambdaQueryWrapper<ChapterPO>()
+                .eq(ChapterPO::getCourseId, pageDTO.getCourseId())
+                .orderByAsc(ChapterPO::getSort);
         PageInfo<ChapterPO> pageInfo = new PageInfo<>(chapterService.list(wrapper));
         List<ChapterPO> list = pageInfo.getList();
         List<ChapterDTO> dtoList = CopyUtils.copyList(list, ChapterDTO.class);

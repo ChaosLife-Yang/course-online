@@ -80,9 +80,7 @@ public class UserController {
      */
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated UserDTO userDTO) {
-        UserPO userPo = new UserPO();
-        BeanUtils.copyProperties(userDTO, userPo);
-        boolean option = userService.saveOrUpdate(userPo);
+        boolean option = userService.saveOrUpdateUser(userDTO);
         if (option) {
             return ResponseResult.success();
         } else {

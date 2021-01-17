@@ -24,10 +24,9 @@ import java.util.Objects;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseObject<Object> error(RuntimeException e) {
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseObject<Object> error(IllegalArgumentException e) {
         log.error(e.getMessage());
-        e.printStackTrace();
         return ResponseResult.error(e.getMessage());
     }
 

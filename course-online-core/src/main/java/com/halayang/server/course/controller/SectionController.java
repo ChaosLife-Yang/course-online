@@ -64,7 +64,8 @@ public class SectionController {
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         LambdaQueryWrapper<SectionPO> wrapper = new LambdaQueryWrapper<SectionPO>()
                 .eq(SectionPO::getChapterId, pageDTO.getChapterId())
-                .eq(SectionPO::getCourseId, pageDTO.getCourseId());
+                .eq(SectionPO::getCourseId, pageDTO.getCourseId())
+                .orderByAsc(SectionPO::getSort);
         PageInfo<SectionPO> pageInfo = new PageInfo<>(sectionService.list(wrapper));
         List<SectionPO> list = pageInfo.getList();
         List<SectionDTO> dtoList = CopyUtils.copyList(list, SectionDTO.class);

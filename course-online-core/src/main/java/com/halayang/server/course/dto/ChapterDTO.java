@@ -42,6 +42,9 @@ public class ChapterDTO implements Serializable {
     @ApiModelProperty(value = "名称")
     @NotBlank(message = "名称不为空")
     private String name;
+
+    @ApiModelProperty(value = "顺序")
+    private Integer sort;
     /**
      * 创建时间
      */

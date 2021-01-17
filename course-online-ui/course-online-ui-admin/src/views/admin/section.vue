@@ -30,6 +30,9 @@
                 <el-form-item label="视频" :label-width="formLabelWidth" prop="video">
                     <el-input v-model="sectionDto.video" autocomplete="off"/>
                 </el-form-item>
+                <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
+                    <el-input v-model="sectionDto.sort" autocomplete="off"/>
+                </el-form-item>
                 <el-form-item label="时长" :label-width="formLabelWidth" prop="time">
                     <el-input v-model="sectionDto.time" autocomplete="off"/>
                 </el-form-item>
@@ -62,6 +65,7 @@
                 <th>时长</th>
                 <th>收费</th>
                 <th>vod</th>
+                <th>顺序</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -75,6 +79,7 @@
                 <th>{{ section.time | formatSecond}}</th>
                 <th>{{ charge | optionKV(section.charge)}}</th>
                 <th>{{ section.vod}}</th>
+                <th>{{ section.sort}}</th>
                 <td>
                     <div class="btn-group">
                         <el-tooltip class="item" effect="dark" content="更新" placement="top">
@@ -141,6 +146,9 @@
                     ],
                     vod: [
                         {required: true, message: '请输入vod', trigger: 'blur'},
+                    ],
+                    sort: [
+                        {required: true, message: '请输入顺序', trigger: 'blur'},
                     ],
                 },
             }
