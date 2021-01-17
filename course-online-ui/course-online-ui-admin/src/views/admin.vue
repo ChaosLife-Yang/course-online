@@ -456,11 +456,11 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="">
-                                <a href="tables.html">
+                            <li class="" id="business-user-sidebar">
+                                <router-link to="/business/user">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     用户管理
-                                </a>
+                                </router-link>
 
                                 <b class="arrow"></b>
                             </li>
@@ -494,7 +494,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="">
+                            <li class="" id="system-file-sidebar">
                                 <router-link to="/system/file">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     文件管理

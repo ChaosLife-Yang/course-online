@@ -14,7 +14,8 @@
     "element-ui": "^2.14.1",
     "vue": "^2.6.12",
     "vue-froala-wysiwyg": "^3.2.5-1",
-    "vue-router": "^3.4.9"
+    "vue-router": "^3.4.9",
+    "vue-simple-uploader": "^0.7.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

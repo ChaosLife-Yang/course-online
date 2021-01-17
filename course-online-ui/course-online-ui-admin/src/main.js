@@ -14,7 +14,9 @@ import 'froala-editor/css/froala_style.min.css'
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/js/languages/zh_cn.js'
 import 'froala-editor/js/plugins.pkgd.min.js'
+import uploader from 'vue-simple-uploader'
 
+Vue.use(uploader);
 Vue.use(VueFroala);
 
 Vue.use(ElementUI);

@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class BusinessCodeGenerator {
 
-    private static String toPath = "course-online-file/src/main/java/com/halayang/server/";
+    private static String toPath = "course-online-auth/src/main/java/com/halayang/server/";
 
     /**
      * controller代码生成器
@@ -48,7 +48,7 @@ public class BusinessCodeGenerator {
         FreemarkerUtils.generator(toPath + classNamePrefix + "Controller.java", map);
     }
 
-    private static String toDtoPath = "course-online-file/src/main/java/com/halayang/server/";
+    private static String toDtoPath = "course-online-auth/src/main/java/com/halayang/server/";
 
     /**
      * dto代码生成器
@@ -121,9 +121,9 @@ public class BusinessCodeGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-//        dtoGenerator(toDtoPath, "File", "file", "file", "file");
-        controllerGenerator(toPath, "File", "file", "file", "文件管理");
-        vueGenerator(toVuePath, "/api/file", "file", "file", "文件", "file");
+        dtoGenerator(toDtoPath, "User", "rbac", "user", "user");
+        controllerGenerator(toPath, "User", "rbac", "user", "用户管理");
+        vueGenerator(toVuePath, "/api/auth", "user", "user", "用户", "user");
     }
 
 }

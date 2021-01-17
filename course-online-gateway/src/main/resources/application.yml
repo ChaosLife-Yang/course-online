@@ -37,6 +37,16 @@ spring:
           # 路由重写
           filters:
             - RewritePath=/api/file(?<segment>/?.*),$\{segment}
+          # 设置路由id 认证服务
+        - id: course-online-auth
+          # 设置路由uri lb://nacos中注册的服务名
+          uri: lb://${spring.cloud.gateway.routes[2].id}
+          # 断言 路由规则
+          predicates:
+            - Path=/api/auth/**
+          # 路由重写
+          filters:
+            - RewritePath=/api/auth(?<segment>/?.*),$\{segment}
 
 logging:
   level:

@@ -41,7 +41,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         //项目路径
-        String projectPath = "E:\\JavaStudy\\ZZZZZZ StudyingCode\\course-online\\course-online-file";
+        String projectPath = "E:\\JavaStudy\\ZZZZZZ StudyingCode\\course-online\\course-online-auth";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("YangYuDi");
         gc.setIdType(IdType.ASSIGN_ID);

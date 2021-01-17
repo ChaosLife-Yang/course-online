@@ -9,6 +9,7 @@ import Section from "./views/admin/section"
 import Category from "./views/admin/category"
 import Teacher from "./views/admin/teacher"
 import File from "./views/admin/file"
+import User from "./views/admin/user"
 
 Vue.use(Router);
 
@@ -62,6 +63,11 @@ export default new Router({
                     path: 'system/file',
                     name: 'system/file',
                     component: File,
+                },{
+                    //子路由不用加斜杠
+                    path: 'business/user',
+                    name: 'business/user',
+                    component: User,
                 },
             ]
         },
