@@ -20,7 +20,7 @@
                     <a href="index.html" class="navbar-brand">
                         <small>
                             <i class="fa fa-leaf"></i>
-                            Ace-YUDI 在线课程管理控台
+                            Ace YUDI 在线课程管理控台
                         </small>
                     </a>
                 </div>
@@ -519,7 +519,7 @@
                 <div class="footer-inner">
                     <div class="footer-content">
                         <span class="bigger-120">
-                          <span class="blue bolder">Ace-YUDI</span>
+                          <span class="blue bolder">Ace YUDI</span>
                           在线课程管理控台 &copy; 2020-2021
                         </span>
                     </div>
