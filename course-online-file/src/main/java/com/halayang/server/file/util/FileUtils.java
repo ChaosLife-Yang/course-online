@@ -23,6 +23,10 @@ import java.util.UUID;
  * @create 2021/1/12 15:44
  */
 public class FileUtils {
+    /**
+     * 正斜杠
+     */
+    public static final String SEPARATOR = "/";
 
     private FileUtils() {
     }
@@ -69,11 +73,11 @@ public class FileUtils {
      */
     public static String getTimePath() {
         return new StringBuilder(FileUtils.yearFilePrefix())
-                .append("/")
+                .append(SEPARATOR)
                 .append(FileUtils.monthFilePrefix())
-                .append("/")
+                .append(SEPARATOR)
                 .append(FileUtils.dayFilePrefix())
-                .append("/")
+                .append(SEPARATOR)
                 .toString();
     }
 
@@ -89,10 +93,10 @@ public class FileUtils {
     public static FileDTO saveMultipartFile(MultipartFile file, String filePath) {
         try {
             String originalFilename = file.getOriginalFilename();
-            String postName = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String postName = getExtensionName(originalFilename);
             String parentPath = FileUtils.getTimePath();
             //最终文件名
-            String finalName = UUID.randomUUID().toString() + postName;
+            String finalName = UUID.randomUUID().toString() + "." + postName;
             String finalPath = filePath + parentPath + finalName;
             File dest = new File(finalPath);
             if (!dest.getParentFile().exists()) {
@@ -110,13 +114,21 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 获取文件MD5值
+     *
+     * @param file 文件
+     * @return java.lang.String
+     * @author YangYudi
+     * @date 2021/1/18 9:01
+     */
     public static String getFileMD5(File file) {
         if (!file.exists() || !file.isFile()) {
             return null;
         }
         MessageDigest digest = null;
         FileInputStream in = null;
-        byte buffer[] = new byte[1024];
+        byte[] buffer = new byte[1024];
         int len;
         try {
             digest = MessageDigest.getInstance("MD5");
@@ -132,4 +144,22 @@ public class FileUtils {
         return bigInt.toString(16);
     }
 
+    /**
+     * 获取文件后缀
+     *
+     * @param filename 文件名
+     * @return java.lang.String
+     * @author YangYudi
+     * @date 2021/1/18 9:01
+     */
+    public static String getExtensionName(String filename) {
+        if ((filename != null) && (filename.length() > 0)) {
+            int dot = filename.lastIndexOf('.');
+            if ((dot > -1) && (dot < (filename.length() - 1))) {
+                return filename.substring(dot + 1);
+            }
+            return filename.toLowerCase();
+        }
+        return null;
+    }
 }
