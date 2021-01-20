@@ -13,6 +13,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.halayang</groupId>
             <artifactId>halayang-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>

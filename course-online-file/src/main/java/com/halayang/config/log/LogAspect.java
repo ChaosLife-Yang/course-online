@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,7 +55,18 @@ public class LogAspect {
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object[] args = joinPoint.getArgs();
-        log.info("请求参数: {}", JacksonUtils.toString(args));
+        boolean flag = true;
+        for (Object arg : args) {
+            if (arg instanceof MultipartFile) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            log.info("请求参数: {}", JacksonUtils.toString(args));
+        }else {
+            log.info("上传文件请求");
+        }
         Object result = joinPoint.proceed(args);
         log.info("返回结果: {}", JacksonUtils.toString(result));
         log.info("------------- 结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);

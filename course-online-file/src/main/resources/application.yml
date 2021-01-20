@@ -20,8 +20,8 @@ spring:
       connection-test-query: SELECT 1
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      max-file-size: 10GB
+      max-request-size: 10GB
 
 mybatis-plus:
   configuration:

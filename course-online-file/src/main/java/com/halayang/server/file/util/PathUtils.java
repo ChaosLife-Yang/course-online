@@ -1,10 +1,11 @@
 package com.halayang.server.file.util;
 
 import com.halayang.server.file.dto.FileDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.time.LocalDate;
@@ -22,13 +23,14 @@ import java.util.UUID;
  * @description
  * @create 2021/1/12 15:44
  */
-public class FileUtils {
+@Slf4j
+public class PathUtils {
     /**
      * 正斜杠
      */
     public static final String SEPARATOR = "/";
 
-    private FileUtils() {
+    private PathUtils() {
     }
 
     /**
@@ -72,13 +74,30 @@ public class FileUtils {
      * @date 2021/1/12 15:51
      */
     public static String getTimePath() {
-        return new StringBuilder(FileUtils.yearFilePrefix())
+        return new StringBuilder(PathUtils.yearFilePrefix())
                 .append(SEPARATOR)
-                .append(FileUtils.monthFilePrefix())
+                .append(PathUtils.monthFilePrefix())
                 .append(SEPARATOR)
-                .append(FileUtils.dayFilePrefix())
+                .append(PathUtils.dayFilePrefix())
                 .append(SEPARATOR)
                 .toString();
+    }
+
+    /**
+     * 根据MultipartFile生成要存储的文件路径
+     *
+     * @param file MultipartFile文件
+     * @author YangYudi
+     * @date 2021/1/20 15:45
+     * @return java.lang.String
+     */
+    public static String getSaveFileName(MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        String postName = PathUtils.getExtensionName(originalFilename);
+        String parentPath = PathUtils.getTimePath();
+        //最终文件名
+        String finalName = UUID.randomUUID().toString() + "." + postName;
+        return parentPath + finalName;
     }
 
     /**
@@ -94,7 +113,7 @@ public class FileUtils {
         try {
             String originalFilename = file.getOriginalFilename();
             String postName = getExtensionName(originalFilename);
-            String parentPath = FileUtils.getTimePath();
+            String parentPath = PathUtils.getTimePath();
             //最终文件名
             String finalName = UUID.randomUUID().toString() + "." + postName;
             String finalPath = filePath + parentPath + finalName;
@@ -117,23 +136,18 @@ public class FileUtils {
     /**
      * 获取文件MD5值
      *
-     * @param file 文件
+     * @param in 文件输入流
      * @return java.lang.String
      * @author YangYudi
      * @date 2021/1/18 9:01
      */
-    public static String getFileMD5(File file) {
-        if (!file.exists() || !file.isFile()) {
-            return null;
-        }
+    public static String getFileMD5(InputStream in) {
         MessageDigest digest = null;
-        FileInputStream in = null;
         byte[] buffer = new byte[1024];
         int len;
         try {
             digest = MessageDigest.getInstance("MD5");
-            in = new FileInputStream(file);
-            while ((len = in.read(buffer, 0, 1024)) != -1) {
+            while ((len = in.read(buffer)) != -1) {
                 digest.update(buffer, 0, len);
             }
             in.close();

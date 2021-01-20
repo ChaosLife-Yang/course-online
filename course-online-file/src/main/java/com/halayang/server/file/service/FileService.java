@@ -17,4 +17,7 @@ public interface FileService extends IService<FilePO> {
 
     String uploadMultipartFile(MultipartFile file, String filePath, FileUseEnum fileUseEnum);
 
+    void uploadToOss(MultipartFile file, String filePath, FileUseEnum fileUseEnum);
+
+
 }

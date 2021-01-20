@@ -9,3 +9,5 @@ spring:
         extension-configs:
           - data-id: jackson-dev.yml
             refresh: true
+          - data-id: aliyun.yml
+            refresh: true
