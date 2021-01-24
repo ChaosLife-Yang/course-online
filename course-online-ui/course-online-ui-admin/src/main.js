@@ -14,15 +14,17 @@ import 'froala-editor/css/froala_style.min.css'
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/js/languages/zh_cn.js'
 import 'froala-editor/js/plugins.pkgd.min.js'
-import uploader from 'vue-simple-uploader'
+import UUID from 'vue-uuid'
 
-Vue.use(uploader);
+Vue.use(UUID);
+
 Vue.use(VueFroala);
 
 Vue.use(ElementUI);
 Vue.prototype.$ajax = axios;
 Vue.config.productionTip = false;
-
+//去掉警告
+Vue.config.silent = true;
 /**
  * axios拦截器
  */

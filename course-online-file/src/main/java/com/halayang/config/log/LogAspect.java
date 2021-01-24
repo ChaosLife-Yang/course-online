@@ -34,6 +34,13 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class LogAspect {
 
+    /**
+     * controller方法为切点
+     *
+     * @author YangYudi
+     * @date 2021/1/23 8:51
+     * @return void
+     */
     @Pointcut("execution(public * com.halayang.server.*.controller.*Controller.*(..))")
     public void controllerPointcut() {
     }
@@ -63,13 +70,12 @@ public class LogAspect {
             }
         }
         if (flag) {
-            log.info("请求参数: {}", JacksonUtils.toString(args));
+            log.info("接收请求");
         }else {
             log.info("上传文件请求");
         }
         Object result = joinPoint.proceed(args);
-        log.info("返回结果: {}", JacksonUtils.toString(result));
-        log.info("------------- 结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
+        log.info("------------- 请求结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
         return result;
     }
 

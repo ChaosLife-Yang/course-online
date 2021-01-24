@@ -19,6 +19,20 @@ spring:
       auto-commit: true
       connection-test-query: SELECT 1
 
+# Feign 配置
+feign:
+  compression:
+    request:
+      # 开启请求压缩
+      enabled: true
+      # 配置压缩的 MIME TYPE
+      mime-types: text/xml,application/xml,application/json
+      # 配置压缩数据大小的下限
+      min-request-size: 128
+    response:
+      # 开启响应压缩
+      enabled: true
+
 mybatis-plus:
   configuration:
     # 开启缓存

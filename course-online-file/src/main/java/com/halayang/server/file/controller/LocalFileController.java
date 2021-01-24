@@ -1,14 +1,18 @@
 package com.halayang.server.file.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.halayang.common.enums.FileUseEnum;
+import com.halayang.common.utils.JacksonUtils;
+import com.halayang.common.utils.response.ResponseObject;
+import com.halayang.common.utils.response.ResponseResult;
+import com.halayang.server.file.dto.FileDTO;
+import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -37,6 +41,23 @@ public class LocalFileController {
 
     @Autowired
     private FileService fileService;
+
+    @PostMapping("/shardUpload")
+    public String shardUpload(FileDTO fileDTO) {
+        return fileService.shardFileUpload(fileDTO);
+    }
+
+    @GetMapping("/check/{key}")
+    public ResponseObject<Integer> checkKey(@PathVariable String key) {
+        FilePO one = fileService.getOne(new LambdaQueryWrapper<FilePO>()
+                .eq(FilePO::getFileKey, key));
+        //判断上传到第几个分片了
+        if (ObjectUtils.isEmpty(one)) {
+            return ResponseResult.success(0);
+        } else {
+            return ResponseResult.success(one.getShardIndex());
+        }
+    }
 
     @PostMapping("/uploadCourseFile")
     public String uploadCourseFile(@RequestParam MultipartFile file) {

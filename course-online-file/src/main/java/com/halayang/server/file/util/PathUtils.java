@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -87,9 +89,9 @@ public class PathUtils {
      * 根据MultipartFile生成要存储的文件路径
      *
      * @param file MultipartFile文件
+     * @return java.lang.String
      * @author YangYudi
      * @date 2021/1/20 15:45
-     * @return java.lang.String
      */
     public static String getSaveFileName(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
@@ -97,7 +99,68 @@ public class PathUtils {
         String parentPath = PathUtils.getTimePath();
         //最终文件名
         String finalName = UUID.randomUUID().toString() + "." + postName;
-        return parentPath + finalName;
+        return new StringBuilder().append(parentPath).append(finalName).toString();
+    }
+
+    /**
+     * 获得保存相对路径
+     *
+     * @param fileName 文件名
+     * @return java.lang.String
+     * @author YangYudi
+     * @date 2021/1/24 15:04
+     */
+    public static String getSaveFileName(String fileName) {
+        String parentPath = PathUtils.getTimePath();
+        //最终文件名
+        return new StringBuilder().append(parentPath).append(fileName).toString();
+    }
+
+    public static String getFileMD5(File file) {
+        if (!file.isFile()) {
+            return null;
+        }
+        MessageDigest digest = null;
+        byte[] buffer = new byte[1024];
+        int len;
+        try (FileInputStream in = new FileInputStream(file)) {
+            digest = MessageDigest.getInstance("MD5");
+            while ((len = in.read(buffer, 0, 1024)) != -1) {
+                digest.update(buffer, 0, len);
+            }
+        } catch (Exception e) {
+            log.error("文件md5转换异常", e);
+            throw new IllegalArgumentException("文件md5转换异常");
+        }
+        BigInteger bigInt = new BigInteger(1, digest.digest());
+        return bigInt.toString(16);
+    }
+
+    /**
+     * 根据dto保存文件
+     *
+     * @param fileDTO  dto对象
+     * @param filePath 保存路径
+     * @return void
+     * @author YangYudi
+     * @date 2021/1/24 15:06
+     */
+    public static String saveMultipartFile(FileDTO fileDTO, String filePath) {
+        try {
+            MultipartFile file = fileDTO.getFile();
+            String saveName = PathUtils.getSaveFileName(fileDTO.getNewName());
+            //标序号，表示第几个分片
+            String finalPath = String.format("%s/%s.%d", filePath, saveName, fileDTO.getShardIndex());
+            File dest = new File(finalPath);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            file.transferTo(dest);
+            return saveName;
+        } catch (IOException e) {
+            log.error("", e);
+            throw new IllegalArgumentException("文件保存出异常了");
+        }
     }
 
     /**

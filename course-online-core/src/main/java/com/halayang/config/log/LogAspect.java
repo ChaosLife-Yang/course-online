@@ -54,10 +54,9 @@ public class LogAspect {
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object[] args = joinPoint.getArgs();
-        log.info("请求参数: {}", JacksonUtils.toString(args));
+        log.info("接收请求");
         Object result = joinPoint.proceed(args);
-        log.info("返回结果: {}", JacksonUtils.toString(result));
-        log.info("------------- 结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
+        log.info("------------- 请求结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
         return result;
     }
 
