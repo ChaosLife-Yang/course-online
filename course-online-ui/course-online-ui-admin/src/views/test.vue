@@ -2,8 +2,11 @@
     <div>
         <shardUpload
                 :url="url"
-                :check-url="checkUrl"/>
-
+                :check-url="checkUrl"
+                @changePercent="changePercent">
+        </shardUpload>
+        <el-progress :percentage="percentage" :stroke-width="24"
+                     :status="success"></el-progress>
     </div>
 </template>
 
@@ -17,6 +20,18 @@
             return {
                 url: process.env.VUE_APP_SERVER + '/api/file/local/shardUpload',
                 checkUrl: process.env.VUE_APP_SERVER + '/api/file/local/check',
+                percentage: 0,
+                success: ""
+            }
+        },
+        methods: {
+            changePercent(percentage) {
+                this.percentage = percentage;
+                if (percentage === 100) {
+                    this.success = 'success';
+                }else {
+                    this.success = '';
+                }
             }
         }
 

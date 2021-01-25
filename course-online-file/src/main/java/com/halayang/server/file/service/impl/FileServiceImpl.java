@@ -126,7 +126,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
                 String path = filePath + relativePath + "." + i;
                 File file = new File(path);
                 boolean result = file.delete();
-                log.info("删除{} {}", path, result ? "成功" : "失败");
+                log.info("删除分片{} {}", path, result ? "成功" : "失败");
             }
 
         }

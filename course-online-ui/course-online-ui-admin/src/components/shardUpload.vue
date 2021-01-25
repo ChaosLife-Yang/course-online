@@ -12,7 +12,6 @@
                 :show-file-list="false">
             <el-button :loading="flag" size="small" type="primary">点击上传</el-button>
         </el-upload>
-        <el-progress :percentage="percentage" :format="format"></el-progress>
     </div>
 </template>
 
@@ -73,6 +72,10 @@
                         let shardIndex = result.data;
                         //获取分片总数
                         let shardTotal = Math.ceil(size / shardSize);
+                        let percentage = shardIndex / shardTotal;
+                        this.percentage = percentage.toFixed(3) * 100;
+                        //向父组件传递百分比数据
+                        this.$emit('changePercent', this.percentage);
                         //分片起始位置
                         let start = shardIndex * shardSize;
                         //分片结束位置
@@ -103,8 +106,9 @@
                     let resp = response.data;
                     shardIndex++;
                     //获取进度
-                    let percentage= shardIndex / shardTotal;
+                    let percentage = shardIndex / shardTotal;
                     this.percentage = percentage.toFixed(3) * 100;
+                    this.$emit('changePercent', this.percentage);
                     start = shardIndex * shardSize;
                     end = Math.min(file.size, start + shardSize);
                     fileShard = file.slice(start, end);
@@ -114,6 +118,8 @@
                         this.$refs.upload.clearFiles();
                         this.flag = false;
                         this.msg('success', "上传文件完成");
+                        //向父组件传递文件路径
+                        this.$emit('getUrl', resp.data);
                     }
                 }).catch(error => {
                     this.$refs.upload.clearFiles();

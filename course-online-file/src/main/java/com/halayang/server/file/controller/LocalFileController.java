@@ -43,8 +43,9 @@ public class LocalFileController {
     private FileService fileService;
 
     @PostMapping("/shardUpload")
-    public String shardUpload(FileDTO fileDTO) {
-        return fileService.shardFileUpload(fileDTO);
+    public ResponseObject<String> shardUpload(FileDTO fileDTO) {
+        String relative = fileService.shardFileUpload(fileDTO);
+        return ResponseResult.success(String.format("%s%s", showPath, relative));
     }
 
     @GetMapping("/check/{key}")
