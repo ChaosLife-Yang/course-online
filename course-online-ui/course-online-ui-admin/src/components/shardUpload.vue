@@ -10,14 +10,12 @@
                 multiple
                 :limit="1"
                 :show-file-list="false">
-            <el-button :loading="flag" size="small" type="primary">点击上传</el-button>
+            <el-button :loading="flag" size="small" type="primary">{{buttonName}}</el-button>
         </el-upload>
     </div>
 </template>
 
 <script>
-    import BMF from 'browser-md5-file';
-
     export default {
         name: "shardUpload",
         data() {
@@ -27,6 +25,14 @@
             }
         },
         props: {
+            buttonName:{
+                type: String,
+                required: true
+            },
+            getMd5: {
+                type: String,
+                required: true
+            },
             url: {
                 type: String,
                 required: true
@@ -61,34 +67,41 @@
                 let shardSize = this.shardSize;
                 //获取文件后缀
                 let suffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase();
+                let formData = new window.FormData();
+                formData.append("file", file);
+                this.$ajax.post(this.getMd5, formData).then((res) => {
+                    if (res.data.code === 200) {
+                        //读取文件md5值
+                        let key16 = res.data.data;
+                        this.$ajax.get(`${this.checkUrl}/${key16}`).then((response) => {
+                            let result = response.data;
+                            //分片索引
+                            let shardIndex = result.data;
+                            //获取分片总数
+                            let shardTotal = Math.ceil(size / shardSize);
+                            let percentage = shardIndex / shardTotal;
+                            this.percentage = (percentage * 100).toFixed(0);
+                            //向父组件传递百分比数据
+                            this.$emit('changePercent', this.percentage);
+                            //分片起始位置
+                            let start = shardIndex * shardSize;
+                            //分片结束位置
+                            let end = Math.min(file.size, start + shardSize);
+                            //截取分片数据
+                            let fileShard = file.slice(start, end);
+                            let newName = this.$uuid.v4() + "." + suffix;
+                            //递归上传
+                            this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
 
-                const bmf = new BMF();
-                bmf.md5(file, (err, md5) => {
-                    //读取文件md5值
-                    let key16 = md5;
-                    this.$ajax.get(`${this.checkUrl}/${key16}`).then((response) => {
-                        let result = response.data;
-                        //分片索引
-                        let shardIndex = result.data;
-                        //获取分片总数
-                        let shardTotal = Math.ceil(size / shardSize);
-                        let percentage = shardIndex / shardTotal;
-                        this.percentage = percentage.toFixed(3) * 100;
-                        //向父组件传递百分比数据
-                        this.$emit('changePercent', this.percentage);
-                        //分片起始位置
-                        let start = shardIndex * shardSize;
-                        //分片结束位置
-                        let end = Math.min(file.size, start + shardSize);
-                        //截取分片数据
-                        let fileShard = file.slice(start, end);
-                        let newName = this.$uuid.v1() + "." + suffix;
-                        //递归上传
-                        this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
+                        }).catch(error => {
+                            this.msg('error', error);
+                        });
+                    } else {
+                        this.msg('error', res.data.msg);
+                    }
 
-                    }).catch(error => {
-                        this.msg('error', error);
-                    });
+                }).catch(error => {
+                    this.msg('error', error);
                 });
 
             },
@@ -109,7 +122,7 @@
                     shardIndex++;
                     //获取进度
                     let percentage = shardIndex / shardTotal;
-                    this.percentage = percentage.toFixed(3) * 100;
+                    this.percentage = (percentage * 100).toFixed(0);
                     this.$emit('changePercent', this.percentage);
                     start = shardIndex * shardSize;
                     end = Math.min(file.size, start + shardSize);
@@ -124,7 +137,7 @@
                             this.msg('success', "上传文件完成");
                             //向父组件传递文件路径
                             this.$emit('getUrl', resp.data);
-                        }else {
+                        } else {
                             this.msg('error', "上传文件有误");
                         }
                     }

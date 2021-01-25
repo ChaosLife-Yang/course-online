@@ -2,19 +2,21 @@ package com.halayang.server.file.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.halayang.common.enums.FileUseEnum;
-import com.halayang.common.utils.JacksonUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
+import com.halayang.server.file.util.PathUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +43,16 @@ public class LocalFileController {
 
     @Autowired
     private FileService fileService;
+
+    @PostMapping("/getMd5")
+    public ResponseObject<String> getMd5(@RequestParam MultipartFile file){
+        try {
+            String fileMd5 = PathUtils.getFileMd5(file.getInputStream());
+            return ResponseResult.success(fileMd5);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("获取md5失败");
+        }
+    }
 
     @PostMapping("/shardUpload")
     public ResponseObject<String> shardUpload(FileDTO fileDTO) {

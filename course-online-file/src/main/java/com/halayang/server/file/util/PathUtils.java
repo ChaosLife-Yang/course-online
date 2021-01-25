@@ -8,7 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +32,8 @@ public class PathUtils {
      * 正斜杠
      */
     public static final String SEPARATOR = "/";
+    private static final char[] HEXDIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
+            '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     private PathUtils() {
     }
@@ -116,26 +119,6 @@ public class PathUtils {
         return new StringBuilder().append(parentPath).append(fileName).toString();
     }
 
-    public static String getFileMD5(File file) {
-        if (!file.isFile()) {
-            return null;
-        }
-        MessageDigest digest = null;
-        byte[] buffer = new byte[1024];
-        int len;
-        try (FileInputStream in = new FileInputStream(file)) {
-            digest = MessageDigest.getInstance("MD5");
-            while ((len = in.read(buffer, 0, 1024)) != -1) {
-                digest.update(buffer, 0, len);
-            }
-        } catch (Exception e) {
-            log.error("文件md5转换异常", e);
-            throw new IllegalArgumentException("文件md5转换异常");
-        }
-        BigInteger bigInt = new BigInteger(1, digest.digest());
-        return bigInt.toString(16);
-    }
-
     /**
      * 根据dto保存文件
      *
@@ -204,21 +187,47 @@ public class PathUtils {
      * @author YangYudi
      * @date 2021/1/18 9:01
      */
-    public static String getFileMD5(InputStream in) {
-        MessageDigest digest = null;
-        byte[] buffer = new byte[1024];
-        int len;
+    public static String getFileMd5(InputStream in) {
         try {
-            digest = MessageDigest.getInstance("MD5");
-            while ((len = in.read(buffer)) != -1) {
-                digest.update(buffer, 0, len);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            FileInputStream fis = (FileInputStream) in;
+            FileChannel fChannel = fis.getChannel();
+            ByteBuffer buffer = ByteBuffer.allocateDirect(10 * 1024 * 1024);
+            while ((fChannel.read(buffer)) != -1) {
+                buffer.flip();
+                md.update(buffer);
+                buffer.compact();
             }
-            in.close();
+            byte[] b = md.digest();
+            return byteToHexString(b);
         } catch (Exception e) {
+            log.error("获取文件md5异常", e);
             throw new IllegalArgumentException(e.getMessage());
         }
-        BigInteger bigInt = new BigInteger(1, digest.digest());
-        return bigInt.toString(16);
+    }
+
+    private static String byteToHexString(byte[] tmp) {
+        String s;
+        // 用字节表示就是 16 个字节
+        // 每个字节用 16 进制表示的话，使用两个字符，
+        char[] str = new char[16 * 2];
+        // 所以表示成 16 进制需要 32 个字符
+        // 表示转换结果中对应的字符位置
+        int k = 0;
+        // 从第一个字节开始，对 MD5 的每一个字节
+        for (int i = 0; i < 16; i++) {
+            // 转换成 16 进制字符的转换
+            // 取第 i 个字节
+            byte byte0 = tmp[i];
+            // 取字节中高 4 位的数字转换,
+            str[k++] = HEXDIGITS[byte0 >>> 4 & 0xf];
+            // >>> 为逻辑右移，将符号位一起右移
+            // 取字节中低 4 位的数字转换
+            str[k++] = HEXDIGITS[byte0 & 0xf];
+        }
+        // 换后的结果转换为字符串
+        s = new String(str);
+        return s;
     }
 
     /**
