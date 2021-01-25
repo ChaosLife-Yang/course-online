@@ -86,6 +86,8 @@
                         //递归上传
                         this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
 
+                    }).catch(error => {
+                        this.msg('error', error);
                     });
                 });
 
@@ -113,13 +115,18 @@
                     end = Math.min(file.size, start + shardSize);
                     fileShard = file.slice(start, end);
                     if (shardIndex < shardTotal) {
+                        //递归上传
                         this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
                     } else {
                         this.$refs.upload.clearFiles();
                         this.flag = false;
-                        this.msg('success', "上传文件完成");
-                        //向父组件传递文件路径
-                        this.$emit('getUrl', resp.data);
+                        if (resp.code != null && resp.code === 200) {
+                            this.msg('success', "上传文件完成");
+                            //向父组件传递文件路径
+                            this.$emit('getUrl', resp.data);
+                        }else {
+                            this.msg('error', "上传文件有误");
+                        }
                     }
                 }).catch(error => {
                     this.$refs.upload.clearFiles();
