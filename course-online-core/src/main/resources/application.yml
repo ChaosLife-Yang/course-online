@@ -28,7 +28,7 @@ feign:
       # 配置压缩的 MIME TYPE
       mime-types: text/xml,application/xml,application/json
       # 配置压缩数据大小的下限
-      min-request-size: 128
+      min-request-size: 1024
     response:
       # 开启响应压缩
       enabled: true

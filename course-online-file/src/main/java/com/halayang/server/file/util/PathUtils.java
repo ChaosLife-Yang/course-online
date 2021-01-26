@@ -88,22 +88,6 @@ public class PathUtils {
                 .toString();
     }
 
-    /**
-     * 根据MultipartFile生成要存储的文件路径
-     *
-     * @param file MultipartFile文件
-     * @return java.lang.String
-     * @author YangYudi
-     * @date 2021/1/20 15:45
-     */
-    public static String getSaveFileName(MultipartFile file) {
-        String originalFilename = file.getOriginalFilename();
-        String postName = PathUtils.getExtensionName(originalFilename);
-        String parentPath = PathUtils.getTimePath();
-        //最终文件名
-        String finalName = UUID.randomUUID().toString() + "." + postName;
-        return new StringBuilder().append(parentPath).append(finalName).toString();
-    }
 
     /**
      * 获得保存相对路径
@@ -193,11 +177,6 @@ public class PathUtils {
             FileInputStream fis = (FileInputStream) in;
             FileChannel fChannel = fis.getChannel();
             ByteBuffer buffer = ByteBuffer.allocateDirect(10 * 1024 * 1024);
-//            while ((fChannel.read(buffer)) != -1) {
-//                buffer.flip();
-//                md.update(buffer);
-//                buffer.compact();
-//            }
             //只读取第一个分片 这样效率高一点 就不用把整个文件读取了
             fChannel.read(buffer);
             buffer.flip();

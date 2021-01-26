@@ -1,7 +1,6 @@
 package com.halayang.server.file.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.halayang.common.enums.FileUseEnum;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.po.FilePO;
 import org.springframework.web.multipart.MultipartFile;
