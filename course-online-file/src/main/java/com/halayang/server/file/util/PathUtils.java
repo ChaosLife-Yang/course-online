@@ -198,7 +198,7 @@ public class PathUtils {
 //                md.update(buffer);
 //                buffer.compact();
 //            }
-
+            //只读取第一个分片 这样效率高一点 就不用把整个文件读取了
             fChannel.read(buffer);
             buffer.flip();
             md.update(buffer);
