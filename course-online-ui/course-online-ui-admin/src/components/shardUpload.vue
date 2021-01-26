@@ -96,13 +96,16 @@
                             this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
 
                         }).catch(error => {
+                            this.$refs.upload.clearFiles();
                             this.msg('error', error);
                         });
                     } else {
+                        this.$refs.upload.clearFiles();
                         this.msg('error', res.data.msg);
                     }
 
                 }).catch(error => {
+                    this.$refs.upload.clearFiles();
                     this.msg('error', error);
                 });
 
