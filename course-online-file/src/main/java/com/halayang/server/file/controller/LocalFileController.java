@@ -13,6 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,25 +69,16 @@ public class LocalFileController {
         if (ObjectUtils.isEmpty(one)) {
             return ResponseResult.success(0);
         } else {
+            if (StringUtils.isEmpty(one.getShardIndex()) && StringUtils.isEmpty(one.getShardTotal())) {
+                return ResponseResult.success(0);
+            }
             return ResponseResult.success(one.getShardIndex());
         }
     }
 
-    @PostMapping("/uploadCourseFile")
-    public String uploadCourseFile(@RequestParam MultipartFile file) {
-        String finalShowPath = fileService.uploadMultipartFile(file, filePath, FileUseEnum.COURSE);
-        return showPath + finalShowPath;
-    }
-
-    @PostMapping("/uploadTeacherFile")
-    public String uploadTeacherFile(@RequestParam MultipartFile file) {
-        String finalShowPath = fileService.uploadMultipartFile(file, filePath, FileUseEnum.TEACHER);
-        return showPath + finalShowPath;
-    }
-
     @PostMapping("/contentUpload")
     public Map<String, String> contentUpload(@RequestParam MultipartFile file) {
-        String finalShowPath = fileService.uploadMultipartFile(file, filePath, FileUseEnum.COURSE);
+        String finalShowPath = fileService.courseContentUpload(file);
         Map<String, String> map = new HashMap<>(2);
         map.put("link", showPath + finalShowPath);
         return map;

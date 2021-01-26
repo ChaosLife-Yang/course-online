@@ -15,16 +15,22 @@
                     <el-input v-model="teacherDto.nickname" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="头像" :label-width="formLabelWidth" prop="image">
-                    <el-upload
-                            id="el-up"
-                            class="avatar-uploader"
-                            :action="gateway+'/api/file/local/uploadTeacherFile'"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                    <shard-upload
+                            :url="gateway+'/api/file/local/shardUpload'"
+                            :check-url="gateway+'/api/file/local/check'"
+                            :get-md5="gateway+'/api/file/local/getMd5'"
+                            :button-name="'点击上传'"
+                            :use="'T'"
+                            @changePercent="changePercent"
+                            @getUrl="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload"/>
+                    <el-progress :percentage="percentage" :status="success"></el-progress>
+                    <el-image
+                            v-if="imageUrl"
+                            style="width: 100px; height: 100px"
+                            :src="imageUrl"
+                            :preview-src-list="[imageUrl]"
+                            :fit="'scale-down'"></el-image>
                 </el-form-item>
                 <el-form-item label="职位" :label-width="formLabelWidth" prop="position">
                     <el-input v-model="teacherDto.position" autocomplete="off"/>
@@ -100,11 +106,16 @@
 </template>
 
 <script>
+    import shardUpload from "../../components/shardUpload";
+
     export default {
         name: "teacher",
+        components: {shardUpload},
         data() {
             return {
                 gateway: process.env.VUE_APP_SERVER,
+                percentage: 0,
+                success: "",
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
                 title: "添加教师",
@@ -149,6 +160,7 @@
                 this.dialogFormVisible = true;
                 this.teacherDto = {};
                 this.imageUrl = "";
+                this.percentage = 0;
             },
             remove(id) {
                 this.$confirm('此操作将删除该教师, 是否继续?', '提示', {
@@ -179,6 +191,7 @@
             get(id) {
                 this.title = "修改教师信息";
                 this.dialogFormVisible = true;
+                this.percentage = 0;
                 //获取要更新的对象
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/teacher/" + id)
@@ -257,9 +270,17 @@
                     .catch(_ => {
                     });
             },
-            handleAvatarSuccess(res, file) {
-                this.imageUrl = file.response;
-                this.teacherDto.image = this.imageUrl;
+            changePercent(percentage) {
+                this.percentage = percentage;
+                if (percentage == 100) {
+                    this.success = 'success';
+                } else {
+                    this.success = '';
+                }
+            },
+            handleAvatarSuccess(url) {
+                this.imageUrl = url;
+                this.teacherDto.image = url;
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';

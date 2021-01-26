@@ -15,7 +15,10 @@ import 'froala-editor/js/froala_editor.pkgd.min.js'
 import 'froala-editor/js/languages/zh_cn.js'
 import 'froala-editor/js/plugins.pkgd.min.js'
 import UUID from 'vue-uuid'
+import VideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
 
+Vue.use(VideoPlayer);
 Vue.use(UUID);
 
 Vue.use(VueFroala);

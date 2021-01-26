@@ -8,7 +8,7 @@
         </el-button>
         <h4 class="lighter">
             <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
-             {{course.name}}
+            {{course.name}}
         </h4>
 
         <el-button type="primary"
@@ -120,7 +120,7 @@
 
         created() {
             this.course = SessionStorage.get(SESSION_KEY_COURSE) || {};
-            if (this.course==={}){
+            if (Tool.isEmpty(this.course)) {
                 this.$router.push("/business/course");
             }
             this.chapterDto.courseId = this.course.id;
@@ -159,7 +159,7 @@
                             let result = response.data;
                             if (result.code === 200) {
                                 this.msg('success', result.msg);
-                            }else {
+                            } else {
                                 this.msg('error', result.msg);
                             }
                         })

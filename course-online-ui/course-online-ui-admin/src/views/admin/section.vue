@@ -28,6 +28,16 @@
                     {{chapter.name}}
                 </el-form-item>
                 <el-form-item label="视频" :label-width="formLabelWidth" prop="video">
+                    <shard-upload
+                            :url="gateway+'/api/file/local/shardUpload'"
+                            :check-url="gateway+'/api/file/local/check'"
+                            :get-md5="gateway+'/api/file/local/getMd5'"
+                            :button-name="'点击上传'"
+                            :use="'C'"
+                            @changePercent="changePercent"
+                            @getUrl="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload"/>
+                    <el-progress :percentage="percentage" :status="success"></el-progress>
                     <el-input v-model="sectionDto.video" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
@@ -116,10 +126,16 @@
 </template>
 
 <script>
+    import shardUpload from "../../components/shardUpload";
+
     export default {
         name: "section",
+        components: {shardUpload},
         data() {
             return {
+                gateway: process.env.VUE_APP_SERVER,
+                percentage: 0,
+                success: "",
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
                 course: {},
@@ -156,15 +172,15 @@
 
         created() {
             this.course = SessionStorage.get(SESSION_KEY_COURSE) || {};
-            if (this.course==={}){
+            if (Tool.isEmpty(this.course)) {
                 this.$router.push("/business/course");
             }
-            this.sectionDto.courseId=this.course.id;
+            this.sectionDto.courseId = this.course.id;
             this.chapter = SessionStorage.get(SESSION_KEY_CHAPTER) || {};
-            if (this.chapter==={}){
+            if (Tool.isEmpty(this.chapter)) {
                 this.$router.push("/business/chapter");
             }
-            this.sectionDto.chapterId=this.chapter.id;
+            this.sectionDto.chapterId = this.chapter.id;
             this.list();
         },
         methods: {
@@ -178,8 +194,8 @@
             add() {
                 this.dialogFormVisible = true;
                 this.sectionDto = {};
-                this.sectionDto.courseId=this.course.id;
-                this.sectionDto.chapterId=this.chapter.id;
+                this.sectionDto.courseId = this.course.id;
+                this.sectionDto.chapterId = this.chapter.id;
             },
             remove(id) {
                 this.$confirm('此操作将删除该小节, 是否继续?', '提示', {
@@ -194,7 +210,7 @@
                             let result = response.data;
                             if (result.code === 200) {
                                 this.msg('success', result.msg);
-                            }else {
+                            } else {
                                 this.msg('error', result.msg);
                             }
                         })
@@ -232,7 +248,7 @@
                                 this.sectionDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
-                                }else {
+                                } else {
                                     this.msg('error', result.msg);
                                 }
                                 this.dialogFormVisible = false;
@@ -253,8 +269,8 @@
             list() {
                 this.$ajax
                     .post(process.env.VUE_APP_SERVER + "/api/service/section/list", {
-                        courseId:this.sectionDto.courseId,
-                        chapterId:this.sectionDto.chapterId,
+                        courseId: this.sectionDto.courseId,
+                        chapterId: this.sectionDto.chapterId,
                         page: this.currentPage,
                         size: this.size
                     })
@@ -276,6 +292,24 @@
                 this.currentPage = val;
                 this.list();
             },
+            changePercent(percentage) {
+                this.percentage = percentage;
+                if (percentage == 100) {
+                    this.success = 'success';
+                } else {
+                    this.success = '';
+                }
+            },
+            handleAvatarSuccess(url) {
+                this.sectionDto.video = url;
+            },
+            beforeAvatarUpload(file) {
+                const isLt2M = file.size / 1024 / 1024 < 500;
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 500MB!');
+                }
+                return isLt2M;
+            }
 
         },
     };

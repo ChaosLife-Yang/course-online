@@ -159,7 +159,7 @@ public class PathUtils {
         try {
             String originalFilename = file.getOriginalFilename();
             String postName = getExtensionName(originalFilename);
-            String parentPath = PathUtils.getTimePath();
+            String parentPath = getTimePath();
             //最终文件名
             String finalName = UUID.randomUUID().toString() + "." + postName;
             String finalPath = filePath + parentPath + finalName;
@@ -193,11 +193,16 @@ public class PathUtils {
             FileInputStream fis = (FileInputStream) in;
             FileChannel fChannel = fis.getChannel();
             ByteBuffer buffer = ByteBuffer.allocateDirect(10 * 1024 * 1024);
-            while ((fChannel.read(buffer)) != -1) {
-                buffer.flip();
-                md.update(buffer);
-                buffer.compact();
-            }
+//            while ((fChannel.read(buffer)) != -1) {
+//                buffer.flip();
+//                md.update(buffer);
+//                buffer.compact();
+//            }
+
+            fChannel.read(buffer);
+            buffer.flip();
+            md.update(buffer);
+            buffer.compact();
             byte[] b = md.digest();
             return byteToHexString(b);
         } catch (Exception e) {

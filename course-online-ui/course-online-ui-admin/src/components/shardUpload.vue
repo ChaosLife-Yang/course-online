@@ -9,8 +9,9 @@
                 :http-request="upload"
                 multiple
                 :limit="1"
+                :before-upload="beforeUpload"
                 :show-file-list="false">
-            <el-button :loading="flag" size="small" type="primary">{{buttonName}}</el-button>
+            <el-button :loading="flag" size="small" icon="el-icon-upload2" type="primary">{{buttonName}}</el-button>
         </el-upload>
     </div>
 </template>
@@ -48,7 +49,8 @@
             shardSize: {
                 type: Number,
                 default: 10 * 1024 * 1024
-            }
+            },
+            beforeUpload: Function
         },
         methods: {
             msg(type, message) {
@@ -145,6 +147,7 @@
                     this.$refs.upload.clearFiles();
                     this.msg('error', error);
                 });
+
             }
         }
     }

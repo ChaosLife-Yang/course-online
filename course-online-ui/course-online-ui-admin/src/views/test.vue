@@ -1,13 +1,13 @@
 <template>
     <div>
-        <shardUpload
+        <shard-upload
                 :url="url"
                 :check-url="checkUrl"
                 :get-md5="getMd5"
                 :button-name="'点击上传'"
                 @changePercent="changePercent"
                 @getUrl="getUrl">
-        </shardUpload>
+        </shard-upload>
         <el-progress :percentage="percentage" :stroke-width="24"
                      :status="success"></el-progress>
         {{fileUrl}}

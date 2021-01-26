@@ -8,11 +8,9 @@
                 <th>后缀</th>
                 <th>大小</th>
                 <th>用途</th>
-                <th>已上传分片</th>
+                <th>已上传分片索引</th>
                 <th>分片大小</th>
                 <th>分片总数</th>
-                <th>文件标识</th>
-                <th>vod</th>
                 <th>上传时间</th>
             </tr>
             </thead>
@@ -21,13 +19,11 @@
                 <th>{{ file.path}}</th>
                 <th>{{ file.name}}</th>
                 <th>{{ file.suffix}}</th>
-                <th>{{ file.size | formatFileSize}}</th>
+                <th>{{ file.size|formatFileSize}}</th>
                 <th>{{ fileUse|optionKV(file.useTo)}}</th>
-                <th>{{ file.shardIndex}}</th>
-                <th>{{ file.shardSize}}</th>
+                <th>{{ file.shardIndex }}</th>
+                <th>{{ file.shardSize|formatFileSize}}</th>
                 <th>{{ file.shardTotal}}</th>
-                <th>{{ file.fileKey}}</th>
-                <th>{{ file.vod}}</th>
                 <th>{{ file.createTime}}</th>
             </tr>
             </tbody>
