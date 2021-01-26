@@ -15,7 +15,7 @@
                    plain
                    @click="add">添加小节
         </el-button>
-        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+        <el-dialog :title="title" :before-close="handleClose" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="ruleForm" :model="sectionDto">
                 <el-input v-model="sectionDto.id" style="display: none"/>
                 <el-form-item label="标题" :label-width="formLabelWidth" prop="title">
@@ -196,6 +196,7 @@
                 this.sectionDto = {};
                 this.sectionDto.courseId = this.course.id;
                 this.sectionDto.chapterId = this.chapter.id;
+                this.percentage = 0;
             },
             remove(id) {
                 this.$confirm('此操作将删除该小节, 是否继续?', '提示', {
@@ -226,6 +227,7 @@
             get(id) {
                 this.title = "修改小节信息";
                 this.dialogFormVisible = true;
+                this.percentage = 0;
                 //获取要更新的对象
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/section/" + id)
@@ -299,6 +301,14 @@
                 } else {
                     this.success = '';
                 }
+            },
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                    })
+                    .catch(_ => {
+                    });
             },
             handleAvatarSuccess(url) {
                 this.sectionDto.video = url;

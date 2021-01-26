@@ -16,7 +16,7 @@
                    plain
                    @click="add">添加大章
         </el-button>
-        <el-dialog :title="title" :visible.sync="dialogFormVisible">
+        <el-dialog :title="title" :before-close="handleClose" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="ruleForm" :model="chapterDto">
                 <el-input v-model="chapterDto.id" style="display: none"/>
                 <el-form-item label="大章名称" :label-width="formLabelWidth" prop="name">
@@ -231,6 +231,14 @@
                         this.msg('error', error);
                     });
 
+            },
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                    })
+                    .catch(_ => {
+                    });
             },
             handleSizeChange(val) {
                 this.size = val;

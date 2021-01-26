@@ -3,7 +3,7 @@
         <el-upload
                 :disabled="flag"
                 id="el-up"
-                class="avatar-uploader"
+                class="upload-demo"
                 action
                 ref="upload"
                 :http-request="upload"
@@ -153,6 +153,42 @@
     }
 </script>
 
-<style scoped>
+<style>
+    .el-input {
+        width: 80% !important;
+        margin: 0 5px !important;
+    }
 
+    #el-up input {
+        display: none !important;
+    }
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 103px;
+        line-height: 178px;
+        text-align: center;
+        display: block;
+        margin-top: 75px;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 </style>
