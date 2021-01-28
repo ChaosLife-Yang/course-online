@@ -171,16 +171,16 @@
                         this.msg('error', '上传文件有误');
                         return
                     }
-                    //文件分片
-                    shardIndex++;
-                    start = shardIndex * shardSize;
-                    end = Math.min(file.size, start + shardSize);
-                    fileShard = file.slice(start, end);
-                    //获取进度
-                    let percentage = shardIndex / shardTotal;
-                    this.percentage = (percentage * 100).toFixed(0);
-                    this.$emit('changePercent', this.percentage);
                     if (shardIndex < shardTotal) {
+                        //文件分片
+                        shardIndex++;
+                        start = shardIndex * shardSize;
+                        end = Math.min(file.size, start + shardSize);
+                        fileShard = file.slice(start, end);
+                        //获取进度
+                        let percentage = shardIndex / shardTotal;
+                        this.percentage = (percentage * 100).toFixed(0);
+                        this.$emit('changePercent', this.percentage);
                         //递归上传
                         this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
                     } else {
