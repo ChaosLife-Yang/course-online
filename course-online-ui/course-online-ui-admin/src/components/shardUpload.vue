@@ -12,9 +12,9 @@
                 :before-upload="beforeUpload"
                 :show-file-list="false">
             <el-button :loading="flag" size="small" icon="el-icon-upload2" type="primary">{{buttonName}}</el-button>
-        </el-upload>&emsp;
-        <el-button type="info" size="small" :disabled="shut" @click="shut = true" plain>暂停</el-button>&emsp;
-        <el-button type="success" size="small" :disabled="carry" @click="upload(param)" plain>继续</el-button>
+        </el-upload>&nbsp;
+        <el-button type="info" class="upload-demo" size="small" :disabled="shut" @click="shut = true" plain>暂停</el-button>
+        <el-button type="success" class="upload-demo" size="small" :disabled="carry" @click="upload(param)" plain>继续</el-button>
     </div>
 </template>
 
@@ -224,7 +224,9 @@
         position: relative;
         overflow: hidden;
     }
-
+    .upload-demo{
+        display: inline;
+    }
     .avatar-uploader .el-upload:hover {
         border-color: #409EFF;
     }
