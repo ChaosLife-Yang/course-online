@@ -13,8 +13,10 @@
                 :show-file-list="false">
             <el-button :loading="flag" size="small" icon="el-icon-upload2" type="primary">{{buttonName}}</el-button>
         </el-upload>&nbsp;
-        <el-button type="info" class="upload-demo" size="small" :disabled="shut" @click="shut = true" plain>暂停</el-button>
-        <el-button type="success" class="upload-demo" size="small" :disabled="carry" @click="upload(param)" plain>继续</el-button>
+        <el-button type="info" class="upload-demo" size="small" :disabled="shut" @click="shut = true" plain>暂停
+        </el-button>
+        <el-button type="success" class="upload-demo" size="small" :disabled="carry" @click="upload(param)" plain>继续
+        </el-button>
     </div>
 </template>
 
@@ -187,6 +189,7 @@
                         this.$refs.upload.clearFiles();
                         this.flag = false;
                         if (resp.code != null && resp.code === 200) {
+                            this.shut = true;
                             this.msg('success', "上传文件完成");
                             //向父组件传递文件路径
                             this.$emit('getUrl', resp.data);
@@ -224,9 +227,11 @@
         position: relative;
         overflow: hidden;
     }
-    .upload-demo{
+
+    .upload-demo {
         display: inline;
     }
+
     .avatar-uploader .el-upload:hover {
         border-color: #409EFF;
     }
