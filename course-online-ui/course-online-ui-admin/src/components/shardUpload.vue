@@ -12,7 +12,9 @@
                 :before-upload="beforeUpload"
                 :show-file-list="false">
             <el-button :loading="flag" size="small" icon="el-icon-upload2" type="primary">{{buttonName}}</el-button>
-        </el-upload>
+        </el-upload>&emsp;
+        <el-button type="info" size="small" :disabled="shut" @click="shut = true" plain>暂停</el-button>&emsp;
+        <el-button type="success" size="small" :disabled="carry" @click="upload(param)" plain>继续</el-button>
     </div>
 </template>
 
@@ -22,7 +24,10 @@
         data() {
             return {
                 percentage: 0,
-                flag: false
+                flag: false,
+                shut: true,
+                carry: true,
+                param: {}
             }
         },
         props: {
@@ -61,7 +66,10 @@
                 });
             },
             upload(param) {
+                this.param = param;
                 this.flag = true;
+                this.shut = false;
+                this.carry = true;
                 let file = param.file;
                 let size = file.size;
                 let fileName = file.name;
@@ -72,6 +80,7 @@
                 let formData = new window.FormData();
                 //获取分片总数
                 let shardTotal = Math.ceil(size / shardSize);
+                //获取文件最后的分片
                 let index = (shardTotal - 1) * shardSize;
                 let indexEnd = Math.min(file.size, index + shardSize);
                 //将文件最后一片传上去获取md5
@@ -91,8 +100,8 @@
                             if (result.data.shardIndex != null) {
                                 newName = result.data.newName;
                                 shardIndex = result.data.shardIndex;
+                                shardIndex += 1;
                                 percentage = shardIndex / shardTotal;
-                                shardIndex += 1
                             } else {
                                 newName = this.$uuid.v4() + "." + suffix;
                                 shardIndex = 0;
@@ -136,6 +145,11 @@
 
             },
             shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16) {
+                if (this.shut) {
+                    this.flag = false;
+                    this.carry = false;
+                    return
+                }
                 let formData = new window.FormData();
                 formData.append('file', fileShard);
                 formData.append('suffix', suffix);
@@ -157,14 +171,15 @@
                         this.msg('error', '上传文件有误');
                         return
                     }
+                    //文件分片
+                    shardIndex++;
+                    start = shardIndex * shardSize;
+                    end = Math.min(file.size, start + shardSize);
+                    fileShard = file.slice(start, end);
                     //获取进度
                     let percentage = shardIndex / shardTotal;
                     this.percentage = (percentage * 100).toFixed(0);
                     this.$emit('changePercent', this.percentage);
-                    start = shardIndex * shardSize;
-                    end = Math.min(file.size, start + shardSize);
-                    fileShard = file.slice(start, end);
-                    shardIndex++;
                     if (shardIndex < shardTotal) {
                         //递归上传
                         this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
