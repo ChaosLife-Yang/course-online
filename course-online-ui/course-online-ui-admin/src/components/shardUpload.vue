@@ -157,7 +157,6 @@
                         this.msg('error', '上传文件有误');
                         return
                     }
-                    shardIndex++;
                     //获取进度
                     let percentage = shardIndex / shardTotal;
                     this.percentage = (percentage * 100).toFixed(0);
@@ -165,6 +164,7 @@
                     start = shardIndex * shardSize;
                     end = Math.min(file.size, start + shardSize);
                     fileShard = file.slice(start, end);
+                    shardIndex++;
                     if (shardIndex < shardTotal) {
                         //递归上传
                         this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
