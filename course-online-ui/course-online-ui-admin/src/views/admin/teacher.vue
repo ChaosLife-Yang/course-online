@@ -16,7 +16,7 @@
                 </el-form-item>
                 <el-form-item label="头像" :label-width="formLabelWidth" prop="image">
                     <shard-upload
-                            :url="gateway+'/api/file/local/shardUpload'"
+                            :url="gateway+'/api/file/oss/upload'"
                             :check-url="gateway+'/api/file/local/check'"
                             :get-md5="gateway+'/api/file/local/getMd5'"
                             :button-name="'点击上传'"

@@ -3,6 +3,7 @@ package com.halayang.server.file.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.po.FilePO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -17,5 +18,7 @@ import com.halayang.server.file.po.FilePO;
 public interface OssService extends IService<FilePO> {
 
     String upload(FileDTO fileDTO);
+
+    String contentUpload( MultipartFile file);
 
 }

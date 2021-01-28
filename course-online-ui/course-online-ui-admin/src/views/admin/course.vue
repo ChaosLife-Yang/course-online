@@ -29,7 +29,7 @@
                 </el-form-item>
                 <el-form-item label="封面" :label-width="formLabelWidth" prop="image">
                     <shard-upload
-                            :url="gateway+'/api/file/local/shardUpload'"
+                            :url="gateway+'/api/file/oss/upload'"
                             :check-url="gateway+'/api/file/local/check'"
                             :get-md5="gateway+'/api/file/local/getMd5'"
                             :button-name="'点击上传'"
@@ -201,7 +201,7 @@
                     theme: "dark",//主题
                     placeholder: "请填写内容...",
                     language: "zh_cn",//国际化
-                    imageUploadURL: process.env.VUE_APP_SERVER + "/api/file/local/contentUpload",//上传url
+                    imageUploadURL: process.env.VUE_APP_SERVER + "/api/file/oss/contentUpload",//上传url
                     quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],//快速插入项
                     // toolbarVisibleWithoutSelection: true,//是否开启 不选中模式
                     // disableRightClick: true,//是否屏蔽右击

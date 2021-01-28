@@ -6,6 +6,7 @@ import com.aliyun.oss.model.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.halayang.common.enums.FileUseEnum;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.mapper.FileMapper;
@@ -25,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -105,4 +107,29 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             throw new IllegalArgumentException("上传有误");
         }
     }
+
+    @Override
+    public String contentUpload(MultipartFile file) {
+        try {
+            //封装dto然后调用上面的方法
+            String extensionName = PathUtils.getExtensionName(file.getOriginalFilename());
+            FileDTO fileDTO = new FileDTO()
+                    .setFile(file)
+                    .setName(file.getOriginalFilename())
+                    .setSuffix(extensionName)
+                    .setUseTo(FileUseEnum.COURSE.getCode())
+                    .setFileKey(PathUtils.getFileMd5(file.getInputStream()))
+                    .setNewName(UUID.randomUUID().toString() + "." + extensionName)
+                    .setShardIndex(0)
+                    .setShardTotal(1)
+                    .setShardSize(Math.toIntExact(file.getSize()))
+                    .setSize(Math.toIntExact(file.getSize()));
+
+            return upload(fileDTO);
+        } catch (IOException e) {
+            log.error("上传有误", e);
+            throw new IllegalArgumentException("上传有误");
+        }
+    }
+
 }
