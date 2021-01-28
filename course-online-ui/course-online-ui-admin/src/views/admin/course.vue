@@ -196,13 +196,12 @@
                     label: 'name'
                 },
                 froalaConfig: {
-                    toolbarButtons: ['undo', 'redo', 'clearFormatting', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertFile', 'insertTable', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'html', 'fullscreen', 'help'],
+                    toolbarButtons: ['undo', 'redo', 'clearFormatting', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertTable', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'html', 'fullscreen', 'help'],
                     //['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
                     theme: "dark",//主题
                     placeholder: "请填写内容...",
                     language: "zh_cn",//国际化
                     imageUploadURL: process.env.VUE_APP_SERVER + "/api/file/local/contentUpload",//上传url
-                    fileUploadURL: process.env.VUE_APP_SERVER + "/api/file/local/contentUpload",//上传url 更多上传介绍 请访问https://www.froala.com/wysiwyg-editor/docs/options
                     quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],//快速插入项
                     // toolbarVisibleWithoutSelection: true,//是否开启 不选中模式
                     // disableRightClick: true,//是否屏蔽右击

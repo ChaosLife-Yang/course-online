@@ -5,6 +5,7 @@ import com.halayang.common.enums.FileUseEnum;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.file.dto.FileDTO;
+import com.halayang.server.file.dto.FileMessageDTO;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
 import com.halayang.server.file.util.PathUtils;
@@ -46,7 +47,7 @@ public class LocalFileController {
     private FileService fileService;
 
     @PostMapping("/getMd5")
-    public ResponseObject<String> getMd5(@RequestParam MultipartFile file){
+    public ResponseObject<String> getMd5(@RequestParam MultipartFile file) {
         try {
             String fileMd5 = PathUtils.getFileMd5(file.getInputStream());
             return ResponseResult.success(fileMd5);
@@ -62,18 +63,8 @@ public class LocalFileController {
     }
 
     @GetMapping("/check/{key}")
-    public ResponseObject<Integer> checkKey(@PathVariable String key) {
-        FilePO one = fileService.getOne(new LambdaQueryWrapper<FilePO>()
-                .eq(FilePO::getFileKey, key));
-        //判断上传到第几个分片了
-        if (ObjectUtils.isEmpty(one)) {
-            return ResponseResult.success(0);
-        } else {
-            if (StringUtils.isEmpty(one.getShardIndex()) && StringUtils.isEmpty(one.getShardTotal())) {
-                return ResponseResult.success(0);
-            }
-            return ResponseResult.success(one.getShardIndex());
-        }
+    public ResponseObject<FileMessageDTO> checkKey(@PathVariable String key) {
+        return ResponseResult.success(fileService.getShardIndex(key));
     }
 
     @PostMapping("/contentUpload")

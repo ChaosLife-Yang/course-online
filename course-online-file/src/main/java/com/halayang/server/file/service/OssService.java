@@ -1,6 +1,7 @@
 package com.halayang.server.file.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.po.FilePO;
 
 /**
@@ -14,4 +15,7 @@ import com.halayang.server.file.po.FilePO;
  *  YangYuDi               2021/1/26 10:10           1.0                         
  */
 public interface OssService extends IService<FilePO> {
+
+    String upload(FileDTO fileDTO);
+
 }

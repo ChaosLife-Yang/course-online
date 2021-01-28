@@ -26,7 +26,7 @@
             }
         },
         props: {
-            buttonName:{
+            buttonName: {
                 type: String,
                 required: true
             },
@@ -70,18 +70,35 @@
                 //获取文件后缀
                 let suffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase();
                 let formData = new window.FormData();
-                formData.append("file", file);
+                //获取分片总数
+                let shardTotal = Math.ceil(size / shardSize);
+                let index = (shardTotal - 1) * shardSize;
+                let indexEnd = Math.min(file.size, index + shardSize);
+                //将文件最后一片传上去获取md5
+                let shard = file.slice(index, indexEnd);
+                formData.append("file", shard);
                 this.$ajax.post(this.getMd5, formData).then((res) => {
                     if (res.data.code === 200) {
                         //读取文件md5值
                         let key16 = res.data.data;
+                        //获取分片索引
                         this.$ajax.get(`${this.checkUrl}/${key16}`).then((response) => {
                             let result = response.data;
+                            let newName;
+                            let percentage;
                             //分片索引
-                            let shardIndex = result.data;
-                            //获取分片总数
-                            let shardTotal = Math.ceil(size / shardSize);
-                            let percentage = shardIndex / shardTotal;
+                            let shardIndex;
+                            if (result.data.shardIndex != null) {
+                                newName = result.data.newName;
+                                shardIndex = result.data.shardIndex;
+                                percentage = shardIndex / shardTotal;
+                                shardIndex += 1
+                            } else {
+                                newName = this.$uuid.v4() + "." + suffix;
+                                shardIndex = 0;
+                                percentage = shardIndex / shardTotal;
+                            }
+                            //获得百分比
                             this.percentage = (percentage * 100).toFixed(0);
                             //向父组件传递百分比数据
                             this.$emit('changePercent', this.percentage);
@@ -91,21 +108,29 @@
                             let end = Math.min(file.size, start + shardSize);
                             //截取分片数据
                             let fileShard = file.slice(start, end);
-                            let newName = this.$uuid.v4() + "." + suffix;
+
                             //递归上传
                             this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
 
                         }).catch(error => {
-                            this.$refs.upload.clearFiles();
                             this.msg('error', error);
+                            this.percentage = 0;
+                            this.$emit('changePercent', this.percentage);
+                            this.$refs.upload.clearFiles();
+                            this.flag = false;
                         });
                     } else {
+                        this.percentage = 0;
                         this.$refs.upload.clearFiles();
+                        this.flag = false;
+                        this.$emit('changePercent', this.percentage);
                         this.msg('error', res.data.msg);
                     }
-
                 }).catch(error => {
+                    this.percentage = 0;
+                    this.$emit('changePercent', this.percentage);
                     this.$refs.upload.clearFiles();
+                    this.flag = false;
                     this.msg('error', error);
                 });
 
@@ -124,6 +149,14 @@
                 formData.append('useTo', this.use);
                 this.$ajax.post(this.url, formData).then((response) => {
                     let resp = response.data;
+                    if (resp.code != 200) {
+                        this.percentage = 0;
+                        this.$emit('changePercent', this.percentage);
+                        this.$refs.upload.clearFiles();
+                        this.flag = false;
+                        this.msg('error', '上传文件有误');
+                        return
+                    }
                     shardIndex++;
                     //获取进度
                     let percentage = shardIndex / shardTotal;
@@ -147,7 +180,10 @@
                         }
                     }
                 }).catch(error => {
+                    this.percentage = 0;
+                    this.$emit('changePercent', this.percentage);
                     this.$refs.upload.clearFiles();
+                    this.flag = false;
                     this.msg('error', error);
                 });
 

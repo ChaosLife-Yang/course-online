@@ -10,8 +10,10 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.halayang.common.enums.FileUseEnum;
 import com.halayang.common.utils.CopyUtils;
+import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.config.executor.TaskExecutorConfig;
 import com.halayang.server.file.dto.FileDTO;
+import com.halayang.server.file.dto.FileMessageDTO;
 import com.halayang.server.file.mapper.FileMapper;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
@@ -47,6 +49,30 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
 
     @Value("${file.upload.path}")
     private String filePath;
+
+    @Override
+    public FileMessageDTO getShardIndex(String key) {
+        FilePO one = this.getOne(new LambdaQueryWrapper<FilePO>()
+                .eq(FilePO::getFileKey, key));
+        FileMessageDTO fileMessageDTO;
+        //判断上传到第几个分片了 数据库找不到就表示没上传过 分片索引为0
+        //找到了但分片索引 分片总数等信息为null表示是文本编辑器上传的分片索引也为0
+        if (ObjectUtils.isEmpty(one)) {
+            fileMessageDTO = new FileMessageDTO();
+        } else {
+            if (StringUtils.isEmpty(one.getShardIndex()) && StringUtils.isEmpty(one.getShardTotal())) {
+                fileMessageDTO = new FileMessageDTO()
+                        .setShardIndex(0);
+                return fileMessageDTO;
+            }
+            String path = one.getPath();
+            String newName = path.substring(path.lastIndexOf("/") + 1);
+            fileMessageDTO = new FileMessageDTO()
+                    .setShardIndex(one.getShardIndex())
+                    .setNewName(newName);
+        }
+        return fileMessageDTO;
+    }
 
     @Override
     public String shardFileUpload(FileDTO fileDTO) {

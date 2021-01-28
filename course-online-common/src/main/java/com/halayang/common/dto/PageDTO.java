@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.List;
 
 /**
@@ -42,15 +43,18 @@ public class PageDTO<T> {
     /**
      * 共多少页
      */
+    @Null
     private Integer pages;
 
     /**
      * 总条数
      */
+    @Null
     private Long total;
 
     /**
      * 数据
      */
+    @Null
     private List<T> list;
 }

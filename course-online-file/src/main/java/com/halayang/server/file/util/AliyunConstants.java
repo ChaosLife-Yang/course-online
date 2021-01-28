@@ -34,4 +34,7 @@ public class AliyunConstants {
     @Value("${aliyun.file.bucketname}")
     private String bucketName;
 
+    @Value("${aliyun.file.show}")
+    private String show;
+
 }

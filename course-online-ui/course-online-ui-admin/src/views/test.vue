@@ -23,7 +23,7 @@
         components: {shardUpload},
         data() {
             return {
-                url: process.env.VUE_APP_SERVER + '/api/file/local/shardUpload',
+                url: process.env.VUE_APP_SERVER + '/api/file/oss/upload',
                 checkUrl: process.env.VUE_APP_SERVER + '/api/file/local/check',
                 getMd5: process.env.VUE_APP_SERVER + '/api/file/local/getMd5',
                 percentage: 0,
