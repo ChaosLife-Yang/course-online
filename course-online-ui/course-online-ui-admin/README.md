@@ -1,4 +1,10 @@
 # admin 后台管理
+## 构建项目
+安装vue-cli 再构建
+```
+npm install -g @vue/cli
+vue create xxx
+```
 
 ## 安装依赖
 ```
