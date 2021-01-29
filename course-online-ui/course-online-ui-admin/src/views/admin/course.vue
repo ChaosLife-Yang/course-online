@@ -196,8 +196,9 @@
                     label: 'name'
                 },
                 froalaConfig: {
-                    toolbarButtons: ['undo', 'redo', 'clearFormatting', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertTable', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'html', 'fullscreen', 'help'],
-                    //['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
+                    toolbarButtons: ['undo', 'redo', 'clearFormatting', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertTable', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'html', 'fullscreen', 'help'],
+                    //['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
+                    theme: 'gray',
                     placeholder: "请填写内容...",
                     language: "zh_cn",//国际化
                     imageUploadURL: process.env.VUE_APP_SERVER + "/api/file/oss/contentUpload",//上传url
@@ -205,8 +206,11 @@
                     // toolbarVisibleWithoutSelection: true,//是否开启 不选中模式
                     // disableRightClick: true,//是否屏蔽右击
                     colorsHEXInput: false,//关闭16进制色值
-                    toolbarSticky: true,//操作栏是否自动吸顶
+                    toolbarSticky: false,//操作栏是否自动吸顶
                     zIndex: 99999,
+                    defineIcon: {
+                        'color': {SRC: 'txt_color@2x.png', ALT: 'Image button', template: 'image'},
+                    },
                     events: {
                         'froalaEditor.initialized': function () {
                             console.log('froalaEditor initialized')

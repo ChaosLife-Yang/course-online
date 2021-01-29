@@ -9,16 +9,19 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import VueFroala from 'vue-froala-wysiwyg'
 
-
 // Import and use Vue Froala lib.
 import 'froala-editor/css/froala_editor.pkgd.min.css'
 import 'froala-editor/css/froala_style.min.css'
 import 'froala-editor/css/plugins/colors.min.css'
-
+import 'froala-editor/css/plugins/colors.min.css'
+import 'froala-editor/css/themes/gray.css'
+import 'font-awesome/css/font-awesome.min.css'
 //Import Froala Editor
 import 'froala-editor/js/plugins.pkgd.min.js';
 import 'froala-editor/js/languages/zh_cn.js'
 import 'froala-editor/js/plugins/colors.min.js'
+import 'froala-editor/js/plugins/emoticons.min.js'
+import 'froala-editor/js/plugins/code_beautifier.min.js'
 //Import third party plugins
 import 'froala-editor/js/third_party/embedly.min';
 import 'froala-editor/js/third_party/font_awesome.min';
@@ -26,10 +29,13 @@ import 'froala-editor/js/third_party/spell_checker.min';
 import 'froala-editor/js/third_party/image_tui.min';
 import 'froala-editor/js/froala_editor.pkgd.min.js'
 
+import jQuery from 'jquery';
 import UUID from 'vue-uuid'
 import VideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 
+window.$ = jQuery;
+window.jQuery = jQuery;
 Vue.use(VideoPlayer);
 Vue.use(UUID);
 
