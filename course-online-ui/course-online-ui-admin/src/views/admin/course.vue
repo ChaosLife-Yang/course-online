@@ -93,7 +93,8 @@
         <el-dialog :before-close="handleClose" :title="contentTitle + '——' + title"
                    :visible.sync="dialogContentFormVisible">
             <div slot="footer" class="dialog-footer">
-                <editor :model="courseContentDto.content"></editor>
+                <editor :model="courseContentDto.content"
+                :image-upload-url="gateway + '/api/file/oss/contentUpload'"></editor>
                 <br/>
                 <el-button type="primary" @click="addContent">提 交</el-button>
             </div>

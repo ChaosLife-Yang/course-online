@@ -11,6 +11,10 @@
             model: {
                 type: String,
                 require: true
+            },
+            imageUploadUrl: {
+                type: String,
+                require: true
             }
         },
         data() {
@@ -23,7 +27,7 @@
                     // theme: "dark",//主题
                     placeholder: "请填写内容...",
                     language: "zh_cn",//国际化
-                    imageUploadURL: this.gateway + "/api/file/oss/contentUpload",//上传图片url
+                    imageUploadUrl: this.imageUploadUrl,//上传图片url
                     imageAllowedTypes: ['jpeg', 'jpg', 'png'],
                     charCounterCount: false,
                     quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],//快速插入项
