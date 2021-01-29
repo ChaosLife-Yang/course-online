@@ -3,7 +3,6 @@ package com.halayang.server.file.controller;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.file.dto.FileDTO;
-import com.halayang.server.file.service.FileService;
 import com.halayang.server.file.service.OssService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,11 @@ import java.util.Map;
  *
  * @author YangYuDi
  * @version 1.0.0
- * <author>                <time>                  <version>                   <description>
- * YangYuDi               2021/1/26 10:11           1.0
  * @program course-online
  * @description
  * @create 2021/1/26 10:11
+ * <author>                <time>                  <version>                   <description>
+ * YangYuDi               2021/1/26 10:11           1.0
  */
 @Slf4j
 @RestController

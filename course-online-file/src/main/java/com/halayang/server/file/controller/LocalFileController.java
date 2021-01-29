@@ -1,20 +1,14 @@
 package com.halayang.server.file.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.halayang.common.enums.FileUseEnum;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.dto.FileMessageDTO;
-import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
 import com.halayang.server.file.util.PathUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,11 +21,11 @@ import java.util.Map;
  *
  * @author YangYuDi
  * @version 1.0.0
- * <author>                <time>                  <version>                   <description>
- * YangYuDi               2021/1/12 10:12           1.0                         文件
  * @program course-online
  * @description 上传至本地的文件
  * @create 2021/1/12 10:12
+ * <author>                <time>                  <version>                   <description>
+ * YangYuDi               2021/1/12 10:12           1.0                         文件
  */
 @Slf4j
 @RestController

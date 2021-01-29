@@ -103,12 +103,11 @@
                                 newName = result.data.newName;
                                 shardIndex = result.data.shardIndex;
                                 shardIndex += 1;
-                                percentage = shardIndex / shardTotal;
                             } else {
                                 newName = this.$uuid.v4() + "." + suffix;
                                 shardIndex = 0;
-                                percentage = shardIndex / shardTotal;
                             }
+                            percentage = shardIndex / shardTotal;
                             //获得百分比
                             this.percentage = (percentage * 100).toFixed(0);
                             //向父组件传递百分比数据
