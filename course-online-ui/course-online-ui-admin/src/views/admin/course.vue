@@ -101,8 +101,10 @@
         <div class="row">
             <div v-for="course in courses" class="col-xs-6 col-sm-4 col-md-3">
                 <div class="thumbnail search-thumbnail">
-                    <img v-show="!course.image" class="media-object" src="@/assets/demo-course.jpg"/>
-                    <img v-show="course.image" class="media-object" :src="course.image"/>
+                    <el-image v-show="!course.image" :fit="'scale-down'" style="width: 100%; height: 50%"
+                              :src="require('@/assets/demo-course.jpg')"/>
+                    <el-image v-show="course.image" :fit="'scale-down'" style="width: 100%; height: 50%"
+                              :src="course.image"/>
                     <div class="caption">
                         <div class="clearfix">
                         <span class="pull-right label label-danger info-label">

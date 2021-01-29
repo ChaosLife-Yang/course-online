@@ -50,10 +50,10 @@
             <div v-for="teacher in teachers" class="col-md-3 col-sm-6">
                 <div class="thumbnail search-thumbnail">
                     <span class="profile-picture">
-                      <img v-show="!teacher.image" class="editable img-responsive editable-click editable-empty"
-                           src="@/assets/讲师默认头像.jpg" v-bind:title="teacher.intro"/>
-                      <img v-show="teacher.image" class="editable img-responsive editable-click editable-empty"
-                           v-bind:src="teacher.image" v-bind:title="teacher.intro"/>
+                        <el-image v-show="!teacher.image" :fit="'scale-down'" style="width: 100%; height: 100%"
+                                  :src="require('@/assets/讲师默认头像.jpg')" :title="teacher.intro"/>
+                        <el-image v-show="teacher.image" :fit="'scale-down'" style="width: 100%; height: 100%"
+                                  :src="teacher.image" :title="teacher.intro"/>
                     </span>
                     <div class="space-4"></div>
                     <span href="javascript:" class="label label-primary arrowed-in-right label-lg"

@@ -12,6 +12,8 @@
         <el-progress :percentage="percentage" :stroke-width="24"
                      :status="success"></el-progress>
         {{fileUrl}}
+        <el-image :fit="'scale-down'" style="width: 350px; height: 200px" :src="require('@/assets/demo-course.jpg')"></el-image>
+
     </div>
 </template>
 
