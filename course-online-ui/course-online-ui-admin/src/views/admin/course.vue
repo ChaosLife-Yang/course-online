@@ -208,9 +208,6 @@
                     colorsHEXInput: false,//关闭16进制色值
                     toolbarSticky: false,//操作栏是否自动吸顶
                     zIndex: 99999,
-                    defineIcon: {
-                        'color': {SRC: 'txt_color@2x.png', ALT: 'Image button', template: 'image'},
-                    },
                     events: {
                         'froalaEditor.initialized': function () {
                             console.log('froalaEditor initialized')
