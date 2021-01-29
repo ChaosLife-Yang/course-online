@@ -13,9 +13,11 @@
     "browser-md5-file": "^1.1.1",
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1",
     "spark-md5": "^3.0.1",
     "vue": "^2.6.12",
-    "vue-froala-wysiwyg": "^3.2.5-1",
+    "vue-froala-wysiwyg": "^2.9.0",
     "vue-router": "^3.4.9",
     "vue-uuid": "^2.0.2",
     "vue-video-player": "^5.0.2"

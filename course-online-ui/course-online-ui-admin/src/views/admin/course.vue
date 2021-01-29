@@ -93,7 +93,7 @@
         <el-dialog :before-close="handleClose" :title="contentTitle + '——' + title"
                    :visible.sync="dialogContentFormVisible">
             <div slot="footer" class="dialog-footer">
-                <froala :tag="'textarea'" :config="froalaConfig" v-model="courseContentDto.content"></froala>
+                <editor :model="courseContentDto.content"></editor>
                 <br/>
                 <el-button type="primary" @click="addContent">提 交</el-button>
             </div>
@@ -164,10 +164,11 @@
 
 <script>
     import shardUpload from "../../components/shardUpload";
+    import editor from "../../components/editor";
 
     export default {
         name: "course",
-        components: {shardUpload},
+        components: {shardUpload, editor},
         data() {
             return {
                 gateway: process.env.VUE_APP_SERVER,
@@ -194,24 +195,6 @@
                 defaultProps: {
                     children: 'children',
                     label: 'name'
-                },
-                froalaConfig: {
-                    toolbarButtons: ['undo', 'redo', 'clearFormatting', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertTable', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'html', 'fullscreen', 'help'],
-                    //['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
-                    placeholder: "请填写内容...",
-                    language: "zh_cn",//国际化
-                    imageUploadURL: process.env.VUE_APP_SERVER + "/api/file/oss/contentUpload",//上传url
-                    quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],//快速插入项
-                    // toolbarVisibleWithoutSelection: true,//是否开启 不选中模式
-                    // disableRightClick: true,//是否屏蔽右击
-                    colorsHEXInput: false,//关闭16进制色值
-                    toolbarSticky: true,//操作栏是否自动吸顶
-                    zIndex: 99999,
-                    events: {
-                        'froalaEditor.initialized': function () {
-                            console.log('froalaEditor initialized')
-                        }
-                    },
                 },
                 rules: {
                     name: [
