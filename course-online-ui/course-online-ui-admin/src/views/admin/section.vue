@@ -34,6 +34,7 @@
                          :file-name="sectionDto.title"
                          @getVod="handleAvatarSuccess"
                          @getUrl="getUrl"
+                         @getDuration="getDuration"
                          :before-upload="beforeAvatarUpload"/>
                     <video v-show="sectionDto.video" width="500px" :src="sectionDto.video" controls="controls">
                         您的浏览器不支持 video 标签。
@@ -146,7 +147,6 @@
                 currentPage: 1,
                 size: 10,
                 sectionDto: {},
-                time: null,
                 charge: this.$SECTION_CHARGE,
                 rules: {
                     title: [
@@ -299,6 +299,9 @@
             },
             getUrl(key) {
                 this.sectionDto.video = key;
+            },
+            getDuration(key) {
+                this.sectionDto.time = key;
             },
             beforeAvatarUpload(file) {
                 let fileName = file.name;

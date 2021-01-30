@@ -93,6 +93,7 @@
                                 this.flag = false;
                                 this.$emit('getVod', resp.data.vod);
                                 this.$emit('getUrl', resp.data.url);
+                                this.$emit('getDuration', resp.data.duration);
                             }else {
                                 this.$refs.upload.clearFiles();
                                 this.flag = false;

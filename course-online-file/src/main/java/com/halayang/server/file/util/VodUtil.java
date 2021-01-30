@@ -140,6 +140,12 @@ public class VodUtil {
         return client.getAcsResponse(request);
     }
 
+    public static GetVideoInfoResponse getVideoInfo(DefaultAcsClient client, String videoId) throws Exception {
+        GetVideoInfoRequest request = new GetVideoInfoRequest();
+        request.setVideoId(videoId);
+        return client.getAcsResponse(request);
+    }
+
     /**
      * 获取播放凭证函数
      *

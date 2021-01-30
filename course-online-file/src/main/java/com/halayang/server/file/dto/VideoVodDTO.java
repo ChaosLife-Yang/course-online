@@ -28,4 +28,7 @@ public class VideoVodDTO {
     @ApiModelProperty(value = "播放地址")
     private String url;
 
+    @ApiModelProperty(value = "视频时长")
+    private Integer duration;
+
 }
