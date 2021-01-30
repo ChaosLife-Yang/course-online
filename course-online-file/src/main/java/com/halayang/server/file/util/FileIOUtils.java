@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
@@ -27,7 +29,7 @@ import java.util.UUID;
  * @create 2021/1/12 15:44
  */
 @Slf4j
-public class PathUtils {
+public class FileIOUtils {
     /**
      * 正斜杠
      */
@@ -35,7 +37,7 @@ public class PathUtils {
     private static final char[] HEXDIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
             '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    private PathUtils() {
+    private FileIOUtils() {
     }
 
     /**
@@ -79,15 +81,14 @@ public class PathUtils {
      * @date 2021/1/12 15:51
      */
     public static String getTimePath() {
-        return new StringBuilder(PathUtils.yearFilePrefix())
+        return new StringBuilder(FileIOUtils.yearFilePrefix())
                 .append(SEPARATOR)
-                .append(PathUtils.monthFilePrefix())
+                .append(FileIOUtils.monthFilePrefix())
                 .append(SEPARATOR)
-                .append(PathUtils.dayFilePrefix())
+                .append(FileIOUtils.dayFilePrefix())
                 .append(SEPARATOR)
                 .toString();
     }
-
 
     /**
      * 获得保存相对路径
@@ -98,7 +99,7 @@ public class PathUtils {
      * @date 2021/1/24 15:04
      */
     public static String getSaveFileName(String fileName) {
-        String parentPath = PathUtils.getTimePath();
+        String parentPath = FileIOUtils.getTimePath();
         //最终文件名
         return new StringBuilder().append(parentPath).append(fileName).toString();
     }
@@ -113,8 +114,8 @@ public class PathUtils {
      */
     public static String getSaveFileName(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
-        String postName = PathUtils.getExtensionName(originalFilename);
-        String parentPath = PathUtils.getTimePath();
+        String postName = FileIOUtils.getExtensionName(originalFilename);
+        String parentPath = FileIOUtils.getTimePath();
         //最终文件名
         String finalName = UUID.randomUUID().toString() + "." + postName;
         return new StringBuilder().append(parentPath).append(finalName).toString();
@@ -132,7 +133,7 @@ public class PathUtils {
     public static String saveMultipartFile(FileDTO fileDTO, String filePath) {
         try {
             MultipartFile file = fileDTO.getFile();
-            String saveName = PathUtils.getSaveFileName(fileDTO.getNewName());
+            String saveName = FileIOUtils.getSaveFileName(fileDTO.getNewName());
             //标序号，表示第几个分片
             String finalPath = String.format("%s/%s.%d", filePath, saveName, fileDTO.getShardIndex());
             File dest = new File(finalPath);

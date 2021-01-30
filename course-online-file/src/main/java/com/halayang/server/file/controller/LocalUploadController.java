@@ -5,7 +5,7 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.dto.FileMessageDTO;
 import com.halayang.server.file.service.FileService;
-import com.halayang.server.file.util.PathUtils;
+import com.halayang.server.file.util.FileIOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +43,7 @@ public class LocalUploadController {
     @PostMapping("/getMd5")
     public ResponseObject<String> getMd5(@RequestParam MultipartFile file) {
         try {
-            String fileMd5 = PathUtils.getFileMd5(file.getInputStream());
+            String fileMd5 = FileIOUtils.getFileMd5(file.getInputStream());
             return ResponseResult.success(fileMd5);
         } catch (IOException e) {
             throw new IllegalArgumentException("获取md5失败");

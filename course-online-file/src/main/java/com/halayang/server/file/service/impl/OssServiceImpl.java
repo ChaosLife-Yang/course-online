@@ -15,7 +15,7 @@ import com.halayang.server.file.mapper.FileMapper;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.OssService;
 import com.halayang.server.file.util.AliyunConstants;
-import com.halayang.server.file.util.PathUtils;
+import com.halayang.server.file.util.FileIOUtils;
 import com.halayang.server.file.util.VodUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +64,7 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
         }
         try {
             MultipartFile file = fileDTO.getFile();
-            String objectName = PathUtils.getSaveFileName(fileDTO.getNewName());
+            String objectName = FileIOUtils.getSaveFileName(fileDTO.getNewName());
 
             String bucketName = aliyunConstants.getBucketName();
             // 创建OSSClient实例。
@@ -110,13 +110,13 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
     public String contentUpload(MultipartFile file) {
         try {
             //封装dto然后调用上面的方法
-            String extensionName = PathUtils.getExtensionName(file.getOriginalFilename());
+            String extensionName = FileIOUtils.getExtensionName(file.getOriginalFilename());
             FileDTO fileDTO = new FileDTO()
                     .setFile(file)
                     .setName(file.getOriginalFilename())
                     .setSuffix(extensionName)
                     .setUseTo(FileUseEnum.COURSE.getCode())
-                    .setFileKey(PathUtils.getFileMd5(file.getInputStream()))
+                    .setFileKey(FileIOUtils.getFileMd5(file.getInputStream()))
                     .setNewName(UUID.randomUUID().toString() + "." + extensionName)
                     .setShardIndex(0)
                     .setShardTotal(1)

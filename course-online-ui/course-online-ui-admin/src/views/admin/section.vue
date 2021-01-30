@@ -312,18 +312,6 @@
                 if (!isLt2M) {
                     this.$message.error('上传视频大小不能超过 2GB !');
                 }
-                let duration;
-                if (isVideo && isLt2M) {
-                    let url = URL.createObjectURL(file);
-                    let audioElement = new Audio(url);
-
-                    audioElement.addEventListener("loadedmetadata", _event => {
-                        duration = audioElement.duration; //时长为秒，小数，182.36
-                        duration = Math.floor(duration);
-                        console.log(duration);
-                        this.time = duration;
-                    });
-                }
 
                 return isVideo && isLt2M;
             }

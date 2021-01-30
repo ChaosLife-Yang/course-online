@@ -10,7 +10,7 @@ import com.halayang.server.file.dto.FileMessageDTO;
 import com.halayang.server.file.mapper.FileMapper;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
-import com.halayang.server.file.util.PathUtils;
+import com.halayang.server.file.util.FileIOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -74,7 +74,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
             }
         }
         //保存文件
-        String saveName = PathUtils.saveMultipartFile(fileDTO, filePath);
+        String saveName = FileIOUtils.saveMultipartFile(fileDTO, filePath);
         FilePO filePo = CopyUtils.copy(fileDTO, FilePO.class);
         filePo.setPath(saveName);
         //不存在就插入，存在就更新
@@ -150,14 +150,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
     public String courseContentUpload(MultipartFile file) {
         try {
             //文件存在且上传完成直接返回地址
-            String fileMd5 = PathUtils.getFileMd5(file.getInputStream());
+            String fileMd5 = FileIOUtils.getFileMd5(file.getInputStream());
             FilePO one = this.getOne(new LambdaUpdateWrapper<FilePO>()
                     .eq(FilePO::getFileKey, fileMd5));
             if (!ObjectUtils.isEmpty(one) && (one.getShardIndex() == one.getShardTotal() - 1) && !StringUtils.isEmpty(one.getPath())) {
                 return one.getPath();
             }
             //不存在就上传
-            FileDTO fileDTO = PathUtils.saveMultipartFile(file, filePath);
+            FileDTO fileDTO = FileIOUtils.saveMultipartFile(file, filePath);
             //通过富文本编辑器上传就默认只有一个分片
             fileDTO.setShardSize(fileDTO.getSize())
                     .setShardTotal(1)
