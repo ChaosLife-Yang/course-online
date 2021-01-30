@@ -65,8 +65,8 @@
 
                     <div class="text-center">
                     <span href="javascript:" class="text-info bigger-110" v-bind:title="teacher.motto">
-                        <h4 class="lighter"> <i
-                                class="el-icon-user-solid"></i>{{teacher.nickname}}【{{teacher.name}}】</h4>
+                        <h4 class="lighter">
+                            <i class="el-icon-user-solid"></i>{{teacher.nickname}}【{{teacher.name}}】</h4>
                     </span>
                     </div>
 

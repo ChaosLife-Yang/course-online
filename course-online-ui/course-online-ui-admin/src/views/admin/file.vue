@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th>相对路径</th>
-                <th>源文件名</th>
+                <th>文件名</th>
                 <th>后缀</th>
                 <th>大小</th>
                 <th>用途</th>

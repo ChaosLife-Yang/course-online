@@ -12,25 +12,37 @@
         <el-progress :percentage="percentage" :stroke-width="24"
                      :status="success"></el-progress>
         {{fileUrl}}
-        <el-image :fit="'scale-down'" style="width: 350px; height: 200px" :src="require('@/assets/demo-course.jpg')"></el-image>
+        <el-image :fit="'scale-down'" style="width: 350px; height: 200px"
+                  :src="require('@/assets/demo-course.jpg')"></el-image>
 
+        <vod :before-upload="beforeAvatarUpload"
+             :get-md5="getMd5"
+             :upload-url="vod"
+             :button-name="'点击上传'"
+             :file-name="'测试'"
+             @getVod="getVod"
+        />
+        {{vodName}}
     </div>
 </template>
 
 <script>
     import shardUpload from "../components/shardUpload";
+    import vod from "../components/vod";
 
     export default {
         name: "test",
-        components: {shardUpload},
+        components: {shardUpload, vod},
         data() {
             return {
                 url: process.env.VUE_APP_SERVER + '/api/file/oss/upload',
                 checkUrl: process.env.VUE_APP_SERVER + '/api/file/local/check',
                 getMd5: process.env.VUE_APP_SERVER + '/api/file/local/getMd5',
+                vod: process.env.VUE_APP_SERVER + '/api/file/oss/vod',
                 percentage: 0,
                 success: "",
                 fileUrl: "",
+                vodName: '',
             }
         },
         methods: {
@@ -58,6 +70,9 @@
                     this.$message.error('上传视频大小不能超过 2GB!');
                 }
                 return isVideo && isLt2M;
+            },
+            getVod(key) {
+                this.vodName = key;
             }
         }
 

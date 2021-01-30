@@ -20,6 +20,7 @@ import com.halayang.server.file.service.FileService;
 import com.halayang.server.file.util.AliyunConstants;
 import com.halayang.server.file.util.PathUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -57,7 +59,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
         FileMessageDTO fileMessageDTO;
         //判断上传到第几个分片了 数据库找不到就表示没上传过 分片索引为0
         //找到了但分片索引 分片总数等信息为null表示是文本编辑器上传的分片索引也为0
-        if (ObjectUtils.isEmpty(one)) {
+        //path为空表示是上传到vod了
+        if (ObjectUtils.isEmpty(one) || StringUtils.isEmpty(one.getPath())) {
             fileMessageDTO = new FileMessageDTO();
         } else {
             if (StringUtils.isEmpty(one.getShardIndex()) && StringUtils.isEmpty(one.getShardTotal())) {
@@ -78,14 +81,12 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
     public String shardFileUpload(FileDTO fileDTO) {
         int count = this.count(new LambdaQueryWrapper<FilePO>()
                 .eq(FilePO::getFileKey, fileDTO.getFileKey()));
+        FilePO one = null;
         if (count > 0) {
             //如果文件已经上传完成分片合并完成就可以极速秒传了
-            FilePO one = this.getOne(new LambdaUpdateWrapper<FilePO>()
+            one = this.getOne(new LambdaUpdateWrapper<FilePO>()
                     .eq(FilePO::getFileKey, fileDTO.getFileKey()));
-            if (StringUtils.isEmpty(one.getShardIndex()) && StringUtils.isEmpty(one.getShardTotal())) {
-                return one.getPath();
-            }
-            if (one.getShardIndex() == one.getShardTotal() - 1) {
+            if ((one.getShardIndex() == one.getShardTotal() - 1) && !StringUtils.isEmpty(one.getPath())) {
                 return one.getPath();
             }
         }
@@ -94,10 +95,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
         FilePO filePo = CopyUtils.copy(fileDTO, FilePO.class);
         filePo.setPath(saveName);
         //不存在就插入，存在就更新
-        if (count > 0) {
-            this.update(new LambdaUpdateWrapper<FilePO>()
-                    .set(FilePO::getShardIndex, fileDTO.getShardIndex())
-                    .eq(FilePO::getFileKey, fileDTO.getFileKey()));
+        if (one != null) {
+            filePo.setId(one.getId());
+            filePo.setName(one.getName());
+            this.updateById(filePo);
         } else {
             this.save(filePo);
         }
@@ -169,16 +170,15 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
             String fileMd5 = PathUtils.getFileMd5(file.getInputStream());
             FilePO one = this.getOne(new LambdaUpdateWrapper<FilePO>()
                     .eq(FilePO::getFileKey, fileMd5));
-            if (!ObjectUtils.isEmpty(one)) {
-                if (StringUtils.isEmpty(one.getShardIndex()) && StringUtils.isEmpty(one.getShardTotal())) {
-                    return one.getPath();
-                }
-                if (one.getShardIndex() == one.getShardTotal() - 1) {
-                    return one.getPath();
-                }
+            if (!ObjectUtils.isEmpty(one) && (one.getShardIndex() == one.getShardTotal() - 1) && !StringUtils.isEmpty(one.getPath())) {
+                return one.getPath();
             }
             //不存在就上传
             FileDTO fileDTO = PathUtils.saveMultipartFile(file, filePath);
+            //通过富文本编辑器上传就默认只有一个分片
+            fileDTO.setShardSize(fileDTO.getSize())
+                    .setShardTotal(1)
+                    .setShardIndex(0);
             FilePO filePo = CopyUtils.copy(fileDTO, FilePO.class);
             filePo.setUseTo(FileUseEnum.COURSE.getCode())
                     .setFileKey(fileMd5);

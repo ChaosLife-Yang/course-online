@@ -46,4 +46,9 @@ public class OssController {
         return map;
     }
 
+    @PostMapping("/vod")
+    public ResponseObject<String> vod(FileDTO fileDTO) {
+        return ResponseResult.success(ossService.vod(fileDTO));
+    }
+
 }

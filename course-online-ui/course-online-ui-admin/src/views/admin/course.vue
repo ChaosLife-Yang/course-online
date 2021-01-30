@@ -101,9 +101,9 @@
         <div class="row">
             <div v-for="course in courses" class="col-xs-6 col-sm-4 col-md-3">
                 <div class="thumbnail search-thumbnail">
-                    <el-image v-show="!course.image" :fit="'scale-down'" style="width: 100%; height: 50%"
+                    <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
                               :src="require('@/assets/demo-course.jpg')"/>
-                    <el-image v-show="course.image" :fit="'scale-down'" style="width: 100%; height: 50%"
+                    <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
                               :src="course.image"/>
                     <div class="caption">
                         <div class="clearfix">
@@ -384,7 +384,6 @@
                                     } else {
                                         this.msg('error', result.msg);
                                     }
-                                    this.courseDto.id = "";
                                     this.dialogFormVisible = false;
                                     this.list();
                                 }).catch(error => {

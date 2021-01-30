@@ -14,18 +14,16 @@ import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.OssService;
 import com.halayang.server.file.util.AliyunConstants;
 import com.halayang.server.file.util.PathUtils;
+import com.halayang.server.file.util.VodUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -57,10 +55,7 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
                     .eq(FilePO::getFileKey, fileDTO.getFileKey());
             one = this.getOne(eq);
             String path = aliyunConstants.getShow();
-            if (StringUtils.isEmpty(one.getShardIndex()) && StringUtils.isEmpty(one.getShardTotal())) {
-                return path + one.getPath();
-            }
-            if (one.getShardIndex() == one.getShardTotal() - 1) {
+            if ((one.getShardIndex() == one.getShardTotal() - 1) && !StringUtils.isEmpty(one.getPath())) {
                 return path + one.getPath();
             }
 
@@ -92,10 +87,10 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             FilePO filePo = CopyUtils.copy(fileDTO, FilePO.class);
             filePo.setPath(objectName);
             //不存在就插入，存在就更新
-            if (count > 0) {
-                this.update(new LambdaUpdateWrapper<FilePO>()
-                        .set(FilePO::getShardIndex, fileDTO.getShardIndex())
-                        .eq(FilePO::getFileKey, fileDTO.getFileKey()));
+            if (one != null) {
+                filePo.setId(one.getId());
+                filePo.setName(one.getName());
+                this.updateById(filePo);
             } else {
                 this.save(filePo);
             }
@@ -126,6 +121,49 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
                     .setSize(Math.toIntExact(file.getSize()));
 
             return upload(fileDTO);
+        } catch (IOException e) {
+            log.error("上传有误", e);
+            throw new IllegalArgumentException("上传有误");
+        }
+    }
+
+    @Override
+    public String vod(FileDTO fileDTO) {
+        String keyId = aliyunConstants.getKeyId();
+        String keySecret = aliyunConstants.getKeySecret();
+        MultipartFile file = fileDTO.getFile();
+        String fileKey = fileDTO.getFileKey();
+        FilePO one = this.getOne(new LambdaQueryWrapper<FilePO>()
+                .eq(FilePO::getFileKey, fileKey));
+        if (!ObjectUtils.isEmpty(one) && !StringUtils.isEmpty(one.getVod())) {
+            return one.getVod();
+        }
+        String name = fileDTO.getName();
+        try {
+            //先上传再保存到数据库中
+            String vod = VodUtil.uploadVod(keyId, keySecret, name, file.getInputStream());
+
+            if (!ObjectUtils.isEmpty(one)) {
+                //不为空就更新
+                one.setVod(vod)
+                        .setName(fileDTO.getName());
+                boolean update = this.updateById(one);
+                if (update) {
+                    return vod;
+                } else {
+                    log.error("上传有误");
+                    throw new IllegalArgumentException("上传有误");
+                }
+            }
+            FilePO po = CopyUtils.copy(fileDTO, FilePO.class);
+            po.setVod(vod);
+            boolean save = this.save(po);
+            if (save) {
+                return vod;
+            } else {
+                log.error("上传有误");
+                throw new IllegalArgumentException("上传有误");
+            }
         } catch (IOException e) {
             log.error("上传有误", e);
             throw new IllegalArgumentException("上传有误");

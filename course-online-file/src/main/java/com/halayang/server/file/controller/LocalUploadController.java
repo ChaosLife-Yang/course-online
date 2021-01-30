@@ -30,7 +30,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/local")
-public class LocalFileController {
+public class LocalUploadController {
     @Value("${file.upload.path}")
     private String filePath;
 

@@ -7,18 +7,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
- * @program course-online
- * @description 
+ *
  * @author YangYuDi
- * @create 2021/1/26 10:10
  * @version 1.0.0
- *  <author>                <time>                  <version>                   <description>
- *  YangYuDi               2021/1/26 10:10           1.0                         
+ * <author>                <time>                  <version>                   <description>
+ * YangYuDi               2021/1/26 10:10           1.0
+ * @program course-online
+ * @description
+ * @create 2021/1/26 10:10
  */
 public interface OssService extends IService<FilePO> {
 
     String upload(FileDTO fileDTO);
 
-    String contentUpload( MultipartFile file);
+    String contentUpload(MultipartFile file);
+
+    String vod(FileDTO fileDTO);
 
 }
