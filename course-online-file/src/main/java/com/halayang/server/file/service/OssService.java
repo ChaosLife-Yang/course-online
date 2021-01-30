@@ -2,6 +2,7 @@ package com.halayang.server.file.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.halayang.server.file.dto.FileDTO;
+import com.halayang.server.file.dto.VideoVodDTO;
 import com.halayang.server.file.po.FilePO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,6 @@ public interface OssService extends IService<FilePO> {
 
     String contentUpload(MultipartFile file);
 
-    String vod(FileDTO fileDTO);
+    VideoVodDTO getVodMessage(FileDTO fileDTO);
 
 }

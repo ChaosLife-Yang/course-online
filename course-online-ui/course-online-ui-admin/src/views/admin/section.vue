@@ -28,23 +28,22 @@
                     {{chapter.name}}
                 </el-form-item>
                 <el-form-item label="视频" :label-width="formLabelWidth" prop="video">
-                    <shard-upload
-                            :url="gateway+'/api/file/oss/upload'"
-                            :check-url="gateway+'/api/file/local/check'"
-                            :get-md5="gateway+'/api/file/local/getMd5'"
-                            :button-name="'点击上传'"
-                            :use="'C'"
-                            @changePercent="changePercent"
-                            @getUrl="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload"/>
-                    <el-progress :percentage="percentage" :status="success"></el-progress>
-                    <el-input v-model="sectionDto.video" autocomplete="off"/>
+                    <vod :upload-url="gateway+'/api/file/oss/vod'"
+                         :get-md5="gateway+'/api/file/local/getMd5'"
+                         :button-name="'点击上传'"
+                         :file-name="sectionDto.title"
+                         @getVod="handleAvatarSuccess"
+                         @getUrl="getUrl"
+                         :before-upload="beforeAvatarUpload"/>
+                    <video v-show="sectionDto.video" width="500px" :src="sectionDto.video" controls="controls">
+                        您的浏览器不支持 video 标签。
+                    </video>
                 </el-form-item>
                 <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
                     <el-input v-model="sectionDto.sort" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="时长" :label-width="formLabelWidth" prop="time">
-                    <el-input v-model="sectionDto.time" autocomplete="off"/>
+                    {{sectionDto.time}} s
                 </el-form-item>
                 <el-form-item label="收费" :label-width="formLabelWidth" prop="charge">
                     <el-select v-model="sectionDto.charge" placeholder="请选择">
@@ -57,7 +56,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="vod" :label-width="formLabelWidth" prop="vod">
-                    <el-input v-model="sectionDto.vod" autocomplete="off"/>
+                    {{sectionDto.vod}}
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -85,7 +84,10 @@
                 <th>{{ section.title}}</th>
                 <th>{{ course.name}}</th>
                 <th>{{ chapter.name}}</th>
-                <th>{{ section.video}}</th>
+                <th>
+                    <a v-show="section.video" :href="section.video" rel="noopener noreferrer" target="_blank">点击查看</a>
+                    <span v-show="!section.video">没有上传</span>
+                </th>
                 <th>{{ section.time | formatSecond}}</th>
                 <th>{{ charge | optionKV(section.charge)}}</th>
                 <th>{{ section.vod}}</th>
@@ -126,16 +128,14 @@
 </template>
 
 <script>
-    import shardUpload from "../../components/shardUpload";
+    import vod from "../../components/vod";
 
     export default {
         name: "section",
-        components: {shardUpload},
+        components: {vod},
         data() {
             return {
                 gateway: process.env.VUE_APP_SERVER,
-                percentage: 0,
-                success: "",
                 dialogFormVisible: false,
                 formLabelWidth: '80px',
                 course: {},
@@ -146,22 +146,14 @@
                 currentPage: 1,
                 size: 10,
                 sectionDto: {},
+                time: null,
                 charge: this.$SECTION_CHARGE,
                 rules: {
                     title: [
                         {required: true, message: '请输入标题', trigger: 'blur'},
                     ],
-                    video: [
-                        {required: true, message: '请输入视频', trigger: 'blur'},
-                    ],
-                    time: [
-                        {required: true, message: '请输入时长', trigger: 'blur'},
-                    ],
                     charge: [
                         {required: true, message: '请输入收费', trigger: 'blur'},
-                    ],
-                    vod: [
-                        {required: true, message: '请输入vod', trigger: 'blur'},
                     ],
                     sort: [
                         {required: true, message: '请输入顺序', trigger: 'blur'},
@@ -294,14 +286,6 @@
                 this.currentPage = val;
                 this.list();
             },
-            changePercent(percentage) {
-                this.percentage = percentage;
-                if (percentage == 100) {
-                    this.success = 'success';
-                } else {
-                    this.success = '';
-                }
-            },
             handleClose(done) {
                 this.$confirm('确认关闭？')
                     .then(_ => {
@@ -310,8 +294,11 @@
                     .catch(_ => {
                     });
             },
-            handleAvatarSuccess(url) {
-                this.sectionDto.video = url;
+            handleAvatarSuccess(key) {
+                this.sectionDto.vod = key;
+            },
+            getUrl(key) {
+                this.sectionDto.video = key;
             },
             beforeAvatarUpload(file) {
                 let fileName = file.name;
@@ -325,6 +312,19 @@
                 if (!isLt2M) {
                     this.$message.error('上传视频大小不能超过 2GB !');
                 }
+                let duration;
+                if (isVideo && isLt2M) {
+                    let url = URL.createObjectURL(file);
+                    let audioElement = new Audio(url);
+
+                    audioElement.addEventListener("loadedmetadata", _event => {
+                        duration = audioElement.duration; //时长为秒，小数，182.36
+                        duration = Math.floor(duration);
+                        console.log(duration);
+                        this.time = duration;
+                    });
+                }
+
                 return isVideo && isLt2M;
             }
 

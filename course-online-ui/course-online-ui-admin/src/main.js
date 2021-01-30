@@ -31,12 +31,9 @@ import 'froala-editor/js/froala_editor.pkgd.min.js'
 
 import jQuery from 'jquery';
 import UUID from 'vue-uuid'
-import VideoPlayer from 'vue-video-player'
-import 'video.js/dist/video-js.css'
 
 window.$ = jQuery;
 window.jQuery = jQuery;
-Vue.use(VideoPlayer);
 Vue.use(UUID);
 
 Vue.use(VueFroala);

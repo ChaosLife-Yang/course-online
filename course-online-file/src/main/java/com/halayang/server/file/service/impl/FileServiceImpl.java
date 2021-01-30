@@ -1,38 +1,24 @@
 package com.halayang.server.file.service.impl;
 
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.internal.OSSHeaders;
-import com.aliyun.oss.model.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.halayang.common.enums.FileUseEnum;
 import com.halayang.common.utils.CopyUtils;
-import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.config.executor.TaskExecutorConfig;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.dto.FileMessageDTO;
 import com.halayang.server.file.mapper.FileMapper;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
-import com.halayang.server.file.util.AliyunConstants;
 import com.halayang.server.file.util.PathUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <p>
@@ -45,9 +31,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 @Service
 public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements FileService {
-
-    @Autowired
-    private AliyunConstants aliyunConstants;
 
     @Value("${file.upload.path}")
     private String filePath;

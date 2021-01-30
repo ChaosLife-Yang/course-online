@@ -3,12 +3,14 @@ package com.halayang.server.file.service.impl;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.*;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.vod.model.v20170321.GetMezzanineInfoResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.halayang.common.enums.FileUseEnum;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.server.file.dto.FileDTO;
+import com.halayang.server.file.dto.VideoVodDTO;
 import com.halayang.server.file.mapper.FileMapper;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.OssService;
@@ -89,6 +91,7 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             //不存在就插入，存在就更新
             if (one != null) {
                 filePo.setId(one.getId());
+                //文件名不变
                 filePo.setName(one.getName());
                 this.updateById(filePo);
             } else {
@@ -127,8 +130,7 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
         }
     }
 
-    @Override
-    public String vod(FileDTO fileDTO) {
+    private String vod(FileDTO fileDTO) {
         String keyId = aliyunConstants.getKeyId();
         String keySecret = aliyunConstants.getKeySecret();
         MultipartFile file = fileDTO.getFile();
@@ -167,6 +169,24 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
         } catch (IOException e) {
             log.error("上传有误", e);
             throw new IllegalArgumentException("上传有误");
+        }
+    }
+
+    @Override
+    public VideoVodDTO getVodMessage(FileDTO fileDTO) {
+        String vod = vod(fileDTO);
+        String keyId = aliyunConstants.getKeyId();
+        String keySecret = aliyunConstants.getKeySecret();
+        try {
+            DefaultAcsClient vodClient = VodUtil.initVodClient(keyId, keySecret);
+            GetMezzanineInfoResponse response = VodUtil.getMezzanineInfo(vodClient, vod);
+            //将vod配套的url封装成dto
+            return new VideoVodDTO()
+                    .setVod(vod)
+                    .setUrl(response.getMezzanine().getFileURL());
+        } catch (Exception e) {
+            log.error("上传视频出错", e);
+            throw new IllegalArgumentException("上传视频出错");
         }
     }
 

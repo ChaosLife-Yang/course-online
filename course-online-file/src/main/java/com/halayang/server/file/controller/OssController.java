@@ -3,6 +3,7 @@ package com.halayang.server.file.controller;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.file.dto.FileDTO;
+import com.halayang.server.file.dto.VideoVodDTO;
 import com.halayang.server.file.service.OssService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,8 @@ public class OssController {
     }
 
     @PostMapping("/vod")
-    public ResponseObject<String> vod(FileDTO fileDTO) {
-        return ResponseResult.success(ossService.vod(fileDTO));
+    public ResponseObject<VideoVodDTO> vod(FileDTO fileDTO) {
+        return ResponseResult.success(ossService.getVodMessage(fileDTO));
     }
 
 }

@@ -91,7 +91,8 @@
                                 this.msg('success', '上传成功');
                                 this.$refs.upload.clearFiles();
                                 this.flag = false;
-                                this.$emit('getVod', resp.data);
+                                this.$emit('getVod', resp.data.vod);
+                                this.$emit('getUrl', resp.data.url);
                             }else {
                                 this.$refs.upload.clearFiles();
                                 this.flag = false;
