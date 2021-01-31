@@ -156,6 +156,7 @@ public class VodUtil {
     public static GetVideoPlayAuthResponse getVideoPlayAuth(DefaultAcsClient client, String videoId) throws Exception {
         GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
         request.setVideoId(videoId);
+        request.setAuthInfoTimeout(3000L);
         return client.getAcsResponse(request);
     }
 

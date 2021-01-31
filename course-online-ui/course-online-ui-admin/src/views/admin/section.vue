@@ -36,9 +36,7 @@
                          @getUrl="getUrl"
                          @getDuration="getDuration"
                          :before-upload="beforeAvatarUpload"/>
-                    <video v-show="sectionDto.video" width="500px" :src="sectionDto.video" controls="controls">
-                        您的浏览器不支持 video 标签。
-                    </video>
+                    <ali-player v-if="sectionDto.vod" :get-play-auth="gateway+'/api/file/oss/getPlayAuth'" :vod="sectionDto.vod"/>
                 </el-form-item>
                 <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
                     <el-input v-model="sectionDto.sort" autocomplete="off"/>
@@ -130,10 +128,11 @@
 
 <script>
     import vod from "../../components/vod";
+    import aliPlayer from "../../components/aliPlayer";
 
     export default {
         name: "section",
-        components: {vod},
+        components: {vod, aliPlayer},
         data() {
             return {
                 gateway: process.env.VUE_APP_SERVER,
@@ -303,7 +302,7 @@
             getDuration(key) {
                 this.sectionDto.time = key;
             },
-            beforeAvatarUpload(file) {
+            beforeAvatarUpload: function (file) {
                 let fileName = file.name;
                 let suffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase();
                 const isLt2M = file.size / 1024 / 1024 < 2048;
@@ -315,8 +314,11 @@
                 if (!isLt2M) {
                     this.$message.error('上传视频大小不能超过 2GB !');
                 }
-
-                return isVideo && isLt2M;
+                let blank = Tool.isEmpty(this.sectionDto.title);
+                if (blank) {
+                    this.$message.error('请输入小节名称');
+                }
+                return isVideo && isLt2M && !blank;
             }
 
         },

@@ -7,10 +7,7 @@ import com.halayang.server.file.dto.VideoVodDTO;
 import com.halayang.server.file.service.OssService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -50,6 +47,11 @@ public class OssController {
     @PostMapping("/vod")
     public ResponseObject<VideoVodDTO> vod(FileDTO fileDTO) {
         return ResponseResult.success(ossService.getVodMessage(fileDTO));
+    }
+
+    @PostMapping("/getPlayAuth")
+    public ResponseObject<String> getPlayAuth(@RequestParam String vod){
+        return ResponseResult.success(ossService.getVodAuth(vod));
     }
 
 }

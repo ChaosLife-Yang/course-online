@@ -25,4 +25,6 @@ public interface OssService extends IService<FilePO> {
 
     VideoVodDTO getVodMessage(FileDTO fileDTO);
 
+    String getVodAuth(String vod);
+
 }

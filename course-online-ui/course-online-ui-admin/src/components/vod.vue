@@ -88,13 +88,18 @@
                         this.$ajax.post(this.uploadUrl, formData).then((response) => {
                             let resp = response.data;
                             if (resp.code == 200) {
-                                this.msg('success', '上传成功');
-                                this.$refs.upload.clearFiles();
-                                this.flag = false;
+                                //视频需要时间转码 获取时间可能会失败，就需要递归继续查询视频时长
+                                //后端需要做判断，如果视频已经上传过就不需要继续上传了，直接返回数据
+                                if (resp.data.duration == 0) {
+                                    this.upload(param);
+                                }
                                 this.$emit('getVod', resp.data.vod);
                                 this.$emit('getUrl', resp.data.url);
                                 this.$emit('getDuration', resp.data.duration);
-                            }else {
+                                this.msg('success', '上传成功');
+                                this.$refs.upload.clearFiles();
+                                this.flag = false;
+                            } else {
                                 this.$refs.upload.clearFiles();
                                 this.flag = false;
                                 this.msg('error', res.data.msg);

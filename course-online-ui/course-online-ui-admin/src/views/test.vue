@@ -23,22 +23,26 @@
              @getVod="getVod"
         />
         {{vodName}}
+        <ali-player :get-play-auth="vodAuth" :vod="'907322bd49dc4d51a9c0d06df8dcd016'">
+        </ali-player>
     </div>
 </template>
 
 <script>
     import shardUpload from "../components/shardUpload";
     import vod from "../components/vod";
+    import aliPlayer from "../components/aliPlayer";
 
     export default {
         name: "test",
-        components: {shardUpload, vod},
+        components: {shardUpload, vod, aliPlayer},
         data() {
             return {
                 url: process.env.VUE_APP_SERVER + '/api/file/oss/upload',
                 checkUrl: process.env.VUE_APP_SERVER + '/api/file/local/check',
                 getMd5: process.env.VUE_APP_SERVER + '/api/file/local/getMd5',
                 vod: process.env.VUE_APP_SERVER + '/api/file/oss/vod',
+                vodAuth: process.env.VUE_APP_SERVER + '/api/file/oss/getPlayAuth',
                 percentage: 0,
                 success: "",
                 fileUrl: "",

@@ -4,8 +4,10 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.*;
 import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.vod.model.v20170321.GetMezzanineInfoResponse;
 import com.aliyuncs.vod.model.v20170321.GetVideoInfoResponse;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.halayang.common.enums.FileUseEnum;
@@ -186,7 +188,8 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             String mezzanineDuration = mezzanineInfo.getMezzanine().getDuration();
             BigDecimal bigDecimal = new BigDecimal(mezzanineDuration);
             int duration = bigDecimal.setScale(0, BigDecimal.ROUND_DOWN).intValue();
-            //将vod配套的url封装成dto
+
+            //将vod配套的信息封装成dto
             return new VideoVodDTO()
                     .setVod(vod)
                     .setDuration(duration)
@@ -196,5 +199,20 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             throw new IllegalArgumentException("上传视频出错");
         }
     }
+
+    @Override
+    public String getVodAuth(String vod) {
+        String keyId = aliyunConstants.getKeyId();
+        String keySecret = aliyunConstants.getKeySecret();
+        try {
+            DefaultAcsClient vodClient = VodUtil.initVodClient(keyId, keySecret);
+            GetVideoPlayAuthResponse response = VodUtil.getVideoPlayAuth(vodClient, vod);
+            return response.getPlayAuth();
+        } catch (Exception e) {
+            log.error("获取凭证出错", e);
+            throw new IllegalArgumentException("获取凭证出错");
+        }
+    }
+
 
 }
