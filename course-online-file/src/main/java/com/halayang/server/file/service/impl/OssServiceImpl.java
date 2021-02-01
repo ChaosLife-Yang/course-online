@@ -150,7 +150,7 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             String vod = VodUtil.uploadVod(keyId, keySecret, name, file.getInputStream());
 
             if (!ObjectUtils.isEmpty(one)) {
-                //不为空就更新
+                //不为空就更新 不改文件名
                 one.setVod(vod)
                         .setName(fileDTO.getName());
                 boolean update = this.updateById(one);

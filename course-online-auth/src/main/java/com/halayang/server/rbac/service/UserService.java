@@ -14,6 +14,14 @@ import com.halayang.server.rbac.po.UserPO;
  */
 public interface UserService extends IService<UserPO> {
 
+    /**
+     * 新增或更新用户
+     *
+     * @param userDto 用户dto
+     * @author YangYudi
+     * @date 2021/2/1 10:02
+     * @return boolean
+     */
     boolean saveOrUpdateUser(UserDTO userDto);
 
 }

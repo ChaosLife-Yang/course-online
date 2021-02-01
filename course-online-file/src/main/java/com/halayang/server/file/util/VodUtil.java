@@ -31,9 +31,9 @@ public class VodUtil {
     /**
      * 使用AK初始化VOD客户端
      *
-     * @param accessKeyId
-     * @param accessKeySecret
-     * @return
+     * @param accessKeyId     accessKeyId
+     * @param accessKeySecret accessKeySecret
+     * @return DefaultAcsClient
      * @throws ClientException
      */
     public static DefaultAcsClient initVodClient(String accessKeyId, String accessKeySecret) throws ClientException {
@@ -160,6 +160,17 @@ public class VodUtil {
         return client.getAcsResponse(request);
     }
 
+    /**
+     * 上传视频到vod
+     *
+     * @param accessKeyId     accessKeyId
+     * @param accessKeySecret accessKeySecret
+     * @param fileName        新的文件名
+     * @param in              输入流
+     * @return java.lang.String
+     * @author YangYudi
+     * @date 2021/2/1 10:10
+     */
     public static String uploadVod(String accessKeyId, String accessKeySecret, String fileName, InputStream in) {
         //需要上传到VOD的本地视频文件，需要包含文件扩展名
         try {

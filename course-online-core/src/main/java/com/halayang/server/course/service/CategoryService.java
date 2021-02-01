@@ -16,6 +16,13 @@ import java.util.List;
  */
 public interface CategoryService extends IService<CategoryPO> {
 
+    /**
+     * 获取分类列表，包含子分类
+     *
+     * @author YangYudi
+     * @date 2021/2/1 9:55
+     * @return java.util.List<com.halayang.server.course.dto.CategoryDTO>
+     */
     List<CategoryDTO> getCategoryList();
 
 }

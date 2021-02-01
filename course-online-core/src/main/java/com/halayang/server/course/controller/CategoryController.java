@@ -9,6 +9,8 @@ import com.halayang.server.course.po.CategoryPO;
 import com.halayang.server.course.po.CourseCategoryPO;
 import com.halayang.server.course.service.CategoryService;
 import com.halayang.server.course.service.CourseCategoryService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2020-12-28 15:22:50
  */
+@Api(tags = {"课程分类管理"})
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -41,6 +44,7 @@ public class CategoryController {
      * @author YangYudi
      * @date 2020-12-28 15:22:50
      */
+    @ApiOperation(value = "获取课程分类对象信息", httpMethod = "GET", notes = "获取课程分类对象信息")
     @GetMapping("/{id}")
     public ResponseObject<CategoryDTO> getOne(@PathVariable String id) {
         CategoryPO po = categoryService.getById(id);
@@ -56,6 +60,7 @@ public class CategoryController {
      * @author YangYudi
      * @date 2020-12-28 15:22:50
      */
+    @ApiOperation(value = "课程分类查询", httpMethod = "GET", notes = "课程分类查询")
     @GetMapping("/list")
     public ResponseObject<List<CategoryDTO>> categoryList() {
         List<CategoryDTO> dtoList = categoryService.getCategoryList();
@@ -70,6 +75,7 @@ public class CategoryController {
      * @author YangYudi
      * @date 2020-12-28 15:22:50
      */
+    @ApiOperation(value = "课程分类添加或更新", httpMethod = "POST", notes = "课程分类添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated CategoryDTO categoryDTO) {
         CategoryPO categoryPo = new CategoryPO();
@@ -90,6 +96,7 @@ public class CategoryController {
      * @author YangYudi
      * @date 2020-12-28 15:22:50
      */
+    @ApiOperation(value = "删除课程分类", httpMethod = "GET", notes = "删除课程分类")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = categoryService.removeById(id);

@@ -12,6 +12,8 @@ import com.halayang.server.course.dto.ChapterDTO;
 import com.halayang.server.course.dto.ChapterPageDTO;
 import com.halayang.server.course.po.ChapterPO;
 import com.halayang.server.course.service.ChapterService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +28,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2020-12-20 12:34:23
  */
+@Api(tags = {"课程章节管理"})
 @RestController
 @RequestMapping("/chapter")
 public class ChapterController {
@@ -41,6 +44,7 @@ public class ChapterController {
      * @author YangYudi
      * @date 2020-12-20 12:34:23
      */
+    @ApiOperation(value = "获取大章对象信息", httpMethod = "GET", notes = "获取大章对象信息")
     @GetMapping("/{id}")
     public ResponseObject<ChapterDTO> getOne(@PathVariable String id) {
         ChapterPO po = chapterService.getById(id);
@@ -57,6 +61,7 @@ public class ChapterController {
      * @author YangYudi
      * @date 2020-12-20 12:34:23
      */
+    @ApiOperation(value = "大章分页查询", httpMethod = "POST", notes = "大章分页查询")
     @PostMapping("/list")
     public ResponseObject<PageDTO<ChapterDTO>> chapterList(@RequestBody @Validated ChapterPageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
@@ -84,6 +89,7 @@ public class ChapterController {
      * @author YangYudi
      * @date 2020-12-20 12:34:23
      */
+    @ApiOperation(value = "大章添加或更新", httpMethod = "POST", notes = "大章添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated ChapterDTO chapterDTO) {
         ChapterPO chapterPo = new ChapterPO();
@@ -104,6 +110,7 @@ public class ChapterController {
      * @author YangYudi
      * @date 2020-12-20 12:34:23
      */
+    @ApiOperation(value = "删除大章", httpMethod = "GET", notes = "删除大章")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = chapterService.removeById(id);

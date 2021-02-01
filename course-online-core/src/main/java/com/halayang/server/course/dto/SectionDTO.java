@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "SectionPO对象", description = "小节")
+@ApiModel(value = "SectionDTO对象", description = "小节")
 public class SectionDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

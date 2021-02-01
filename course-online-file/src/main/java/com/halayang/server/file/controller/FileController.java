@@ -10,6 +10,8 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.po.FilePO;
 import com.halayang.server.file.service.FileService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2021-01-16 12:17:31
  */
+@Api(tags = {"文件管理"})
 @RestController
 @RequestMapping("/file")
 public class FileController {
@@ -39,6 +42,7 @@ public class FileController {
      * @author YangYudi
      * @date 2021-01-16 12:17:31
      */
+    @ApiOperation(value = "获取文件管理对象信息", httpMethod = "GET", notes = "获取文件管理对象信息")
     @GetMapping("/{id}")
     public ResponseObject<FileDTO> getOne(@PathVariable String id) {
         FilePO po = fileService.getById(id);
@@ -55,6 +59,7 @@ public class FileController {
      * @author YangYudi
      * @date 2021-01-16 12:17:31
      */
+    @ApiOperation(value = "文件管理分页查询", httpMethod = "POST", notes = "文件管理分页查询")
     @PostMapping("/list")
     public ResponseObject<PageDTO<FileDTO>> fileList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
@@ -78,6 +83,7 @@ public class FileController {
      * @author YangYudi
      * @date 2021-01-16 12:17:31
      */
+    @ApiOperation(value = "文件管理添加或更新", httpMethod = "POST", notes = "文件管理添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated FileDTO fileDTO) {
         FilePO filePo = new FilePO();
@@ -98,6 +104,7 @@ public class FileController {
      * @author YangYudi
      * @date 2021-01-16 12:17:31
      */
+    @ApiOperation(value = "删除文件管理", httpMethod = "GET", notes = "删除文件管理")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = fileService.removeById(id);

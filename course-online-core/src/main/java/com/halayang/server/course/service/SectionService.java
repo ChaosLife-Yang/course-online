@@ -19,7 +19,6 @@ public interface SectionService extends IService<SectionPO> {
      * @param id 课程id
      * @author YangYudi
      * @date 2020/12/28 10:54
-     * @return int
      */
     void updateCourseTime(String id);
 

@@ -10,6 +10,8 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.course.dto.CourseContentDTO;
 import com.halayang.server.course.po.CourseContentPO;
 import com.halayang.server.course.service.CourseContentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2021-01-09 21:59:29
  */
+@Api(tags = {"课程内容管理"})
 @RestController
 @RequestMapping("/courseContent")
 public class CourseContentController {
@@ -40,6 +43,7 @@ public class CourseContentController {
      * @author YangYudi
      * @date 2021-01-09 21:59:29
      */
+    @ApiOperation(value = "获取课程内容对象信息", httpMethod = "GET", notes = "获取课程内容对象信息")
     @GetMapping("/{id}")
     public ResponseObject<CourseContentDTO> getOne(@PathVariable String id) {
         CourseContentPO po = courseContentService.getById(id);
@@ -59,6 +63,7 @@ public class CourseContentController {
      * @author YangYudi
      * @date 2021-01-09 21:59:29
      */
+    @ApiOperation(value = "课程内容分页查询", httpMethod = "POST", notes = "课程内容分页查询")
     @PostMapping("/list")
     public ResponseObject<PageDTO<CourseContentDTO>> courseContentList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
@@ -82,6 +87,7 @@ public class CourseContentController {
      * @author YangYudi
      * @date 2021-01-09 21:59:29
      */
+    @ApiOperation(value = "课程内容添加或更新", httpMethod = "POST", notes = "课程内容添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated CourseContentDTO courseContentDTO) {
         CourseContentPO courseContentPo = new CourseContentPO();
@@ -102,6 +108,7 @@ public class CourseContentController {
      * @author YangYudi
      * @date 2021-01-09 21:59:29
      */
+    @ApiOperation(value = "删除课程内容", httpMethod = "GET", notes = "删除课程内容")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = courseContentService.removeById(id);

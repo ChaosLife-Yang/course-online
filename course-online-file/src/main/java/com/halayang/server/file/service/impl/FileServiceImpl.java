@@ -79,6 +79,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
         filePo.setPath(saveName);
         //不存在就插入，存在就更新
         if (one != null) {
+            //根据id上传不修改文件名
             filePo.setId(one.getId());
             filePo.setName(one.getName());
             this.updateById(filePo);
@@ -136,7 +137,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO> implements 
             } catch (Exception e) {
                 log.error("IO流关闭异常", e);
             }
-
+            //上传完毕 删除分片
             for (int i = 0; i < shardTotal; i++) {
                 String path = filePath + relativePath + "." + i;
                 File file = new File(path);

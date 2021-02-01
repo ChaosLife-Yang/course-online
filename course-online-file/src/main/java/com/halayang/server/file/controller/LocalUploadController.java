@@ -6,6 +6,8 @@ import com.halayang.server.file.dto.FileDTO;
 import com.halayang.server.file.dto.FileMessageDTO;
 import com.halayang.server.file.service.FileService;
 import com.halayang.server.file.util.FileIOUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +29,7 @@ import java.util.Map;
  * <author>                <time>                  <version>                   <description>
  * YangYuDi               2021/1/12 10:12           1.0                         文件
  */
+@Api(tags = {"上传到本地的文件接口"})
 @Slf4j
 @RestController
 @RequestMapping("/local")
@@ -40,6 +43,7 @@ public class LocalUploadController {
     @Autowired
     private FileService fileService;
 
+    @ApiOperation(value = "获取文件MD5值", httpMethod = "POST", notes = "获取文件MD5值")
     @PostMapping("/getMd5")
     public ResponseObject<String> getMd5(@RequestParam MultipartFile file) {
         try {
@@ -50,17 +54,20 @@ public class LocalUploadController {
         }
     }
 
+    @ApiOperation(value = "分片上传", httpMethod = "POST", notes = "分片上传")
     @PostMapping("/shardUpload")
     public ResponseObject<String> shardUpload(FileDTO fileDTO) {
         String relative = fileService.shardFileUpload(fileDTO);
         return ResponseResult.success(String.format("%s%s", showPath, relative));
     }
 
+    @ApiOperation(value = "根据文件MD5获取文件信息", httpMethod = "POST", notes = "根据文件MD5获取文件信息")
     @GetMapping("/check/{key}")
     public ResponseObject<FileMessageDTO> checkKey(@PathVariable String key) {
         return ResponseResult.success(fileService.getShardIndex(key));
     }
 
+    @ApiOperation(value = "富文本编辑器上传图片", httpMethod = "POST", notes = "获取文件MD5值")
     @PostMapping("/contentUpload")
     public Map<String, String> contentUpload(@RequestParam MultipartFile file) {
         String finalShowPath = fileService.courseContentUpload(file);

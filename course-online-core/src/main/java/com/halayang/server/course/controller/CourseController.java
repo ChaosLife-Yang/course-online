@@ -12,6 +12,8 @@ import com.halayang.server.course.dto.CourseDTO;
 import com.halayang.server.course.po.CoursePO;
 import com.halayang.server.course.service.CourseContentService;
 import com.halayang.server.course.service.CourseService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +29,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2020-12-15 16:07:35
  */
+@Api(tags = {"课程管理"})
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -45,6 +48,7 @@ public class CourseController {
      * @author YangYudi
      * @date 2020-12-15 16:07:35
      */
+    @ApiOperation(value = "根据id", httpMethod = "GET", notes = "获取课程对象信息")
     @GetMapping("/{id}")
     public ResponseObject<CourseDTO> getOne(@PathVariable String id) {
         CoursePO po = courseService.getById(id);
@@ -61,6 +65,7 @@ public class CourseController {
      * @author YangYudi
      * @date 2020-12-15 16:07:35
      */
+    @ApiOperation(value = "课程分页查询", httpMethod = "POST", notes = "课程分页查询")
     @PostMapping("/list")
     public ResponseObject<PageDTO<CourseDTO>> courseList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
@@ -83,6 +88,7 @@ public class CourseController {
      * @author YangYudi
      * @date 2020-12-15 16:07:35
      */
+    @ApiOperation(value = "课程添加或更新", httpMethod = "POST", notes = "课程添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated CourseDTO courseDTO) {
         CoursePO coursePo = new CoursePO();
@@ -103,6 +109,7 @@ public class CourseController {
      * @author YangYudi
      * @date 2020-12-15 16:07:35
      */
+    @ApiOperation(value = "删除课程", httpMethod = "GET", notes = "删除课程")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = courseService.removeById(id);

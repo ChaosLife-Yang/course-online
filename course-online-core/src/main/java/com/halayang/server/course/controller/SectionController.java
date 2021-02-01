@@ -12,6 +12,8 @@ import com.halayang.server.course.dto.SectionDTO;
 import com.halayang.server.course.dto.SectionPageDTO;
 import com.halayang.server.course.po.SectionPO;
 import com.halayang.server.course.service.SectionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +29,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2020-12-20 12:28:51
  */
+@Api(tags = {"课程小节管理"})
 @RestController
 @RequestMapping("/section")
 public class SectionController {
@@ -42,6 +45,7 @@ public class SectionController {
      * @author YangYudi
      * @date 2020-12-20 12:28:51
      */
+    @ApiOperation(value = "小节查询", httpMethod = "GET", notes = "根据id小节详情")
     @GetMapping("/{id}")
     public ResponseObject<SectionDTO> getOne(@PathVariable String id) {
         SectionPO po = sectionService.getById(id);
@@ -58,6 +62,7 @@ public class SectionController {
      * @author YangYudi
      * @date 2020-12-20 12:28:51
      */
+    @ApiOperation(value = "小节分页查询", httpMethod = "POST", notes = "根据dto查询分页")
     @PostMapping("/list")
     public ResponseObject<PageDTO<SectionDTO>> sectionList(@RequestBody @Validated SectionPageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
@@ -86,6 +91,7 @@ public class SectionController {
      * @author YangYudi
      * @date 2020-12-20 12:28:51
      */
+    @ApiOperation(value = "新增或更新", httpMethod = "POST", notes = "根据dto查询分页")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated SectionDTO sectionDTO) {
         SectionPO sectionPo = new SectionPO();
@@ -107,6 +113,7 @@ public class SectionController {
      * @author YangYudi
      * @date 2020-12-20 12:28:51
      */
+    @ApiOperation(value = "小节分删除", httpMethod = "GET", notes = "根据id删除")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = sectionService.removeById(id);

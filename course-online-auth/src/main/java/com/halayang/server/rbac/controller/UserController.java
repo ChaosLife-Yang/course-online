@@ -10,6 +10,8 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.rbac.dto.UserDTO;
 import com.halayang.server.rbac.po.UserPO;
 import com.halayang.server.rbac.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2021-01-17 12:18:37
  */
+@Api(tags = {"用户管理"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -39,6 +42,7 @@ public class UserController {
      * @author YangYudi
      * @date 2021-01-17 12:18:37
      */
+    @ApiOperation(value = "获取用户管理对象信息", httpMethod = "GET", notes = "获取用户管理对象信息")
     @GetMapping("/{id}")
     public ResponseObject<UserDTO> getOne(@PathVariable String id) {
         UserPO po = userService.getById(id);
@@ -55,6 +59,7 @@ public class UserController {
      * @author YangYudi
      * @date 2021-01-17 12:18:37
      */
+    @ApiOperation(value = "用户管理分页查询", httpMethod = "POST", notes = "用户管理分页查询")
     @PostMapping("/list")
     public ResponseObject<PageDTO<UserDTO>> userList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
@@ -78,6 +83,7 @@ public class UserController {
      * @author YangYudi
      * @date 2021-01-17 12:18:37
      */
+    @ApiOperation(value = "用户管理添加或更新", httpMethod = "POST", notes = "用户管理添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated UserDTO userDTO) {
         boolean option = userService.saveOrUpdateUser(userDTO);
@@ -96,6 +102,7 @@ public class UserController {
      * @author YangYudi
      * @date 2021-01-17 12:18:37
      */
+    @ApiOperation(value = "删除用户管理", httpMethod = "GET", notes = "删除用户管理")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = userService.removeById(id);

@@ -10,6 +10,8 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.teacher.dto.TeacherDTO;
 import com.halayang.server.teacher.po.TeacherPO;
 import com.halayang.server.teacher.service.TeacherService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -26,6 +28,7 @@ import java.util.List;
  * @author YangYuDi
  * @since 2021-01-11 13:37:22
  */
+@Api(tags = {"老师管理"})
 @RestController
 @RequestMapping("/teacher")
 public class TeacherController {
@@ -41,6 +44,7 @@ public class TeacherController {
      * @author YangYudi
      * @date 2021-01-11 13:37:22
      */
+    @ApiOperation(value = "获取教师对象信息", httpMethod = "GET", notes = "获取教师对象信息")
     @GetMapping("/{id}")
     public ResponseObject<TeacherDTO> getOne(@PathVariable String id) {
         TeacherPO po = teacherService.getById(id);
@@ -57,6 +61,7 @@ public class TeacherController {
      * @author YangYudi
      * @date 2021-01-11 13:37:22
      */
+    @ApiOperation(value = "教师分页查询", httpMethod = "POST", notes = "教师分页查询")
     @PostMapping("/list")
     public ResponseObject<PageDTO<TeacherDTO>> teacherList(@RequestBody @Validated PageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
@@ -79,6 +84,7 @@ public class TeacherController {
      * @date 2021/1/11 16:26
      * @return com.halayang.common.utils.response.ResponseObject<java.util.List < com.halayang.server.teacher.dto.TeacherDTO>>
      */
+    @ApiOperation(value = "获取所有老师信息", httpMethod = "GET", notes = "获取所有老师信息")
     @GetMapping("/all")
     public ResponseObject<List<TeacherDTO>> all(){
         List<TeacherPO> list = teacherService.list(new LambdaQueryWrapper<TeacherPO>().orderByDesc(TeacherPO::getId));
@@ -94,6 +100,7 @@ public class TeacherController {
      * @author YangYudi
      * @date 2021-01-11 13:37:22
      */
+    @ApiOperation(value = "教师添加或更新", httpMethod = "POST", notes = "教师添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated TeacherDTO teacherDTO) {
         TeacherPO teacherPo = new TeacherPO();
@@ -124,6 +131,7 @@ public class TeacherController {
      * @author YangYudi
      * @date 2021-01-11 13:37:22
      */
+    @ApiOperation(value = "删除教师", httpMethod = "GET", notes = "删除教师")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = teacherService.removeById(id);
