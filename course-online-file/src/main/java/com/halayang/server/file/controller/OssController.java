@@ -35,13 +35,13 @@ public class OssController {
     @Autowired
     private OssService ossService;
 
-    @ApiOperation(value = "分片上传到oss", httpMethod = "POST", notes = "分片上传")
+    @ApiOperation(value = "分片上传到oss", httpMethod = "POST", notes = "分片上传到oss")
     @PostMapping("/upload")
     public ResponseObject<String> uploadOss(FileDTO fileDTO) {
         return ResponseResult.success(ossService.upload(fileDTO));
     }
 
-    @ApiOperation(value = "富文本编辑器上传图片", httpMethod = "POST", notes = "分片上传")
+    @ApiOperation(value = "富文本编辑器上传图片", httpMethod = "POST", notes = "富文本编辑器上传图片")
     @PostMapping("/contentUpload")
     public Map<String, String> contentUpload(@RequestParam MultipartFile file) {
         Map<String, String> map = new HashMap<>(2);

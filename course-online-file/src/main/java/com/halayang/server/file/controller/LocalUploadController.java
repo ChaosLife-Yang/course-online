@@ -67,7 +67,7 @@ public class LocalUploadController {
         return ResponseResult.success(fileService.getShardIndex(key));
     }
 
-    @ApiOperation(value = "富文本编辑器上传图片", httpMethod = "POST", notes = "获取文件MD5值")
+    @ApiOperation(value = "富文本编辑器上传图片", httpMethod = "POST", notes = "富文本编辑器上传图片")
     @PostMapping("/contentUpload")
     public Map<String, String> contentUpload(@RequestParam MultipartFile file) {
         String finalShowPath = fileService.courseContentUpload(file);
