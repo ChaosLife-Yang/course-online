@@ -30,7 +30,7 @@
         <!-- MP版本配置 -->
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
         <!-- jjwt自定义token解析版本配置 -->
-        <jjwt.token.wersion>0.9.1</jjwt.token.wersion>
+        <jjwt.token.wersion>0.11.1</jjwt.token.wersion>
         <!-- 斯瓦格api版本配置 -->
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <!-- 斯瓦格注解包版本配置 -->
@@ -103,9 +103,20 @@
                 <scope>import</scope>
             </dependency>
             <!-- 定义自定义token解析依赖 -->
+            <!-- JWT-->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.token.wersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.token.wersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
                 <version>${jjwt.token.wersion}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->

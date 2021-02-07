@@ -2,6 +2,7 @@ package com.halayang.common.utils.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.experimental.Accessors;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Date;
         value = "com.halayang.common.utils.response.ResponseObject<T>",
         description = "状态返回信息"
 )
+@Accessors(chain = true)
 public class ResponseObject<T> {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @ApiModelProperty(
