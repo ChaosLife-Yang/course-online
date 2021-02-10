@@ -242,6 +242,7 @@
                                 this.sectionDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
+                                    this.vod = this.sectionDto.vod;
                                     this.$refs.player.play();
                                 } else {
                                     this.msg('error', result.msg);
