@@ -210,7 +210,7 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             return response.getPlayAuth();
         } catch (Exception e) {
             log.error("获取凭证出错", e);
-            throw new IllegalArgumentException("获取凭证出错");
+            throw new IllegalArgumentException("获取凭证出错,可能在转码中");
         }
     }
 

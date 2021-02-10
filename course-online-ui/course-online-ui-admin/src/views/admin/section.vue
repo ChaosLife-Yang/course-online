@@ -36,13 +36,14 @@
                          @getUrl="getUrl"
                          @getDuration="getDuration"
                          :before-upload="beforeAvatarUpload"/>
-                    <ali-player v-if="sectionDto.vod" :get-play-auth="gateway+'/api/file/oss/getPlayAuth'" :vod="sectionDto.vod"/>
+                    <ali-player v-if="vod" :get-play-auth="gateway+'/api/file/oss/getPlayAuth'" ref="player"
+                                :vod="vod"/>
                 </el-form-item>
                 <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
                     <el-input v-model="sectionDto.sort" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="时长" :label-width="formLabelWidth" prop="time">
-                    {{sectionDto.time}} s
+                <el-form-item label="时长(秒)" :label-width="formLabelWidth" prop="time">
+                    {{sectionDto.time}}
                 </el-form-item>
                 <el-form-item label="收费" :label-width="formLabelWidth" prop="charge">
                     <el-select v-model="sectionDto.charge" placeholder="请选择">
@@ -69,7 +70,6 @@
                 <th>标题</th>
                 <th>课程</th>
                 <th>大章</th>
-                <th>视频</th>
                 <th>时长</th>
                 <th>收费</th>
                 <th>vod</th>
@@ -83,17 +83,13 @@
                 <th>{{ section.title}}</th>
                 <th>{{ course.name}}</th>
                 <th>{{ chapter.name}}</th>
-                <th>
-                    <a v-show="section.video" :href="section.video" rel="noopener noreferrer" target="_blank">点击查看</a>
-                    <span v-show="!section.video">没有上传</span>
-                </th>
                 <th>{{ section.time | formatSecond}}</th>
                 <th>{{ charge | optionKV(section.charge)}}</th>
                 <th>{{ section.vod}}</th>
                 <th>{{ section.sort}}</th>
                 <td>
                     <div class="btn-group">
-                        <el-tooltip class="item" effect="dark" content="更新" placement="top">
+                        <el-tooltip class="item" effect="dark" content="查看 & 更新" placement="top">
                             <el-button @click="get(section.id)"
                                        type="primary"
                                        icon="el-icon-edit"
@@ -146,6 +142,8 @@
                 currentPage: 1,
                 size: 10,
                 sectionDto: {},
+                vod: '',
+                hackReset: true,
                 charge: this.$SECTION_CHARGE,
                 rules: {
                     title: [
@@ -185,6 +183,7 @@
             add() {
                 this.dialogFormVisible = true;
                 this.sectionDto = {};
+                this.vod = '';
                 this.sectionDto.courseId = this.course.id;
                 this.sectionDto.chapterId = this.chapter.id;
                 this.percentage = 0;
@@ -225,6 +224,8 @@
                     .then((response) => {
                         let result = response.data;
                         this.sectionDto = result.data;
+                        this.vod = this.sectionDto.vod;
+                        this.$refs.player.play();
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -241,6 +242,7 @@
                                 this.sectionDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
+                                    this.$refs.player.play();
                                 } else {
                                     this.msg('error', result.msg);
                                 }
@@ -295,6 +297,7 @@
             },
             handleAvatarSuccess(key) {
                 this.sectionDto.vod = key;
+                this.vod = key;
             },
             getUrl(key) {
                 this.sectionDto.video = key;
@@ -319,7 +322,7 @@
                     this.$message.error('请输入小节名称');
                 }
                 return isVideo && isLt2M && !blank;
-            }
+            },
 
         },
     };

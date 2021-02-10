@@ -92,13 +92,14 @@
                                 //后端需要做判断，如果视频已经上传过就不需要继续上传了，直接返回数据
                                 if (resp.data.duration == 0) {
                                     this.upload(param);
+                                } else {
+                                    this.$emit('getVod', resp.data.vod);
+                                    this.$emit('getUrl', resp.data.url);
+                                    this.$emit('getDuration', resp.data.duration);
+                                    this.msg('success', '上传成功');
+                                    this.$refs.upload.clearFiles();
+                                    this.flag = false;
                                 }
-                                this.$emit('getVod', resp.data.vod);
-                                this.$emit('getUrl', resp.data.url);
-                                this.$emit('getDuration', resp.data.duration);
-                                this.msg('success', '上传成功');
-                                this.$refs.upload.clearFiles();
-                                this.flag = false;
                             } else {
                                 this.$refs.upload.clearFiles();
                                 this.flag = false;
