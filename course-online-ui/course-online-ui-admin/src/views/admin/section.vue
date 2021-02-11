@@ -221,9 +221,6 @@
                     .then((response) => {
                         let result = response.data;
                         this.sectionDto = result.data;
-                        if (!Tool.isEmpty(this.sectionDto.vod)) {
-                            this.$refs.player.play();
-                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -240,9 +237,6 @@
                                 this.sectionDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
-                                    if (!Tool.isEmpty(this.sectionDto.vod)) {
-                                        this.$refs.player.play();
-                                    }
                                 } else {
                                     this.msg('error', result.msg);
                                 }
@@ -290,6 +284,7 @@
             handleClose(done) {
                 this.$confirm('确认关闭？')
                     .then(_ => {
+                        this.sectionDto={};
                         done();
                     })
                     .catch(_ => {
@@ -297,9 +292,6 @@
             },
             handleAvatarSuccess(key) {
                 this.sectionDto.vod = key;
-                if (!Tool.isEmpty(this.sectionDto.vod)) {
-                    this.$refs.player.play();
-                }
             },
             getDuration(key) {
                 this.sectionDto.time = key;

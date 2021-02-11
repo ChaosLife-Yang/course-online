@@ -28,6 +28,9 @@
                 player: {}
             }
         },
+        created() {
+            this.play();
+        },
         methods: {
             play() {
                 let formData = new window.FormData();

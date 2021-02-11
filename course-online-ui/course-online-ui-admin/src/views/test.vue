@@ -23,7 +23,7 @@
              @getVod="getVod"
         />
         {{vodName}}
-        <ali-player :get-play-auth="vodAuth" :vod="'907322bd49dc4d51a9c0d06df8dcd016'">
+        <ali-player :get-play-auth="vodAuth" :vod="'a604b029d7da4cfbbecd3be189aed805'">
         </ali-player>
     </div>
 </template>
