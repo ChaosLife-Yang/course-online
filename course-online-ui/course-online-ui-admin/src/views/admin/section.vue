@@ -286,7 +286,7 @@
             handleClose(done) {
                 this.$confirm('确认关闭？')
                     .then(_ => {
-                        this.sectionDto={};
+                        this.sectionDto = {};
                         done();
                     })
                     .catch(_ => {
