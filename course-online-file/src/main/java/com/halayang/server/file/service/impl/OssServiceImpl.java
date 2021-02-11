@@ -4,9 +4,7 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.*;
 import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.vod.model.v20170321.GetMezzanineInfoResponse;
-import com.aliyuncs.vod.model.v20170321.GetVideoInfoResponse;
 import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -210,7 +208,7 @@ public class OssServiceImpl extends ServiceImpl<FileMapper, FilePO> implements O
             return response.getPlayAuth();
         } catch (Exception e) {
             log.error("获取凭证出错", e);
-            throw new IllegalArgumentException("获取凭证出错,可能在转码中");
+            throw new IllegalArgumentException("获取凭证出错,可能视频不存在或在转码中");
         }
     }
 

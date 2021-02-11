@@ -33,11 +33,10 @@
                          :button-name="'点击上传'"
                          :file-name="sectionDto.title"
                          @getVod="handleAvatarSuccess"
-                         @getUrl="getUrl"
                          @getDuration="getDuration"
                          :before-upload="beforeAvatarUpload"/>
-                    <ali-player v-if="vod" :get-play-auth="gateway+'/api/file/oss/getPlayAuth'" ref="player"
-                                :vod="vod"/>
+                    <ali-player v-if="sectionDto.vod" :get-play-auth="gateway+'/api/file/oss/getPlayAuth'" ref="player"
+                                :vod="sectionDto.vod"/>
                 </el-form-item>
                 <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
                     <el-input v-model="sectionDto.sort" autocomplete="off"/>
@@ -142,7 +141,6 @@
                 currentPage: 1,
                 size: 10,
                 sectionDto: {},
-                vod: '',
                 hackReset: true,
                 charge: this.$SECTION_CHARGE,
                 rules: {
@@ -183,7 +181,6 @@
             add() {
                 this.dialogFormVisible = true;
                 this.sectionDto = {};
-                this.vod = '';
                 this.sectionDto.courseId = this.course.id;
                 this.sectionDto.chapterId = this.chapter.id;
                 this.percentage = 0;
@@ -224,8 +221,9 @@
                     .then((response) => {
                         let result = response.data;
                         this.sectionDto = result.data;
-                        this.vod = this.sectionDto.vod;
-                        this.$refs.player.play();
+                        if (!Tool.isEmpty(this.sectionDto.vod)) {
+                            this.$refs.player.play();
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -242,8 +240,9 @@
                                 this.sectionDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
-                                    this.vod = this.sectionDto.vod;
-                                    this.$refs.player.play();
+                                    if (!Tool.isEmpty(this.sectionDto.vod)) {
+                                        this.$refs.player.play();
+                                    }
                                 } else {
                                     this.msg('error', result.msg);
                                 }
@@ -298,10 +297,9 @@
             },
             handleAvatarSuccess(key) {
                 this.sectionDto.vod = key;
-                this.vod = key;
-            },
-            getUrl(key) {
-                this.sectionDto.video = key;
+                if (!Tool.isEmpty(this.sectionDto.vod)) {
+                    this.$refs.player.play();
+                }
             },
             getDuration(key) {
                 this.sectionDto.time = key;

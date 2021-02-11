@@ -23,6 +23,11 @@
                 default: '400px'
             }
         },
+        data() {
+            return {
+                player: {}
+            }
+        },
         methods: {
             play() {
                 let formData = new window.FormData();
@@ -30,8 +35,8 @@
                 this.$ajax.post(this.getPlayAuth, formData).then(resp => {
                     let result = resp.data;
                     if (result.code === 200) {
-                        //页面渲染之后  created
-                        new Aliplayer({
+                        //页面渲染之后
+                        this.player = new Aliplayer({
                             id: 'J_prismPlayer',
                             vid: this.vod, // 视频id
                             playauth: result.data, // 播放凭证
