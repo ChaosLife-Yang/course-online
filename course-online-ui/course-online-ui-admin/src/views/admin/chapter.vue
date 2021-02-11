@@ -30,8 +30,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
+                <el-button :loading="loading" type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
             </div>
         </el-dialog>
         <table id="simple-table" class="table table-bordered table-hover">
@@ -96,6 +95,7 @@
             return {
                 course: {},
                 dialogFormVisible: false,
+                loading: false,
                 formLabelWidth: '80px',
                 title: "添加大章",
                 chapters: [], //数据显示列表
@@ -190,6 +190,7 @@
             saveOrUpdate(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        this.loading = true;
                         this.$ajax
                             .post(process.env.VUE_APP_SERVER + "/api/service/chapter/saveOrUpdate", this.chapterDto)
                             .then((response) => {
@@ -201,6 +202,7 @@
                                     this.msg('error', result.msg);
                                 }
                                 this.dialogFormVisible = false;
+                                this.loading = false;
                                 this.list();
                             })
                             .catch(error => {

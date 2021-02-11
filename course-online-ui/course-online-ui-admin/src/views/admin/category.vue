@@ -8,7 +8,6 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
             </div>
         </el-dialog>
@@ -27,7 +26,6 @@
                         </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">取 消</el-button>
                         <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
                     </div>
                 </el-dialog>
@@ -120,6 +118,7 @@
         data() {
             return {
                 dialogFormVisible: false,
+                loading: false,
                 formLabelWidth: '80px',
                 title: "添加分类",
                 categoryDto: {},
@@ -199,6 +198,7 @@
             saveOrUpdate(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        this.loading = true;
                         this.$ajax
                             .post(process.env.VUE_APP_SERVER + "/api/service/category/saveOrUpdate", this.categoryDto)
                             .then((response) => {
@@ -210,6 +210,7 @@
                                     this.msg('error', result.msg);
                                 }
                                 this.dialogFormVisible = false;
+                                this.loading = false;
                                 this.list();
                             })
                             .catch(error => {
