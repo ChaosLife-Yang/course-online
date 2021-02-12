@@ -235,7 +235,6 @@
                             .post(process.env.VUE_APP_SERVER + "/api/service/section/saveOrUpdate", this.sectionDto)
                             .then((response) => {
                                 let result = response.data;
-                                this.sectionDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
                                 } else {
@@ -244,6 +243,7 @@
                                 this.dialogFormVisible = false;
                                 this.loading = false;
                                 this.list();
+                                this.sectionDto.vod = '';
                             })
                             .catch(error => {
                                 this.msg('error', error);
@@ -286,7 +286,7 @@
             handleClose(done) {
                 this.$confirm('确认关闭？')
                     .then(_ => {
-                        this.sectionDto = {};
+                        this.sectionDto.vod = '';
                         done();
                     })
                     .catch(_ => {
@@ -294,6 +294,7 @@
             },
             handleAvatarSuccess(key) {
                 this.sectionDto.vod = key;
+                this.$refs.player.play();
             },
             getDuration(key) {
                 this.sectionDto.time = key;
