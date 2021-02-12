@@ -8,10 +8,10 @@
         <el-dialog :before-close="handleClose" :title="title" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="ruleForm" :model="userDto">
                 <el-input v-model="userDto.id" style="display: none"/>
-                <el-form-item label="登陆名" :label-width="formLabelWidth" prop="loginName">
+                <el-form-item label="登录名/昵称" :label-width="formLabelWidth" prop="loginName">
                     <el-input v-model="userDto.loginName" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="昵称" :label-width="formLabelWidth" prop="name">
+                <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="userDto.name" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -25,8 +25,8 @@
         <table id="simple-table" class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th>登陆名</th>
-                <th>昵称</th>
+                <th>登录名/昵称</th>
+                <th>姓名</th>
                 <th>创建时间</th>
                 <th>操作</th>
             </tr>
@@ -87,10 +87,10 @@
                 userDto: {},
                 rules: {
                     loginName: [
-                        {required: true, message: '请输入登陆名', trigger: 'blur'},
+                        {required: true, message: '请输入登录名/昵称', trigger: 'blur'},
                     ],
                     name: [
-                        {required: true, message: '请输入昵称', trigger: 'blur'},
+                        {required: true, message: '请输入姓名', trigger: 'blur'},
                     ],
                     password: [
                         {required: true, message: '请输入密码', trigger: 'blur'},
