@@ -293,8 +293,10 @@
                     });
             },
             handleAvatarSuccess(key) {
-                this.sectionDto.vod = key;
-                this.$refs.player.play();
+                this.sectionDto.vod = '';
+                setTimeout(() => {
+                    this.sectionDto.vod = key
+                }, 500);
             },
             getDuration(key) {
                 this.sectionDto.time = key;
