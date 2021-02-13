@@ -294,6 +294,7 @@
             },
             handleAvatarSuccess(key) {
                 this.sectionDto.vod = '';
+                //上传完成之后播放器不能立马加载 需要延迟加载一下
                 setTimeout(() => {
                     this.sectionDto.vod = key
                 }, 500);
