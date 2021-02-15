@@ -16,7 +16,7 @@
             },
             width: {
                 type: String,
-                default: '800px'
+                default: '90%'
             },
             height: {
                 type: String,

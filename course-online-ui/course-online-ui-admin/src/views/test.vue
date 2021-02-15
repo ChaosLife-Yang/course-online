@@ -84,7 +84,7 @@
                 this.vodName = key;
             },
             decode() {
-                let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiY2xpZW50Il0sInVzZXJfbmFtZSI6ImFkbWluIiwic2NvcGUiOlsiYXBwIl0sImV4cCI6MTYxMzI3NTc2OSwiYXV0aG9yaXRpZXMiOlsiYWRkT3JkZXIiLCJzaG93T3JkZXIiLCJ1cGRhdGVPcmRlciIsImRlbGV0ZU9yZGVyIl0sImp0aSI6IjQ1ZjdlZDEwLWIxZGEtNGYwMC04NTFmLThmMjdmMTFiYjczNyIsImNsaWVudF9pZCI6ImNsaWVudCJ9.363avI6rKIt9aSE-iDdoRbH5KrkksJ222RoVBTGzPfo";
+                let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiY2xpZW50Il0sInVzZXJfaWQiOjIsInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJhcHAiXSwiZXhwIjoxNjEzMzU0OTU1LCJhdXRob3JpdGllcyI6WyJhZGRPcmRlciIsInNob3dPcmRlciJdLCJqdGkiOiJlNGQ3MmJhMS0xMjdjLTQ0OWUtODNkYi04MjJhOTRiYjAxNWIiLCJjbGllbnRfaWQiOiJjbGllbnQifQ.gXzZbxriIUrE4xssALHqmdyWL7aASBhPnHk5SJbLFTI";
                 //截取token，获取载体
                 let strings = token.split(".");
                 //解析，需要吧‘_’,'-'进行转换否则会无法解析
