@@ -1,7 +1,7 @@
-package com.halayang.server.rbac.mapper;
+package com.halayang.server.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.halayang.server.rbac.po.UserPO;
+import com.halayang.server.user.po.UserPO;
 
 /**
  * <p>

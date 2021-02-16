@@ -1,4 +1,4 @@
-package com.halayang.server.rbac.controller;
+package com.halayang.server.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
@@ -7,9 +7,9 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.rbac.dto.UserDTO;
-import com.halayang.server.rbac.po.UserPO;
-import com.halayang.server.rbac.service.UserService;
+import com.halayang.server.user.dto.UserDTO;
+import com.halayang.server.user.po.UserPO;
+import com.halayang.server.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;

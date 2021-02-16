@@ -1,12 +1,12 @@
-package com.halayang.server.rbac.service.impl;
+package com.halayang.server.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.halayang.common.utils.BCryptUtils;
-import com.halayang.server.rbac.dto.UserDTO;
-import com.halayang.server.rbac.mapper.UserMapper;
-import com.halayang.server.rbac.po.UserPO;
-import com.halayang.server.rbac.service.UserService;
+import com.halayang.server.user.dto.UserDTO;
+import com.halayang.server.user.mapper.UserMapper;
+import com.halayang.server.user.po.UserPO;
+import com.halayang.server.user.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

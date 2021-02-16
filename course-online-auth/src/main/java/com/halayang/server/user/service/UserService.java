@@ -1,8 +1,8 @@
-package com.halayang.server.rbac.service;
+package com.halayang.server.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.halayang.server.rbac.dto.UserDTO;
-import com.halayang.server.rbac.po.UserPO;
+import com.halayang.server.user.dto.UserDTO;
+import com.halayang.server.user.po.UserPO;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package com.halayang.server.rbac.dto;
+package com.halayang.server.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;

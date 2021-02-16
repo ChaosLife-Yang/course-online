@@ -22,8 +22,6 @@ import java.util.*;
  */
 public class BusinessCodeGenerator {
 
-    private static String toPath = "course-online-auth/src/main/java/com/halayang/server/";
-
     /**
      * controller代码生成器
      *
@@ -47,8 +45,6 @@ public class BusinessCodeGenerator {
         map.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         FreemarkerUtils.generator(toPath + classNamePrefix + "Controller.java", map);
     }
-
-    private static String toDtoPath = "course-online-auth/src/main/java/com/halayang/server/";
 
     /**
      * dto代码生成器
@@ -94,8 +90,6 @@ public class BusinessCodeGenerator {
         return set;
     }
 
-    private static String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
-
     /**
      * vue页面生成器
      *
@@ -121,9 +115,14 @@ public class BusinessCodeGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        dtoGenerator(toDtoPath, "User", "rbac", "user", "user");
-        controllerGenerator(toPath, "User", "rbac", "user", "用户管理");
-        vueGenerator(toVuePath, "/api/auth", "user", "user", "用户", "user");
+        String toDtoPath = "course-online-auth/src/main/java/com/halayang/server/";
+        dtoGenerator(toDtoPath, "Resource", "resource", "resource", "resource");
+
+        String controllerPath = "course-online-auth/src/main/java/com/halayang/server/";
+        controllerGenerator(controllerPath, "Resource", "resource", "resource", "资源管理");
+
+//        String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
+//        vueGenerator(toVuePath, "/api/auth", "user", "user", "用户", "user");
     }
 
 }

@@ -1,28 +1,27 @@
-package com.halayang.server.rbac.po;
+package com.halayang.server.role.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 /**
  * <p>
- * 用户
+ * 角色资源关联
  * </p>
  *
  * @author YangYuDi
- * @since 2021-01-17
+ * @since 2021-02-16
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("user")
-public class UserPO implements Serializable {
+@TableName("role_resource")
+public class RoleResourcePO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,28 +32,17 @@ public class UserPO implements Serializable {
     private String id;
 
     /**
-     * 登陆名
+     * 角色|id
      */
-    private String loginName;
+    private String roleId;
 
     /**
-     * 昵称
+     * 资源|id
      */
-    private String name;
+    private String resourceId;
 
-    /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 创建时间
-     */
     private LocalDateTime createTime;
 
-    /**
-     * 修改时间
-     */
     private LocalDateTime editTime;
 
 
