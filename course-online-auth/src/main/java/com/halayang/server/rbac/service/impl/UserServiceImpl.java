@@ -31,9 +31,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             if (count > 0) {
                 throw new IllegalArgumentException("用户名已被注册，请换一个");
             }
+            //对密码进行加密
+            userDto.setPassword(BCryptUtils.encode(userDto.getPassword()));
         }
-        //对密码进行加密
-        userDto.setPassword(BCryptUtils.encode(userDto.getPassword()));
         UserPO userPo = new UserPO();
         BeanUtils.copyProperties(userDto, userPo);
         return this.saveOrUpdate(userPo);

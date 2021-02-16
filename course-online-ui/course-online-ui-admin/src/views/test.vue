@@ -23,9 +23,37 @@
              @getVod="getVod"
         />
         {{vodName}}
-        <ali-player :get-play-auth="vodAuth" :vod="'a604b029d7da4cfbbecd3be189aed805'">
-        </ali-player>
+
         {{info}}
+
+        <el-table
+                :data="tableData1"
+                style="width: 100%"
+                row-key="id"
+                border
+                highlight-current-row
+                :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+            <el-table-column
+                    prop="date"
+                    label="日期"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="name"
+                    label="姓名"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="address"
+                    label="地址">
+            </el-table-column>
+            <el-table-column
+                    label="操作">
+                <template slot-scope="scope">
+                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="get(scope.row)" circle></el-button>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 
@@ -48,7 +76,45 @@
                 success: "",
                 fileUrl: "",
                 vodName: '',
-                info: {}
+                info: {},
+                tableData1: [{
+                    id: 1,
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    id: 2,
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    id: 3,
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1519 弄',
+                    children: [{
+                        id: 31,
+                        date: '2016-05-01',
+                        name: '王小虎',
+                        address: '上海市普陀区金沙江路 1519 弄',
+                        children: [{
+                            id: 33,
+                            date: '2016-05-01',
+                            name: '王小虎',
+                            address: '上海市普陀区金沙江路 1519 弄'
+                        }]
+                    }, {
+                        id: 32,
+                        date: '2016-05-01',
+                        name: '王小虎',
+                        address: '上海市普陀区金沙江路 1519 弄'
+                    }]
+                }, {
+                    id: 4,
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }]
             }
         },
         created() {
@@ -89,6 +155,9 @@
                 let strings = token.split(".");
                 //解析，需要吧‘_’,'-'进行转换否则会无法解析
                 this.info = JSON.parse(decodeURIComponent(escape(window.atob(strings[1].replace(/-/g, "+").replace(/_/g, "/")))));
+            },
+            get(obj) {
+                console.log(obj.id);
             }
         }
 

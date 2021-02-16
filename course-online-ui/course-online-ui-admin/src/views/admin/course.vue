@@ -411,8 +411,12 @@
                     })
                     .then((response) => {
                         let result = response.data;
-                        this.courses = result.data.list;
-                        this.total = result.count;
+                        if (result.code === 200) {
+                            this.courses = result.data.list;
+                            this.total = result.count;
+                        } else {
+                            this.msg('error', result.msg);
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -421,7 +425,11 @@
                     .get(process.env.VUE_APP_SERVER + "/api/service/category/list")
                     .then((response) => {
                         let result = response.data;
-                        this.categoryList = result.data;
+                        if (result.code === 200) {
+                            this.categoryList = result.data;
+                        } else {
+                            this.msg('error', result.msg);
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -430,8 +438,12 @@
                     .get(process.env.VUE_APP_SERVER + "/api/service/teacher/all")
                     .then((response) => {
                         let result = response.data;
-                        this.teachers = result.data;
-                        this.total = result.count;
+                        if (result.code === 200) {
+                            this.teachers = result.data;
+                            this.total = result.count;
+                        } else {
+                            this.msg('error', result.msg);
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
