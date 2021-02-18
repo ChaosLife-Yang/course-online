@@ -72,9 +72,8 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, ResourcePO>
         ids.add(id);
         //先查询所有
         List<ResourcePO> poList = this.list();
-        List<ResourceDTO> resources = CopyUtils.copyList(poList, ResourceDTO.class);
         //根据节点id 查询子孙节点id 保存到一个list上
-        getChildrenIds(id, resources, ids);
+        getChildrenIds(id, poList, ids);
         return this.removeByIds(ids);
     }
 
@@ -82,16 +81,16 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, ResourcePO>
      * 根据当前节点id递归获取子孙节点id列表 保存到一个list上
      *
      * @param id   id
-     * @param tree 所有节点
+     * @param list 所有节点
      * @param ids  结果集
      * @author YangYudi
      * @date 2021/2/18 17:22
      */
-    private void getChildrenIds(String id, List<ResourceDTO> tree, List<String> ids) {
-        tree.forEach(resourceDTO -> {
-            if (resourceDTO.getParent().equals(id)) {
-                ids.add(resourceDTO.getId());
-                getChildrenIds(resourceDTO.getId(), tree, ids);
+    private void getChildrenIds(String id, List<ResourcePO> list, List<String> ids) {
+        list.forEach(resource -> {
+            if (resource.getParent().equals(id)) {
+                ids.add(resource.getId());
+                getChildrenIds(resource.getId(), list, ids);
             }
         });
     }
