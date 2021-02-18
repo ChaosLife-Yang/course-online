@@ -427,11 +427,11 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="">
-                                <a href="jqgrid.html">
+                            <li class="" id="business-resource-sidebar">
+                                <router-link to="/business/resource">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     资源管理
-                                </a>
+                                </router-link>
 
                                 <b class="arrow"></b>
                             </li>

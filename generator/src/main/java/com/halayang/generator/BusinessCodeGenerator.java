@@ -115,14 +115,14 @@ public class BusinessCodeGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        String toDtoPath = "course-online-auth/src/main/java/com/halayang/server/";
-        dtoGenerator(toDtoPath, "Resource", "resource", "resource", "resource");
+//        String toDtoPath = "course-online-auth/src/main/java/com/halayang/server/";
+//        dtoGenerator(toDtoPath, "Resource", "resource", "resource", "resource");
+//
+//        String controllerPath = "course-online-auth/src/main/java/com/halayang/server/";
+//        controllerGenerator(controllerPath, "Resource", "resource", "resource", "资源管理");
 
-        String controllerPath = "course-online-auth/src/main/java/com/halayang/server/";
-        controllerGenerator(controllerPath, "Resource", "resource", "resource", "资源管理");
-
-//        String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
-//        vueGenerator(toVuePath, "/api/auth", "user", "user", "用户", "user");
+        String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
+        vueGenerator(toVuePath, "/api/auth", "resource", "resource", "资源", "resource");
     }
 
 }
