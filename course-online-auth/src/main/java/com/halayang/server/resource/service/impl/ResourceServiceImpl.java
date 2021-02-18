@@ -33,7 +33,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, ResourcePO>
         //先把资源信息先全部查出来
         List<ResourcePO> poList = this.list();
         List<ResourceDTO> resources = CopyUtils.copyList(poList, ResourceDTO.class);
-        //获取一级节点 父节点为空的节点
+        //只保留一级节点(父节点为空的节点) 用于页面展示
         List<ResourceDTO> collect = resources.stream()
                 .filter(r -> StringUtils.isEmpty(r.getParent()))
                 .collect(Collectors.toList());
