@@ -37,9 +37,9 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
 
         if (!CollectionUtils.isEmpty(courseCategoryDTO.getCategoryId())) {
             List<CourseCategoryPO> collect = courseCategoryDTO.getCategoryId().stream()
-                    .map(s -> new CourseCategoryPO()
+                    .map(categoryId -> new CourseCategoryPO()
                             .setCourseId(courseCategoryDTO.getCourseId())
-                            .setCategoryId(s))
+                            .setCategoryId(categoryId))
                     .collect(Collectors.toList());
             return this.saveBatch(collect);
         }

@@ -50,7 +50,8 @@
             <el-table-column
                     label="操作">
                 <template slot-scope="scope">
-                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="get(scope.row)" circle></el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="get(scope.row)"
+                               circle></el-button>
                 </template>
             </el-table-column>
         </el-table>

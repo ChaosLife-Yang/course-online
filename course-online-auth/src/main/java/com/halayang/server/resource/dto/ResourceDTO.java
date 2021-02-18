@@ -2,6 +2,8 @@ package com.halayang.server.resource.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,46 +25,32 @@ public class ResourceDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-    * id
-    */
     @ApiModelProperty(value = "id")
     private String id;
-    /**
-    * 父id
-    */
+
     @ApiModelProperty(value = "父id")
     private String parent;
-    /**
-    * 名称|菜单或按钮
-    */
+
     @ApiModelProperty(value = "名称|菜单或按钮")
     private String name;
-    /**
-    * 权限标识
-    */
+
     @ApiModelProperty(value = "权限标识")
     private String permissionValue;
-    /**
-    * 页面|路由
-    */
+
     @ApiModelProperty(value = "页面|路由")
     private String page;
-    /**
-    * 请求|接口
-    */
+
     @ApiModelProperty(value = "请求|接口")
     private String request;
-    /**
-    * 创建时间
-    */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+
+    @ApiModelProperty(value = "子节点")
+    private List<ResourceDTO> children;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
-    /**
-    * 修改时间
-    */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime editTime;
 

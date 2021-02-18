@@ -50,24 +50,13 @@ public class ResourceController {
     /**
      * 资源管理分页查询
      *
-     * @param pageDTO 分页数据
      * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.resource.po.ResourcePO>>
      * @author YangYudi
      * @date 2021-02-16 13:48:23
      */
-    @PostMapping("/list")
-    public ResponseObject<PageDTO<ResourceDTO>> resourceList(@RequestBody @Validated PageDTO pageDTO) {
-        //startPage方法往下遇到的第一个sql语句执行分页操作
-        PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<ResourcePO> pageInfo = new PageInfo<>(resourceService.list(new LambdaQueryWrapper<ResourcePO>().orderByDesc(ResourcePO::getId)));
-        List<ResourcePO> list = pageInfo.getList();
-        List<ResourceDTO> dtoList = CopyUtils.copyList(list, ResourceDTO.class);
-        PageDTO<ResourceDTO> page = new PageDTO<ResourceDTO>()
-                .setPage(pageDTO.getPage())
-                .setSize(pageDTO.getSize())
-                .setPages(pageInfo.getPages())
-                .setList(dtoList);
-        return ResponseResult.success(pageInfo.getTotal(), page);
+    @GetMapping("/list")
+    public ResponseObject<List<ResourceDTO>> resourceList() {
+        return ResponseResult.success(resourceService.resourceList());
     }
 
     /**
@@ -100,7 +89,7 @@ public class ResourceController {
      */
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
-        boolean option = resourceService.removeById(id);
+        boolean option = resourceService.deleteResources(id);
         if (option) {
             return ResponseResult.success();
         } else {
