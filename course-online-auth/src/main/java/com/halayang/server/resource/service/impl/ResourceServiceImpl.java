@@ -44,6 +44,15 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, ResourcePO>
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 对一级节点设置子节点
+     *
+     * @param resource dto对象
+     * @param tree     所有节点
+     * @return com.halayang.server.resource.dto.ResourceDTO
+     * @author YangYudi
+     * @date 2021/2/18 17:45
+     */
     private ResourceDTO getChildren(ResourceDTO resource, List<ResourceDTO> tree) {
         //查找子节点
         resource.setChildren(getChildrenById(resource.getId(), tree));
