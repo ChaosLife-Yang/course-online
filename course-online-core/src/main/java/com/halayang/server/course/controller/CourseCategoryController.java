@@ -57,30 +57,6 @@ public class CourseCategoryController {
     }
 
     /**
-     * 课程分类分页查询
-     *
-     * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.courseCategory.po.CourseCategoryPO>>
-     * @author YangYudi
-     * @date 2020-12-20 15:39:06
-     */
-    @ApiOperation(value = "课程分类分页查询", httpMethod = "POST", notes = "课程分类分页查询")
-    @PostMapping("/list")
-    public ResponseObject<PageDTO<CourseCategoryDTO>> courseCategoryList(@RequestBody @Validated PageDTO pageDTO) {
-        //startPage方法往下遇到的第一个sql语句执行分页操作
-        PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<CourseCategoryPO> pageInfo = new PageInfo<>(courseCategoryService.list());
-        List<CourseCategoryPO> list = pageInfo.getList();
-        List<CourseCategoryDTO> dtoList = CopyUtils.copyList(list, CourseCategoryDTO.class);
-        PageDTO<CourseCategoryDTO> page = new PageDTO<CourseCategoryDTO>()
-                .setPage(pageDTO.getPage())
-                .setSize(pageDTO.getSize())
-                .setPages(pageInfo.getPages())
-                .setList(dtoList);
-        return ResponseResult.success(pageInfo.getTotal(), page);
-    }
-
-    /**
      * 课程分类添加或更新
      *
      * @param courseCategoryDTO 请求参数

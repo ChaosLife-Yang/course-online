@@ -1,17 +1,12 @@
 package com.halayang.server.role.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.role.dto.RoleResourceDTO;
 import com.halayang.server.role.po.RoleResourcePO;
 import com.halayang.server.role.service.RoleResourceService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -54,29 +49,6 @@ public class RoleResourceController {
     }
 
     /**
-     * 角色资源分页查询
-     *
-     * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.roleResource.po.RoleResourcePO>>
-     * @author YangYudi
-     * @date 2021-02-19 14:36:42
-     */
-    @PostMapping("/list")
-    public ResponseObject<PageDTO<RoleResourceDTO>> roleResourceList(@RequestBody @Validated PageDTO pageDTO) {
-        //startPage方法往下遇到的第一个sql语句执行分页操作
-        PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
-        PageInfo<RoleResourcePO> pageInfo = new PageInfo<>(roleResourceService.list(new LambdaQueryWrapper<RoleResourcePO>().orderByDesc(RoleResourcePO::getId)));
-        List<RoleResourcePO> list = pageInfo.getList();
-        List<RoleResourceDTO> dtoList = CopyUtils.copyList(list, RoleResourceDTO.class);
-        PageDTO<RoleResourceDTO> page = new PageDTO<RoleResourceDTO>()
-                .setPage(pageDTO.getPage())
-                .setSize(pageDTO.getSize())
-                .setPages(pageInfo.getPages())
-                .setList(dtoList);
-        return ResponseResult.success(pageInfo.getTotal(), page);
-    }
-
-    /**
      * 角色资源添加或更新
      *
      * @param roleResourceDTO 请求参数
@@ -86,9 +58,7 @@ public class RoleResourceController {
      */
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated RoleResourceDTO roleResourceDTO) {
-        RoleResourcePO roleResourcePo = new RoleResourcePO();
-        BeanUtils.copyProperties(roleResourceDTO, roleResourcePo);
-        boolean option = roleResourceService.saveOrUpdate(roleResourcePo);
+        boolean option = roleResourceService.saveOrUpdate(roleResourceDTO);
         if (option) {
             return ResponseResult.success();
         } else {

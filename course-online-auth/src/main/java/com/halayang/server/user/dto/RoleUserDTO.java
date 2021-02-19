@@ -2,6 +2,8 @@ package com.halayang.server.user.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,20 +34,16 @@ public class RoleUserDTO implements Serializable {
     * 角色|id
     */
     @ApiModelProperty(value = "角色|id")
-    private String roleId;
+    private List<String> roleId;
     /**
     * 用户|id
     */
     @ApiModelProperty(value = "用户|id")
     private String userId;
-    /**
-    * 
-    */
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime createTime;
-    /**
-    * 
-    */
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime editTime;
 
