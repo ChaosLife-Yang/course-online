@@ -1,6 +1,5 @@
 package com.halayang.server.resource.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.server.resource.dto.ResourceDTO;
 import com.halayang.server.resource.po.ResourcePO;
@@ -8,12 +7,9 @@ import com.halayang.server.resource.mapper.ResourceMapper;
 import com.halayang.server.resource.service.ResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,9 +1,12 @@
 package com.halayang.generator.util;
 
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +26,7 @@ import java.util.Map;
  * @create 2020/12/15 14:37
  */
 public class FreemarkerUtils {
-
+    private static final Logger log = LoggerFactory.getLogger(FreemarkerUtils.class);
     /**
      * 模板所在的父目录
      */

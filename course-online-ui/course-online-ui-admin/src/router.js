@@ -11,6 +11,7 @@ import Teacher from "./views/admin/teacher"
 import File from "./views/admin/file"
 import User from "./views/admin/user"
 import Resource from "./views/admin/resource"
+import Role from "./views/admin/role"
 import Test from "./views/test"
 
 Vue.use(Router);
@@ -78,6 +79,11 @@ export default new Router({
                     path: 'business/resource',
                     name: 'business/resource',
                     component: Resource,
+                }, {
+                    //子路由不用加斜杠
+                    path: 'business/role',
+                    name: 'business/role',
+                    component: Role,
                 },
             ]
         },

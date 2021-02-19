@@ -53,7 +53,7 @@ public class BusinessCodeGenerator {
      * @param classNamePrefix 类名前缀
      * @param module          模块名
      * @param tableName       数据库表名
-     * @param moduleName      dto代码生成器
+     * @param moduleName      业务中文名
      * @author YangYudi
      * @date 2020/12/16 11:12
      */
@@ -115,14 +115,14 @@ public class BusinessCodeGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-//        String toDtoPath = "course-online-auth/src/main/java/com/halayang/server/";
-//        dtoGenerator(toDtoPath, "Resource", "resource", "resource", "resource");
-//
-//        String controllerPath = "course-online-auth/src/main/java/com/halayang/server/";
-//        controllerGenerator(controllerPath, "Resource", "resource", "resource", "资源管理");
+        String toDtoPath = "course-online-auth/src/main/java/com/halayang/server/";
+        dtoGenerator(toDtoPath, "RoleUser", "user", "role_user", "用户角色");
 
-        String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
-        vueGenerator(toVuePath, "/api/auth", "resource", "resource", "资源", "resource");
+        String controllerPath = "course-online-auth/src/main/java/com/halayang/server/";
+        controllerGenerator(controllerPath, "RoleUser", "user", "roleUser", "用户角色");
+
+//        String toVuePath = "course-online-ui/course-online-ui-admin/src/views/admin/";
+//        vueGenerator(toVuePath, "/api/auth", "role", "role", "角色", "role");
     }
 
 }
