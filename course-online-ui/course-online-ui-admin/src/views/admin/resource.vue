@@ -56,8 +56,9 @@
                 <template slot-scope="scope">
                     <el-tooltip class="item" effect="dark" content="添加子节点" placement="top">
                         <el-button @click="addChild(scope.row.id)"
-                                   type="info"
+                                   type="primary"
                                    icon="el-icon-plus"
+                                   plain
                                    size="mini"/>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" content="更新" placement="top">

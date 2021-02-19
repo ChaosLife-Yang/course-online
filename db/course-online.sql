@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 12/02/2021 19:24:13
+ Date: 19/02/2021 20:56:49
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,6 @@ CREATE TABLE `category`  (
 -- Records of category
 -- ----------------------------
 INSERT INTO `category` VALUES ('00000100', NULL, '前端技术', 100, NULL, '2021-01-09 11:16:39');
-INSERT INTO `category` VALUES ('00000101', '00000100', 'Html/Css', 101, NULL, '2021-01-11 21:43:01');
 INSERT INTO `category` VALUES ('00000102', '00000100', 'JavaScript', 102, NULL, '2021-01-11 21:43:40');
 INSERT INTO `category` VALUES ('00000103', '00000100', 'Vue.js', 103, NULL, '2021-01-16 11:35:28');
 INSERT INTO `category` VALUES ('00000104', '00000100', 'React.js', 104, NULL, '2021-01-16 11:35:32');
@@ -92,6 +91,7 @@ INSERT INTO `category` VALUES ('1348460835772583938', '00000200', 'C', NULL, '20
 INSERT INTO `category` VALUES ('1348460862230253569', '00000200', 'C++', NULL, '2021-01-11 10:44:57', '2021-01-11 10:45:04');
 INSERT INTO `category` VALUES ('1348460912087945218', '00000200', 'C#', NULL, '2021-01-11 10:45:09', '2021-01-11 10:45:09');
 INSERT INTO `category` VALUES ('1348525026122420225', '00000500', '容器', NULL, '2021-01-11 14:59:55', '2021-01-11 14:59:55');
+INSERT INTO `category` VALUES ('1362210423173672962', '00000100', 'HTML/CSS', NULL, '2021-02-18 09:20:48', '2021-02-18 09:20:48');
 
 -- ----------------------------
 -- Table structure for chapter
@@ -179,7 +179,7 @@ INSERT INTO `course` VALUES ('00000001', '数据结构和算法', '这是一门�
 INSERT INTO `course` VALUES ('000012123', 'Java支付项目实战', '这是一门测试课程', 1132, 19.90, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/a8c1d47a-4a57-43fb-9f46-613de92cfb6b.jpg', '1', 'C', 'P', 100, 0, 0, '2020-11-29 13:33:54', '2021-01-30 11:51:45', '1348547421621317633');
 INSERT INTO `course` VALUES ('1347880545798942721', '计算机网络精讲', '计算机网络知识梳理', 1727, 123.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png', '1', 'F', 'D', 123, NULL, 0, '2021-01-09 20:18:59', '2021-01-30 17:22:16', '1348627061677342722');
 INSERT INTO `course` VALUES ('1348551526196572161', '操作系统精讲', '1231', 123, 123.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/ae3c6623-e534-4ee6-9456-43e3d95c1b0a.jpg', '1', 'F', 'D', 0, NULL, 1, '2021-01-11 16:45:13', '2021-01-30 11:51:25', '1348627420260974593');
-INSERT INTO `course` VALUES ('1355363330293850114', '消息中间件精讲', '消息中间件精讲', 4244, 199.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/ae3c6623-e534-4ee6-9456-43e3d95c1b0a.jpg', '1', 'F', 'D', 0, NULL, 0, '2021-01-30 11:52:54', '2021-02-11 17:08:36', '1348627420260974593');
+INSERT INTO `course` VALUES ('1355363330293850114', '消息中间件精讲', '消息中间件精讲', 3678, 199.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/ae3c6623-e534-4ee6-9456-43e3d95c1b0a.jpg', '1', 'F', 'D', 0, NULL, 0, '2021-01-30 11:52:54', '2021-02-11 17:08:36', '1348627420260974593');
 
 -- ----------------------------
 -- Table structure for course_category
@@ -359,32 +359,53 @@ CREATE TABLE `member_course`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for oauth_client_details
+-- ----------------------------
+DROP TABLE IF EXISTS `oauth_client_details`;
+CREATE TABLE `oauth_client_details`  (
+  `client_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `resource_ids` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `client_secret` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `scope` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `authorized_grant_types` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `web_server_redirect_uri` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `authorities` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `access_token_validity` int(11) NULL DEFAULT NULL,
+  `refresh_token_validity` int(11) NULL DEFAULT NULL,
+  `additional_information` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `autoapprove` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of oauth_client_details
+-- ----------------------------
+INSERT INTO `oauth_client_details` VALUES ('client', 'client', '$2a$10$mx9iAfhiAUc95R17NI1O3.ZpQtFvGDF/p2XDndRXcQLull/TnUrYu', 'app', 'authorization_code,refresh_token,password', 'http://localhost:9000/callback', NULL, 1800, NULL, NULL, 'true');
+
+-- ----------------------------
 -- Table structure for resource
 -- ----------------------------
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE `resource`  (
   `id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'id',
+  `parent` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '父id',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称|菜单或按钮',
+  `permission_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限标识',
   `page` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面|路由',
   `request` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求|接口',
-  `parent` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '父id',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-  `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES ('01', '系统管理', NULL, NULL, NULL, '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('0101', '用户管理', '/system/user', NULL, '01', '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('010101', '保存', NULL, '[\"/system/admin/user/list\", \"/system/admin/user/save\"]', '0101', '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('010102', '删除', NULL, '[\"/system/admin/user/delete\"]', '0101', '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('010103', '重置密码', NULL, '[\"/system/admin/user/save-password\"]', '0101', '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('0102', '资源管理', '/system/resource', NULL, '01', '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('010201', '保存/显示', NULL, '[\"/system/admin/resource\"]', '0102', '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('0103', '角色管理', '/system/role', NULL, '01', '2020-12-03 13:47:32', NULL);
-INSERT INTO `resource` VALUES ('010301', '角色/权限管理', NULL, '[\"/system/admin/role\"]', '0103', '2020-12-03 13:47:32', NULL);
+INSERT INTO `resource` VALUES ('01', '', '系统管理', NULL, NULL, NULL, '2020-12-03 13:47:32', NULL);
+INSERT INTO `resource` VALUES ('0101', '01', '用户管理', 'user', '/system/user', NULL, '2020-12-03 13:47:32', '2021-02-18 20:19:16');
+INSERT INTO `resource` VALUES ('010101', '0101', '保存', 'user.save', '', '[\"/system/admin/user/list\", \"/system/admin/user/save\"]', '2020-12-03 13:47:32', '2021-02-18 20:30:01');
+INSERT INTO `resource` VALUES ('010102', '0101', '删除', NULL, NULL, '[\"/system/admin/user/delete\"]', '2020-12-03 13:47:32', NULL);
+INSERT INTO `resource` VALUES ('0102', '01', '资源管理', NULL, '/system/resource', NULL, '2020-12-03 13:47:32', NULL);
+INSERT INTO `resource` VALUES ('010201', '0102', '保存/显示', NULL, NULL, '[\"/system/admin/resource\"]', '2020-12-03 13:47:32', NULL);
 
 -- ----------------------------
 -- Table structure for role
@@ -393,7 +414,7 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`  (
   `id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'id',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色',
-  `desc` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述',
+  `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
@@ -402,9 +423,9 @@ CREATE TABLE `role`  (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('00000000', '系统管理员', '管理用户、角色权限', '2020-12-03 13:48:13', '2020-12-03 13:48:13');
-INSERT INTO `role` VALUES ('00000001', '开发', '维护资源', '2020-12-03 13:48:13', '2020-12-03 13:48:13');
-INSERT INTO `role` VALUES ('00000002', '业务管理员', '负责业务管理', '2020-12-03 13:48:13', '2020-12-03 13:48:13');
+INSERT INTO `role` VALUES ('00000001', '开发管理员', '管理所有', '2020-12-03 13:48:13', '2020-12-03 13:48:13');
+INSERT INTO `role` VALUES ('00000002', '系统管理员', '负责用户角色权限', '2020-12-03 13:48:13', '2020-12-03 13:48:13');
+INSERT INTO `role` VALUES ('00000003', '讲师', '编辑课程', '2020-12-03 13:48:13', '2021-02-14 11:45:26');
 
 -- ----------------------------
 -- Table structure for role_resource
@@ -477,7 +498,7 @@ INSERT INTO `section` VALUES ('1348114448295952385', '概论', '1347880545798942
 INSERT INTO `section` VALUES ('1348115629302906881', '支付宝sdk', '000012123', '1348100676453928961', '', 566, 'C', 1, '2021-01-10 11:53:07', '2021-02-10 15:57:39', '');
 INSERT INTO `section` VALUES ('1348519809431654401', '概述', '00000001', '1348519740418576386', '', 123, 'F', NULL, '2021-01-11 14:39:12', '2021-01-11 14:39:12', '');
 INSERT INTO `section` VALUES ('1348519862774812673', '数组', '00000001', '1348519767064989697', '', 123, 'F', NULL, '2021-01-11 14:39:24', '2021-01-11 14:39:24', '');
-INSERT INTO `section` VALUES ('1355363707567300610', '概论', '1355363330293850114', '1355363441228996610', '', 566, 'F', 1, '2021-01-30 11:54:24', '2021-02-12 11:29:55', '5853386ddf58440cbeccf569b4225e5a');
+INSERT INTO `section` VALUES ('1355363707567300610', '概论', '1355363330293850114', '1355363441228996610', '', 990, 'F', 1, '2021-01-30 11:54:24', '2021-02-13 10:01:09', 'a604b029d7da4cfbbecd3be189aed805');
 INSERT INTO `section` VALUES ('1355363891990847489', '各种mq介绍', '1355363330293850114', '1355363441228996610', '', 566, 'F', 1, '2021-01-30 11:55:08', '2021-02-11 10:08:43', '5853386ddf58440cbeccf569b4225e5a');
 INSERT INTO `section` VALUES ('1355479493107535874', 'http协议', '1347880545798942721', '1355479248218902530', '', 737, 'C', 3, '2021-01-30 19:34:29', '2021-01-31 10:57:14', '');
 INSERT INTO `section` VALUES ('1355796199969394689', 'MQ使用心得', '1355363330293850114', '1355363441228996610', '', 990, 'F', 1, '2021-01-31 16:32:58', '2021-02-12 11:57:23', 'a604b029d7da4cfbbecd3be189aed805');

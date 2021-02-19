@@ -11,8 +11,19 @@
                 <el-form-item label="角色" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="roleDto.name" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="描述" :label-width="formLabelWidth" prop="desc">
-                    <el-input type="textarea" v-model="roleDto.desc" autocomplete="off"/>
+                <el-form-item label="描述" :label-width="formLabelWidth" prop="description">
+                    <el-input type="textarea" v-model="roleDto.description" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="资源权限" :label-width="formLabelWidth" >
+                    <el-tree
+                            :data="resources"
+                            show-checkbox
+                            node-key="id"
+                            ref="tree"
+                            highlight-current
+                            default-expand-all
+                            :props="defaultProps">
+                    </el-tree>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -24,8 +35,6 @@
             <tr>
                 <th>角色</th>
                 <th>描述</th>
-                <th></th>
-                <th></th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -33,9 +42,7 @@
             <tbody>
             <tr v-for="role in roles">
                 <th>{{ role.name}}</th>
-                <th>{{ role.desc}}</th>
-                <th>{{ role.createTime}}</th>
-                <th>{{ role.editTime}}</th>
+                <th>{{ role.description}}</th>
                 <td>
                     <div class="btn-group">
                         <el-tooltip class="item" effect="dark" content="更新" placement="top">
@@ -80,6 +87,11 @@
                 formLabelWidth: '80px',
                 title: "添加角色",
                 roles: [], //数据显示列表
+                resources: [],
+                defaultProps: {
+                    children: 'children',
+                    label: 'name'
+                },
                 total: 0,
                 currentPage: 1,
                 size: 10,
@@ -88,7 +100,7 @@
                     name: [
                         {required: true, message: '请输入角色', trigger: 'blur'},
                     ],
-                    desc: [
+                    description: [
                         {required: true, message: '请输入描述', trigger: 'blur'},
                     ],
                 },
@@ -123,7 +135,7 @@
                             let result = response.data;
                             if (result.code === 200) {
                                 this.msg('success', result.msg);
-                            }else {
+                            } else {
                                 this.msg('error', result.msg);
                             }
                         })
@@ -161,7 +173,7 @@
                                 this.roleDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
-                                }else {
+                                } else {
                                     this.msg('error', result.msg);
                                 }
                                 this.dialogFormVisible = false;
@@ -193,7 +205,15 @@
                     .catch(error => {
                         this.msg('error', error);
                     });
-
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/auth/resource/list")
+                    .then((response) => {
+                        let result = response.data;
+                        this.resources = result.data;
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
             },
             handleSizeChange(val) {
                 this.size = val;
@@ -208,7 +228,8 @@
                     .then(_ => {
                         done();
                     })
-                    .catch(_ => {});
+                    .catch(_ => {
+                    });
             }
 
         },

@@ -418,11 +418,11 @@
 
                                 <b class="arrow"></b>
                             </li>
-                            <li class="">
-                                <a href="tables.html">
+                            <li class="" id="business-role-sidebar">
+                                <router-link to="/business/role">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     角色管理
-                                </a>
+                                </router-link>
 
                                 <b class="arrow"></b>
                             </li>

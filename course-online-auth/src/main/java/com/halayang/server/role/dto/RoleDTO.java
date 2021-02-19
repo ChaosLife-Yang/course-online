@@ -37,7 +37,7 @@ public class RoleDTO implements Serializable {
     * 描述
     */
     @ApiModelProperty(value = "描述")
-    private String desc;
+    private String description;
     /**
     * 
     */

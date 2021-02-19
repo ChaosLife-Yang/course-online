@@ -48,7 +48,7 @@ public class ResourceController {
     }
 
     /**
-     * 资源管理分页查询
+     * 资源查询
      *
      * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.resource.po.ResourcePO>>
      * @author YangYudi

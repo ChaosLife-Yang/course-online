@@ -84,7 +84,7 @@ public class RoleController {
         BeanUtils.copyProperties(roleDTO, rolePo);
         boolean option = roleService.saveOrUpdate(rolePo);
         if (option) {
-            return ResponseResult.success();
+            return ResponseResult.success(rolePo.getId());
         } else {
             return ResponseResult.error();
         }
