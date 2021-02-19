@@ -7,15 +7,19 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
+import com.halayang.server.role.po.RoleResourcePO;
 import com.halayang.server.user.dto.RoleUserDTO;
 import com.halayang.server.user.po.RoleUserPO;
 import com.halayang.server.user.service.RoleUserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  * 用户角色 前端控制器
@@ -39,12 +43,15 @@ public class RoleUserController {
      * @author YangYudi
      * @date 2021-02-19 14:38:32
      */
+    @ApiOperation(value = "通过用户id获取角色id列表", httpMethod = "GET", notes = "通过用户id获取角色id列表")
     @GetMapping("/{id}")
-    public ResponseObject<RoleUserDTO> getOne(@PathVariable String id) {
-        RoleUserPO po = roleUserService.getById(id);
-        RoleUserDTO roleUserDTO = new RoleUserDTO();
-        BeanUtils.copyProperties(po, roleUserDTO);
-        return ResponseResult.success(roleUserDTO);
+    public ResponseObject<List<String>> getOne(@PathVariable String id) {
+        List<String> collect = roleUserService.list(new LambdaQueryWrapper<RoleUserPO>()
+                .eq(RoleUserPO::getUserId, id))
+                .stream()
+                .map(RoleUserPO::getRoleId)
+                .collect(Collectors.toList());
+        return ResponseResult.success(collect);
     }
 
     /**

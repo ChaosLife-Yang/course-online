@@ -10,12 +10,15 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.role.dto.RoleResourceDTO;
 import com.halayang.server.role.po.RoleResourcePO;
 import com.halayang.server.role.service.RoleResourceService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  * 角色资源 前端控制器
@@ -39,19 +42,22 @@ public class RoleResourceController {
      * @author YangYudi
      * @date 2021-02-19 14:36:42
      */
+    @ApiOperation(value = "通过角色id获取资源id列表", httpMethod = "GET", notes = "通过角色id获取资源id列表")
     @GetMapping("/{id}")
-    public ResponseObject<RoleResourceDTO> getOne(@PathVariable String id) {
-        RoleResourcePO po = roleResourceService.getById(id);
-        RoleResourceDTO roleResourceDTO = new RoleResourceDTO();
-        BeanUtils.copyProperties(po, roleResourceDTO);
-        return ResponseResult.success(roleResourceDTO);
+    public ResponseObject<List<String>> getOne(@PathVariable String id) {
+        List<String> collect = roleResourceService.list(new LambdaQueryWrapper<RoleResourcePO>()
+                .eq(RoleResourcePO::getRoleId, id))
+                .stream()
+                .map(RoleResourcePO::getResourceId)
+                .collect(Collectors.toList());
+        return ResponseResult.success(collect);
     }
 
     /**
      * 角色资源分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.roleResource.po.RoleResourcePO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.roleResource.po.RoleResourcePO>>
      * @author YangYudi
      * @date 2021-02-19 14:36:42
      */
