@@ -47,6 +47,13 @@
                 <th>{{ user.createTime}}</th>
                 <td>
                     <div class="btn-group">
+                        <el-tooltip class="item" effect="dark" content="重置密码" placement="top">
+                            <el-button @click="reset(user.id)"
+                                       type="primary"
+                                       icon="el-icon-refresh-left"
+                                       plain
+                                       size="mini"/>
+                        </el-tooltip>
                         <el-tooltip class="item" effect="dark" content="更新" placement="top">
                             <el-button @click="get(user.id)"
                                        type="primary"
@@ -134,13 +141,13 @@
                     this.$ajax
                         .get(process.env.VUE_APP_SERVER + "/api/auth/user/delete/" + id)
                         .then((response) => {
-                            this.list();
                             let result = response.data;
                             if (result.code === 200) {
                                 this.msg('success', result.msg);
                             } else {
                                 this.msg('error', result.msg);
                             }
+                            this.list();
                         })
                         .catch(error => {
                             this.msg('error', error);
@@ -243,6 +250,28 @@
                     .catch(error => {
                         this.msg('error', error);
                     });
+            },
+            reset(id) {
+                this.$confirm('是否重置该用户的密码?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$ajax
+                        .get(process.env.VUE_APP_SERVER + "/api/auth/user/reset/"+id)
+                        .then((response) => {
+                            let result = response.data;
+                            if (result.code === 200) {
+                                this.msg('success', result.msg);
+                            } else {
+                                this.msg('error', result.msg);
+                            }
+                        })
+                        .catch(error => {
+                            this.msg('error', error);
+                        });
+                });
+
             },
             handleSizeChange(val) {
                 this.size = val;
