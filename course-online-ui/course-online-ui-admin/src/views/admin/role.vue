@@ -14,7 +14,7 @@
                 <el-form-item label="描述" :label-width="formLabelWidth" prop="description">
                     <el-input type="textarea" v-model="roleDto.description" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="资源权限" :label-width="formLabelWidth" >
+                <el-form-item label="资源权限" :label-width="formLabelWidth">
                     <el-tree
                             :data="resources"
                             show-checkbox
@@ -121,6 +121,7 @@
             add() {
                 this.dialogFormVisible = true;
                 this.roleDto = {};
+                this.$refs.tree.setCheckedKeys([]);
             },
             remove(id) {
                 this.$confirm('此操作将删除该角色, 是否继续?', '提示', {
@@ -161,6 +162,19 @@
                     .catch(error => {
                         this.msg('error', error);
                     });
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/auth/roleResource/" + id)
+                    .then((response) => {
+                        let result = response.data;
+                        if (result.data != null) {
+                            this.$refs.tree.setCheckedKeys(result.data);
+                        } else {
+                            this.$refs.tree.setCheckedKeys([]);
+                        }
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
             },
             //添加或更新
             saveOrUpdate(formName) {
@@ -170,12 +184,27 @@
                             .post(process.env.VUE_APP_SERVER + "/api/auth/role/saveOrUpdate", this.roleDto)
                             .then((response) => {
                                 let result = response.data;
-                                this.roleDto.id = "";
                                 if (result.code === 200) {
-                                    this.msg('success', result.msg);
+                                    let roleId = result.data;
+                                    this.$ajax.post(process.env.VUE_APP_SERVER + "/api/auth/roleResource/saveOrUpdate",
+                                        {
+                                            roleId: roleId,
+                                            resourceId: this.$refs.tree.getCheckedKeys()
+                                        }).then((response2) => {
+                                        let result2 = response2.data;
+                                        if (result2.code === 200) {
+                                            this.msg('success', result2.msg);
+                                        } else {
+                                            this.msg('error', result2.msg);
+                                        }
+                                    }).catch(error => {
+                                        this.msg('error', error);
+                                    });
+
                                 } else {
                                     this.msg('error', result.msg);
                                 }
+
                                 this.dialogFormVisible = false;
                                 this.list();
                             })

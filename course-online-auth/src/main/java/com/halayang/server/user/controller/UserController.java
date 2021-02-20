@@ -1,9 +1,11 @@
 package com.halayang.server.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
+import com.halayang.common.utils.BCryptUtils;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
@@ -18,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * <p>
  * 用户管理 前端控制器
@@ -33,6 +36,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 默认密码
+     */
+    private static final String DEFAULT_PASSWORD = BCryptUtils.encode("123456");
 
     /**
      * 获取用户管理对象信息
@@ -55,7 +63,7 @@ public class UserController {
      * 用户管理分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.user.po.UserPO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.user.po.UserPO>>
      * @author YangYudi
      * @date 2021-01-17 12:18:37
      */
@@ -86,6 +94,7 @@ public class UserController {
     @ApiOperation(value = "用户管理添加或更新", httpMethod = "POST", notes = "用户管理添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated UserDTO userDTO) {
+        userDTO.setPassword(DEFAULT_PASSWORD);
         boolean option = userService.saveOrUpdateUser(userDTO);
         if (option) {
             return ResponseResult.success();
@@ -106,6 +115,20 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = userService.removeById(id);
+        if (option) {
+            return ResponseResult.success();
+        } else {
+            return ResponseResult.error();
+        }
+    }
+
+    @ApiOperation(value = "重置密码", httpMethod = "GET", notes = "根据用户id重置用户密码")
+    @GetMapping("/reset/{id}")
+    public ResponseObject<String> resetPassword(@PathVariable String id) {
+        boolean option = userService.update(new LambdaUpdateWrapper<UserPO>()
+                .set(UserPO::getPassword, DEFAULT_PASSWORD)
+                .eq(UserPO::getId, id)
+        );
         if (option) {
             return ResponseResult.success();
         } else {

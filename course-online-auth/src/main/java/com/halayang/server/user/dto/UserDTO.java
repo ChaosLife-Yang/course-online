@@ -46,9 +46,7 @@ public class UserDTO implements Serializable {
     /**
      * 密码
      */
-    @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "密码")
-    @Range(max = 255, message = "登录名太长")
     private String password;
     /**
      * 创建时间

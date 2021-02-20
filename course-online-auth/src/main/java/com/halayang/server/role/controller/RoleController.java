@@ -70,6 +70,13 @@ public class RoleController {
         return ResponseResult.success(pageInfo.getTotal(), page);
     }
 
+    @GetMapping("/all")
+    public ResponseObject<List<RoleDTO>> allRole(){
+        List<RolePO> list = roleService.list();
+        List<RoleDTO> dtoList = CopyUtils.copyList(list, RoleDTO.class);
+        return ResponseResult.success(dtoList);
+    }
+
     /**
      * 角色管理添加或更新
      *

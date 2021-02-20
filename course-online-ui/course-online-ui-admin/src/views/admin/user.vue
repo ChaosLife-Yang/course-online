@@ -8,14 +8,22 @@
         <el-dialog :before-close="handleClose" :title="title" :visible.sync="dialogFormVisible">
             <el-form :rules="rules" ref="ruleForm" :model="userDto">
                 <el-input v-model="userDto.id" style="display: none"/>
-                <el-form-item label="登录名/昵称" :label-width="formLabelWidth" prop="loginName">
+                <el-form-item label="登录名" :label-width="formLabelWidth" prop="loginName">
                     <el-input v-model="userDto.loginName" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="userDto.name" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
-                    <el-input placeholder="请输入密码" v-model="userDto.password" show-password></el-input>
+                <el-form-item label="用户角色" :label-width="formLabelWidth">
+                    <el-tree
+                            :data="roles"
+                            show-checkbox
+                            node-key="id"
+                            ref="tree"
+                            highlight-current
+                            default-expand-all
+                            :props="defaultProps">
+                    </el-tree>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -81,6 +89,11 @@
                 formLabelWidth: '80px',
                 title: "添加用户",
                 users: [], //数据显示列表
+                roles: [],
+                defaultProps: {
+                    children: 'children',
+                    label: 'name'
+                },
                 total: 0,
                 currentPage: 1,
                 size: 10,
@@ -91,9 +104,6 @@
                     ],
                     name: [
                         {required: true, message: '请输入姓名', trigger: 'blur'},
-                    ],
-                    password: [
-                        {required: true, message: '请输入密码', trigger: 'blur'},
                     ],
                 },
             }
@@ -127,7 +137,7 @@
                             let result = response.data;
                             if (result.code === 200) {
                                 this.msg('success', result.msg);
-                            }else {
+                            } else {
                                 this.msg('error', result.msg);
                             }
                         })
@@ -162,14 +172,14 @@
                             .post(process.env.VUE_APP_SERVER + "/api/auth/user/saveOrUpdate", this.userDto)
                             .then((response) => {
                                 let result = response.data;
-                                this.userDto.id = "";
                                 if (result.code === 200) {
+
                                     this.msg('success', result.msg);
-                                    this.dialogFormVisible = false;
-                                    this.list();
-                                }else {
+                                } else {
                                     this.msg('error', result.msg);
                                 }
+                                this.dialogFormVisible = false;
+                                this.list();
                             })
                             .catch(error => {
                                 this.msg('error', error);
@@ -197,7 +207,15 @@
                     .catch(error => {
                         this.msg('error', error);
                     });
-
+                this.$ajax
+                    .get(process.env.VUE_APP_SERVER + "/api/auth/role/all")
+                    .then((response) => {
+                        let result = response.data;
+                        this.roles = result.data;
+                    })
+                    .catch(error => {
+                        this.msg('error', error);
+                    });
             },
             handleSizeChange(val) {
                 this.size = val;
@@ -212,7 +230,8 @@
                     .then(_ => {
                         done();
                     })
-                    .catch(_ => {});
+                    .catch(_ => {
+                    });
             }
 
         },
