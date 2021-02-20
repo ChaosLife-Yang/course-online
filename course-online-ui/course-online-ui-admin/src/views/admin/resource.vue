@@ -46,10 +46,12 @@
             </el-table-column>
             <el-table-column
                     prop="page"
+                    :show-overflow-tooltip='true'
                     label="页面路由">
             </el-table-column>
             <el-table-column
                     prop="request"
+                    :show-overflow-tooltip='true'
                     label="后端接口">
             </el-table-column>
             <el-table-column
