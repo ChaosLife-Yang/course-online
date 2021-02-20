@@ -10,7 +10,9 @@ import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.user.dto.UserDTO;
+import com.halayang.server.user.po.RoleUserPO;
 import com.halayang.server.user.po.UserPO;
+import com.halayang.server.user.service.RoleUserService;
 import com.halayang.server.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +38,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleUserService roleUserService;
 
     /**
      * 获取用户管理对象信息
@@ -110,6 +114,7 @@ public class UserController {
     @ApiOperation(value = "删除用户管理", httpMethod = "GET", notes = "删除用户管理")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
+        roleUserService.remove(new LambdaQueryWrapper<RoleUserPO>().eq(RoleUserPO::getUserId, id));
         boolean option = userService.removeById(id);
         if (option) {
             return ResponseResult.success();

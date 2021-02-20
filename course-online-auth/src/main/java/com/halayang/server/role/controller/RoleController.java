@@ -9,6 +9,8 @@ import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.role.dto.RoleDTO;
 import com.halayang.server.role.po.RolePO;
+import com.halayang.server.role.po.RoleResourcePO;
+import com.halayang.server.role.service.RoleResourceService;
 import com.halayang.server.role.service.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * <p>
  * 角色管理 前端控制器
@@ -30,6 +33,8 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private RoleResourceService roleResourceService;
 
     /**
      * 获取角色管理对象信息
@@ -51,7 +56,7 @@ public class RoleController {
      * 角色管理分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.role.po.RolePO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.role.po.RolePO>>
      * @author YangYudi
      * @date 2021-02-19 13:05:36
      */
@@ -71,7 +76,7 @@ public class RoleController {
     }
 
     @GetMapping("/all")
-    public ResponseObject<List<RoleDTO>> allRole(){
+    public ResponseObject<List<RoleDTO>> allRole() {
         List<RolePO> list = roleService.list();
         List<RoleDTO> dtoList = CopyUtils.copyList(list, RoleDTO.class);
         return ResponseResult.success(dtoList);
@@ -107,6 +112,7 @@ public class RoleController {
      */
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
+        roleResourceService.remove(new LambdaQueryWrapper<RoleResourcePO>().eq(RoleResourcePO::getRoleId, id));
         boolean option = roleService.removeById(id);
         if (option) {
             return ResponseResult.success();
