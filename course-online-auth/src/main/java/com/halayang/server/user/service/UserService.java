@@ -1,7 +1,6 @@
 package com.halayang.server.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.halayang.server.user.dto.UserDTO;
 import com.halayang.server.user.po.UserPO;
 
 /**
@@ -17,11 +16,11 @@ public interface UserService extends IService<UserPO> {
     /**
      * 新增或更新用户
      *
-     * @param userDto 用户dto
+     * @param userPO 用户po
      * @author YangYudi
      * @date 2021/2/1 10:02
      * @return boolean
      */
-    boolean saveOrUpdateUser(UserDTO userDto);
+    boolean saveOrUpdateUser(UserPO userPO);
 
 }

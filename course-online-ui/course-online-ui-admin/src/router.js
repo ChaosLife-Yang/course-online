@@ -71,18 +71,18 @@ export default new Router({
                     component: File,
                 }, {
                     //子路由不用加斜杠
-                    path: 'business/user',
-                    name: 'business/user',
+                    path: 'authority/user',
+                    name: 'authority/user',
                     component: User,
                 }, {
                     //子路由不用加斜杠
-                    path: 'business/resource',
-                    name: 'business/resource',
+                    path: 'authority/resource',
+                    name: 'authority/resource',
                     component: Resource,
                 }, {
                     //子路由不用加斜杠
-                    path: 'business/role',
-                    name: 'business/role',
+                    path: 'authority/role',
+                    name: 'authority/role',
                     component: Role,
                 },
             ]

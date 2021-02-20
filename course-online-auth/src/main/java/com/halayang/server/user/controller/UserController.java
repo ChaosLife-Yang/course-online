@@ -38,11 +38,6 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 默认密码
-     */
-    private static final String DEFAULT_PASSWORD = BCryptUtils.encode("123456");
-
-    /**
      * 获取用户管理对象信息
      *
      * @param id 用户管理id
@@ -94,10 +89,11 @@ public class UserController {
     @ApiOperation(value = "用户管理添加或更新", httpMethod = "POST", notes = "用户管理添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated UserDTO userDTO) {
-        userDTO.setPassword(DEFAULT_PASSWORD);
-        boolean option = userService.saveOrUpdateUser(userDTO);
+        UserPO userPo = new UserPO();
+        BeanUtils.copyProperties(userDTO, userPo);
+        boolean option = userService.saveOrUpdateUser(userPo);
         if (option) {
-            return ResponseResult.success();
+            return ResponseResult.success(userPo.getId());
         } else {
             return ResponseResult.error();
         }
@@ -126,7 +122,7 @@ public class UserController {
     @GetMapping("/reset/{id}")
     public ResponseObject<String> resetPassword(@PathVariable String id) {
         boolean option = userService.update(new LambdaUpdateWrapper<UserPO>()
-                .set(UserPO::getPassword, DEFAULT_PASSWORD)
+                .set(UserPO::getPassword, BCryptUtils.encode("123456"))
                 .eq(UserPO::getId, id)
         );
         if (option) {

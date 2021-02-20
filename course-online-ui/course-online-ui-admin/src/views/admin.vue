@@ -410,16 +410,16 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="business-user-sidebar">
-                                <router-link to="/business/user">
+                            <li class="" id="authority-user-sidebar">
+                                <router-link to="/authority/user">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     用户管理
                                 </router-link>
 
                                 <b class="arrow"></b>
                             </li>
-                            <li class="" id="business-role-sidebar">
-                                <router-link to="/business/role">
+                            <li class="" id="authority-role-sidebar">
+                                <router-link to="/authority/role">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     角色管理
                                 </router-link>
@@ -427,8 +427,8 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="" id="business-resource-sidebar">
-                                <router-link to="/business/resource">
+                            <li class="" id="authority-resource-sidebar">
+                                <router-link to="/authority/resource">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     资源管理
                                 </router-link>

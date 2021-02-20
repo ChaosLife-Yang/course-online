@@ -3,11 +3,9 @@ package com.halayang.server.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.halayang.common.utils.BCryptUtils;
-import com.halayang.server.user.dto.UserDTO;
 import com.halayang.server.user.mapper.UserMapper;
 import com.halayang.server.user.po.UserPO;
 import com.halayang.server.user.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,19 +21,17 @@ import org.springframework.util.StringUtils;
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements UserService {
 
     @Override
-    public boolean saveOrUpdateUser(UserDTO userDto) {
-        if (StringUtils.isEmpty(userDto.getId())) {
+    public boolean saveOrUpdateUser(UserPO userPo) {
+        if (StringUtils.isEmpty(userPo.getId())) {
             LambdaQueryWrapper<UserPO> wrapper = new LambdaQueryWrapper<UserPO>()
-                    .eq(UserPO::getLoginName, userDto.getLoginName());
+                    .eq(UserPO::getLoginName, userPo.getLoginName());
             int count = this.count(wrapper);
             if (count > 0) {
                 throw new IllegalArgumentException("用户名已被注册，请换一个");
             }
-            //对密码进行加密
-            userDto.setPassword(BCryptUtils.encode(userDto.getPassword()));
+            userPo.setPassword(BCryptUtils.encode("123456"));
+            return this.save(userPo);
         }
-        UserPO userPo = new UserPO();
-        BeanUtils.copyProperties(userDto, userPo);
-        return this.saveOrUpdate(userPo);
+        return this.updateById(userPo);
     }
 }
