@@ -121,5 +121,9 @@ public class RoleController {
         }
     }
 
+    @GetMapping("/userRoles/{id}")
+    public ResponseObject<List<String>> userRoles(@PathVariable String id){
+        return ResponseResult.success(roleService.getRoleByUserId(id));
+    }
 
 }

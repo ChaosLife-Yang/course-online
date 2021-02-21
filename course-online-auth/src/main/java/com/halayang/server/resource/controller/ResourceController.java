@@ -7,6 +7,7 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
+import com.halayang.server.resource.dto.ResourceAuthorityDTO;
 import com.halayang.server.resource.dto.ResourceDTO;
 import com.halayang.server.resource.po.ResourcePO;
 import com.halayang.server.resource.service.ResourceService;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * <p>
  * 资源管理 前端控制器
@@ -50,7 +52,7 @@ public class ResourceController {
     /**
      * 资源查询
      *
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.resource.po.ResourcePO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO < com.halayang.server.resource.po.ResourcePO>>
      * @author YangYudi
      * @date 2021-02-16 13:48:23
      */
@@ -95,6 +97,11 @@ public class ResourceController {
         } else {
             return ResponseResult.error();
         }
+    }
+
+    @GetMapping("/userResources/{id}")
+    public ResponseObject<List<ResourceAuthorityDTO>> getUserResources(@PathVariable String id) {
+        return ResponseResult.success(resourceService.getPermissionByUserId(id));
     }
 
 

@@ -1,8 +1,10 @@
 package com.halayang.server.resource.service;
 
+import com.halayang.server.resource.dto.ResourceAuthorityDTO;
 import com.halayang.server.resource.dto.ResourceDTO;
 import com.halayang.server.resource.po.ResourcePO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -34,5 +36,15 @@ public interface ResourceService extends IService<ResourcePO> {
      * @return boolean
      */
     boolean deleteResources(String id);
+
+    /**
+     * 获取用户的资源权限
+     *
+     * @param userId id
+     * @author YangYudi
+     * @date 2021/2/21 12:09
+     * @return java.util.List<com.halayang.server.resource.dto.ResourceAuthorityDTO>
+     */
+    List<ResourceAuthorityDTO> getPermissionByUserId(String userId);
 
 }

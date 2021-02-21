@@ -4,7 +4,10 @@ import com.halayang.server.role.po.RolePO;
 import com.halayang.server.role.mapper.RoleMapper;
 import com.halayang.server.role.service.RoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RolePO> implements RoleService {
 
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Override
+    public List<String> getRoleByUserId(String userId) {
+        return roleMapper.getRoleByUserId(userId);
+    }
 }

@@ -1,11 +1,13 @@
 package com.halayang.server.resource.service.impl;
 
 import com.halayang.common.utils.CopyUtils;
+import com.halayang.server.resource.dto.ResourceAuthorityDTO;
 import com.halayang.server.resource.dto.ResourceDTO;
 import com.halayang.server.resource.po.ResourcePO;
 import com.halayang.server.resource.mapper.ResourceMapper;
 import com.halayang.server.resource.service.ResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,6 +25,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, ResourcePO> implements ResourceService {
+
+    @Autowired
+    private ResourceMapper resourceMapper;
 
     @Override
     public List<ResourceDTO> resourceList() {
@@ -98,6 +103,11 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, ResourcePO>
                 getChildrenIds(resource.getId(), list, ids);
             }
         });
+    }
+
+    @Override
+    public List<ResourceAuthorityDTO> getPermissionByUserId(String userId) {
+        return resourceMapper.getPermissionByUserId(userId);
     }
 
 }
