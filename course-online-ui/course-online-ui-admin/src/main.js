@@ -82,6 +82,10 @@ Vue.prototype.$FILE_USE_ARRAY = [{key: "C", value: "课程"}, {key: "T", value: 
 Vue.prototype.$SMS_USE_ARRAY = [{key: "R", value: "注册"}, {key: "F", value: "忘记密码"}];
 Vue.prototype.$SMS_STATUS_ARRAY = [{key: "U", value: "已使用"}, {key: "N", value: "未使用"}];
 
+//路由监听
+router.beforeEach((to, from, next) => {
+    next();
+});
 
 new Vue({
     router,
