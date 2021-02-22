@@ -1,5 +1,7 @@
 package com.halayang.common.utils;
 
+import org.springframework.util.ObjectUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,4 +45,22 @@ public class ContextHolder {
     public static void remove() {
         THREAD_LOCAL.remove();
     }
+
+    public static void setUserId(String userId) {
+        set("userId", userId);
+    }
+
+    public static Object getUserId() {
+        return get("userId");
+    }
+
+    public static void setPrincipal(String claims) {
+        Map<String, Object> map = JacksonUtils.toMap(claims, String.class, Object.class);
+        set("claims", map);
+    }
+
+    public static Object getPrincipal() {
+        return get("claims");
+    }
+
 }

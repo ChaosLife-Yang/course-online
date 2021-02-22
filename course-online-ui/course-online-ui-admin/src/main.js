@@ -43,22 +43,6 @@ Vue.prototype.$ajax = axios;
 Vue.config.productionTip = false;
 //去掉警告
 Vue.config.silent = true;
-/**
- * axios拦截器
- */
-axios.interceptors.request.use(config => {
-    console.log("请求：", config);
-    return config;
-}, error => {
-    console.log(error);
-});
-
-axios.interceptors.response.use(response => {
-    console.log("返回结果：", response);
-    return response;
-}, error => {
-    console.log(error);
-});
 
 // 全局过滤器
 Object.keys(filter).forEach(key => {
@@ -87,7 +71,28 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
+/**
+ * axios拦截器
+ */
+axios.interceptors.request.use(config => {
+    console.log("请求：", config);
+    return config;
+}, error => {
+    console.log(error);
+});
+
+axios.interceptors.response.use(response => {
+    console.log("返回结果：", response);
+    return response;
+}, error => {
+    router.replace({
+        path: '/login',
+        query: {redirect: router.currentRoute.fullPath}
+    });
+    console.log(error);
+});
+
 new Vue({
     router,
     render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
