@@ -24,6 +24,9 @@ public class ResourceAuthorityDTO {
     @ApiModelProperty(value = "名称|菜单或按钮")
     private String name;
 
+    @ApiModelProperty(value = "前端路由")
+    private String page;
+
     @ApiModelProperty(value = "权限标识")
     private String permissionValue;
 
