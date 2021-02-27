@@ -70,6 +70,7 @@ public class RbacService {
             }
             return false;
         } catch (Exception e) {
+            log.error("认证失败", e);
             return false;
         }
     }
