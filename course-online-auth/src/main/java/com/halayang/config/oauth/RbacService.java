@@ -53,19 +53,22 @@ public class RbacService {
                 String urlPattern = request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString();
 
                 //解析jwt
-                OAuth2AuthenticationDetails oAuth2AuthenticationDetails =
-                        (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
-                String token = oAuth2AuthenticationDetails.getTokenValue();
-                Jwt jwt = JwtHelper.decode(token);
-                Map<String, Object> map = JacksonUtils.toMap(jwt.getClaims(), String.class, Object.class);
-                String userId = (String) map.get("user_id");
-                log.info("用户id:{},要访问的restful url:{}", userId, urlPattern);
-                if (!StringUtils.isEmpty(userId)) {
-                    //查询用户权限
-                    List<ResourceAuthorityDTO> permission = resourceService.getPermissionByUserId(userId);
-                    List<String> collect = getPermissionUrls(permission);
-                    log.info("用户能访问的url:{}", collect);
-                    return collect.contains(urlPattern);
+                Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
+                if (details instanceof OAuth2AuthenticationDetails) {
+                    OAuth2AuthenticationDetails oAuth2AuthenticationDetails =
+                            (OAuth2AuthenticationDetails) details;
+                    String token = oAuth2AuthenticationDetails.getTokenValue();
+                    Jwt jwt = JwtHelper.decode(token);
+                    Map<String, Object> map = JacksonUtils.toMap(jwt.getClaims(), String.class, Object.class);
+                    String userId = (String) map.get("user_id");
+                    log.info("用户id:{},要访问的restful url:{}", userId, urlPattern);
+                    if (!StringUtils.isEmpty(userId)) {
+                        //查询用户权限能否访问此url
+                        List<ResourceAuthorityDTO> permission = resourceService.getPermissionByUserId(userId);
+                        List<String> collect = getPermissionUrls(permission);
+                        log.info("用户能访问的url:{}", collect);
+                        return collect.contains(urlPattern);
+                    }
                 }
             }
             return false;
