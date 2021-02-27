@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.io.Serializable;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -19,7 +22,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ResourceAuthorityDTO {
+public class ResourceAuthorityDTO implements GrantedAuthority, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "名称|菜单或按钮")
     private String name;
@@ -33,4 +38,8 @@ public class ResourceAuthorityDTO {
     @ApiModelProperty(value = "请求|接口")
     private String request;
 
+    @Override
+    public String getAuthority() {
+        return this.permissionValue;
+    }
 }

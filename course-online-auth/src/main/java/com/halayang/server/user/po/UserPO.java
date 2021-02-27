@@ -3,12 +3,18 @@ package com.halayang.server.user.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.halayang.server.resource.dto.ResourceAuthorityDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -22,7 +28,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("user")
-public class UserPO implements Serializable {
+public class UserPO implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,5 +63,43 @@ public class UserPO implements Serializable {
      */
     private LocalDateTime editTime;
 
+    @JsonIgnore
+    private transient List<ResourceAuthorityDTO> permissions;
+
+    @Override
+    public String getUsername() {
+        return this.loginName;
+    }
+
+    /**
+     * 实现UserDetails接口必备
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    /**
+     * 用户所有权限
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.permissions;
+    }
 
 }
