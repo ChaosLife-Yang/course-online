@@ -76,13 +76,13 @@ public class RbacService {
 
     public static List<String> getPermissionUrls(List<ResourceAuthorityDTO> permission) {
         return permission.stream()
-                                .filter(per -> !StringUtils.isEmpty(per.getRequest()))
-                                .map(ResourceAuthorityDTO::getRequest)
-                                .map(re -> JacksonUtils.toList(re, String.class))
-                                .distinct()
-                                .parallel()
-                                .flatMap(List::stream)
-                                .collect(Collectors.toList());
+                .filter(per -> !StringUtils.isEmpty(per.getRequest()))
+                .map(ResourceAuthorityDTO::getRequest)
+                .map(re -> JacksonUtils.toList(re, String.class))
+                .flatMap(List::stream)
+                .distinct()
+                .parallel()
+                .collect(Collectors.toList());
     }
 
 
