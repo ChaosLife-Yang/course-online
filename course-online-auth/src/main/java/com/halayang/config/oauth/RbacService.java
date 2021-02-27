@@ -67,6 +67,7 @@ public class RbacService {
                             .filter(per -> !StringUtils.isEmpty(per.getRequest()))
                             .map(ResourceAuthorityDTO::getRequest)
                             .map(re -> JacksonUtils.toList(re, String.class))
+                            .distinct()
                             .flatMap(List::stream)
                             .collect(Collectors.toList());
                     log.info("用户能访问的url:{}", collect);

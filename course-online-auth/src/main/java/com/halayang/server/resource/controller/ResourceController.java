@@ -40,6 +40,7 @@ public class ResourceController {
 
     @Autowired
     private RoleResourceService roleResourceService;
+
     /**
      * 获取资源管理对象信息
      *
@@ -116,6 +117,7 @@ public class ResourceController {
                 .map(ResourceAuthorityDTO::getRequest)
                 .map(re -> JacksonUtils.toList(re, String.class))
                 .flatMap(List::stream)
+                .distinct()
                 .collect(Collectors.toList());
         return ResponseResult.success(collect);
     }
