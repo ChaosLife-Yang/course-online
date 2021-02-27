@@ -63,13 +63,7 @@ public class RbacService {
                 if (!StringUtils.isEmpty(userId)) {
                     //查询用户权限
                     List<ResourceAuthorityDTO> permission = resourceService.getPermissionByUserId(userId);
-                    List<String> collect = permission.stream()
-                            .filter(per -> !StringUtils.isEmpty(per.getRequest()))
-                            .map(ResourceAuthorityDTO::getRequest)
-                            .map(re -> JacksonUtils.toList(re, String.class))
-                            .distinct()
-                            .flatMap(List::stream)
-                            .collect(Collectors.toList());
+                    List<String> collect = getPermissionUrls(permission);
                     log.info("用户能访问的url:{}", collect);
                     return collect.contains(urlPattern);
                 }
@@ -78,6 +72,17 @@ public class RbacService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static List<String> getPermissionUrls(List<ResourceAuthorityDTO> permission) {
+        return permission.stream()
+                                .filter(per -> !StringUtils.isEmpty(per.getRequest()))
+                                .map(ResourceAuthorityDTO::getRequest)
+                                .map(re -> JacksonUtils.toList(re, String.class))
+                                .distinct()
+                                .parallel()
+                                .flatMap(List::stream)
+                                .collect(Collectors.toList());
     }
 
 

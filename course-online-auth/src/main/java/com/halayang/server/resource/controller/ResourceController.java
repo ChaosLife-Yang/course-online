@@ -8,6 +8,7 @@ import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.JacksonUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
+import com.halayang.config.oauth.RbacService;
 import com.halayang.server.resource.dto.ResourceAuthorityDTO;
 import com.halayang.server.resource.dto.ResourceDTO;
 import com.halayang.server.resource.po.ResourcePO;
@@ -110,15 +111,8 @@ public class ResourceController {
 
     @GetMapping("/userResources/{id}")
     public ResponseObject<List<String>> getUserResources(@PathVariable String id) {
-        List<ResourceAuthorityDTO> permission;
-        permission = resourceService.getPermissionByUserId(id);
-        List<String> collect = permission.stream()
-                .filter(per -> !StringUtils.isEmpty(per.getRequest()))
-                .map(ResourceAuthorityDTO::getRequest)
-                .map(re -> JacksonUtils.toList(re, String.class))
-                .flatMap(List::stream)
-                .distinct()
-                .collect(Collectors.toList());
+        List<ResourceAuthorityDTO> permission = resourceService.getPermissionByUserId(id);
+        List<String> collect = RbacService.getPermissionUrls(permission);
         return ResponseResult.success(collect);
     }
 
