@@ -19,6 +19,22 @@ spring:
       auto-commit: true
       connection-test-query: SELECT 1
 
+security:
+  address: 127.0.0.1:8250
+  oauth2:
+    client:
+      client-id: core
+      client-secret: 123456
+      resource-ids: course-online
+      user-authorization-uri: http://${security.address}/oauth/authorize
+      access-token-uri: http://${security.address}/oauth/token
+    resource:
+      # 认证中心id
+      id: server
+      token-info-uri: http://${security.address}/oauth/check_token
+      user-info-uri: http://${security.address}/oauth/principal
+
+
 # Feign 配置
 feign:
   compression:

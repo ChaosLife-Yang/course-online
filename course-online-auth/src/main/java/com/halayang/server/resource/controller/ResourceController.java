@@ -5,18 +5,23 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
+import com.halayang.common.utils.JacksonUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.resource.dto.ResourceAuthorityDTO;
 import com.halayang.server.resource.dto.ResourceDTO;
 import com.halayang.server.resource.po.ResourcePO;
 import com.halayang.server.resource.service.ResourceService;
+import com.halayang.server.role.po.RoleResourcePO;
+import com.halayang.server.role.service.RoleResourceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -33,6 +38,8 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
+    @Autowired
+    private RoleResourceService roleResourceService;
     /**
      * 获取资源管理对象信息
      *
@@ -91,6 +98,7 @@ public class ResourceController {
      */
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
+        roleResourceService.remove(new LambdaQueryWrapper<RoleResourcePO>().eq(RoleResourcePO::getResourceId, id));
         boolean option = resourceService.deleteResources(id);
         if (option) {
             return ResponseResult.success();
@@ -100,9 +108,16 @@ public class ResourceController {
     }
 
     @GetMapping("/userResources/{id}")
-    public ResponseObject<List<ResourceAuthorityDTO>> getUserResources(@PathVariable String id) {
-        return ResponseResult.success(resourceService.getPermissionByUserId(id));
+    public ResponseObject<List<String>> getUserResources(@PathVariable String id) {
+        List<ResourceAuthorityDTO> permission;
+        permission = resourceService.getPermissionByUserId(id);
+        List<String> collect = permission.stream()
+                .filter(per -> !StringUtils.isEmpty(per.getRequest()))
+                .map(ResourceAuthorityDTO::getRequest)
+                .map(re -> JacksonUtils.toList(re, String.class))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+        return ResponseResult.success(collect);
     }
-
 
 }

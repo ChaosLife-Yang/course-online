@@ -1,5 +1,7 @@
 package com.halayang.config.oauth;
 
+import com.halayang.config.exception.OauthExceptionEntryPoint;
+import com.halayang.config.handler.OauthAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
@@ -46,15 +49,23 @@ public class OauthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final JwtTokenStoreConfig.JwtTokenEnhancer jwtTokenEnhancer;
 
+    private final OauthExceptionEntryPoint oauthExceptionEntryPoint;
+
+    private final OauthAccessDeniedHandler accessDeniedHandler;
+
     public OauthServerConfig(DataSource dataSource,
                              @Qualifier("myUserDetailsService") UserDetailsService userDetailsService,
                              AuthenticationManager authenticationManager,
+                             OauthAccessDeniedHandler accessDeniedHandler,
+                             OauthExceptionEntryPoint oauthExceptionEntryPoint,
                              JwtAccessTokenConverter jwtAccessTokenConverter,
                              TokenStore tokenStore,
                              JwtTokenStoreConfig.JwtTokenEnhancer jwtTokenEnhancer) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.oauthExceptionEntryPoint = oauthExceptionEntryPoint;
         this.jwtAccessTokenConverter = jwtAccessTokenConverter;
         this.tokenStore = tokenStore;
         this.jwtTokenEnhancer = jwtTokenEnhancer;
@@ -79,6 +90,17 @@ public class OauthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(jdbcClientDetailsService());
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        oauthServer
+                //对获取token的请求不进行拦截
+                .tokenKeyAccess("permitAll()")
+                //检查token的策略
+                .checkTokenAccess("isAuthenticated()")
+                .accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(oauthExceptionEntryPoint);
     }
 
     @Override
