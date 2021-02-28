@@ -70,6 +70,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .permitAll()
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(oauthExceptionEntryPoint)
+                .and()
                 //禁用session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
