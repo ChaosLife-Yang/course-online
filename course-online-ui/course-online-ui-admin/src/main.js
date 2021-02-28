@@ -31,6 +31,7 @@ import 'froala-editor/js/froala_editor.pkgd.min.js'
 
 import jQuery from 'jquery';
 import UUID from 'vue-uuid'
+import Message from "element-ui/packages/message";
 
 window.$ = jQuery;
 window.jQuery = jQuery;
@@ -65,7 +66,8 @@ Vue.prototype.$COURSE_STATUS_ARRAY = [{key: "P", value: "发布"}, {key: "D", va
 Vue.prototype.$FILE_USE_ARRAY = [{key: "C", value: "课程"}, {key: "T", value: "讲师"}];
 Vue.prototype.$SMS_USE_ARRAY = [{key: "R", value: "注册"}, {key: "F", value: "忘记密码"}];
 Vue.prototype.$SMS_STATUS_ARRAY = [{key: "U", value: "已使用"}, {key: "N", value: "未使用"}];
-
+Vue.prototype.$client_id = 'auth_server';
+Vue.prototype.$client_secret = '123456';
 //路由监听
 router.beforeEach((to, from, next) => {
     next();
@@ -85,11 +87,11 @@ axios.interceptors.response.use(response => {
     console.log("返回结果：", response);
     return response;
 }, error => {
-    router.replace({
-        path: '/login',
-        query: {redirect: router.currentRoute.fullPath}
-    });
     console.log(error);
+    // router.replace({
+    //     path: '/login',
+    //     query: {redirect: router.currentRoute.fullPath}
+    // });
 });
 
 new Vue({

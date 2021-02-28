@@ -408,13 +408,16 @@
                         size: this.size
                     })
                     .then((response) => {
-                        let result = response.data;
-                        if (result.code === 200) {
-                            this.courses = result.data.list;
-                            this.total = result.count;
-                        } else {
-                            this.msg('error', result.msg);
+                        if (response.data != null) {
+                            let result = response.data;
+                            if (result.code === 200) {
+                                this.courses = result.data.list;
+                                this.total = result.count;
+                            } else {
+                                this.msg('error', result.msg);
+                            }
                         }
+
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -422,12 +425,15 @@
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/category/list")
                     .then((response) => {
-                        let result = response.data;
-                        if (result.code === 200) {
-                            this.categoryList = result.data;
-                        } else {
-                            this.msg('error', result.msg);
+                        if (response.data != null) {
+                            let result = response.data;
+                            if (result.code === 200) {
+                                this.categoryList = result.data;
+                            } else {
+                                this.msg('error', result.msg);
+                            }
                         }
+
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -435,13 +441,16 @@
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/teacher/all")
                     .then((response) => {
-                        let result = response.data;
-                        if (result.code === 200) {
-                            this.teachers = result.data;
-                            this.total = result.count;
-                        } else {
-                            this.msg('error', result.msg);
+                        if (response.data != null) {
+                            let result = response.data;
+                            if (result.code === 200) {
+                                this.teachers = result.data;
+                                this.total = result.count;
+                            } else {
+                                this.msg('error', result.msg);
+                            }
                         }
+
                     })
                     .catch(error => {
                         this.msg('error', error);

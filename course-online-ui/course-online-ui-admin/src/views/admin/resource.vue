@@ -196,9 +196,12 @@
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/auth/resource/list")
                     .then((response) => {
-                        let result = response.data;
-                        this.resources = result.data;
-                        this.total = result.count;
+                        if (response.data!=null){
+                            let result = response.data;
+                            this.resources = result.data;
+                            this.total = result.count;
+
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);

@@ -195,7 +195,6 @@
                             .post(process.env.VUE_APP_SERVER + "/api/service/chapter/saveOrUpdate", this.chapterDto)
                             .then((response) => {
                                 let result = response.data;
-                                this.chapterDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
                                 } else {
@@ -225,9 +224,11 @@
                         size: this.size
                     })
                     .then((response) => {
-                        let result = response.data;
-                        this.chapters = result.data.list;
-                        this.total = result.count;
+                        if (response.data != null) {
+                            let result = response.data;
+                            this.chapters = result.data.list;
+                            this.total = result.count;
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);

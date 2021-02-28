@@ -1,8 +1,10 @@
 package com.halayang.config.exception;
 
+import com.halayang.common.utils.response.ResponseCode;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -43,6 +45,19 @@ public class GlobalExceptionHandler {
         String defaultMessage = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
         log.error(defaultMessage);
         return ResponseResult.error(defaultMessage);
+    }
+
+    /**
+     * 客户端未认证
+     *
+     * @param e org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException 异常
+     * @return
+     * @author YeMeng
+     * @date 2019/12/24 16:53
+     */
+    @ExceptionHandler(UnauthorizedClientException.class)
+    public ResponseObject<Object> handleUnauthorizedClientException(UnauthorizedClientException e) {
+        return ResponseResult.error(ResponseCode.UNAUTHORIZED_CLIENT, e.getMessage());
     }
 
 }

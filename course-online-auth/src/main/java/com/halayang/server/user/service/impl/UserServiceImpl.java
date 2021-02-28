@@ -82,7 +82,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             CloseableHttpResponse response = client.execute(httpGet);
             String code = EntityUtils.toString(response.getEntity(), "UTF-8");
             if (StringUtils.isEmpty(code)) {
-                throw new IllegalArgumentException("授权码请求失败");
+                log.error("授权码请求失败");
+                throw new IllegalArgumentException("登录失败");
             }
             Map<String, Object> paramMap = new HashMap<>(4);
             paramMap.put("client_id", userLoginDto.getClientId());
@@ -92,7 +93,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             //登录完成可以把token存入redis username为key 申请令牌中的expires_in为过期时间
             return getMap(url, paramMap, userLoginDto.getClientId(), userLoginDto.getClientSecret());
         } catch (IOException e) {
-            throw new IllegalArgumentException("令牌请求失败");
+            log.error("令牌请求失败");
+            throw new IllegalArgumentException("登录失败");
         }
     }
 

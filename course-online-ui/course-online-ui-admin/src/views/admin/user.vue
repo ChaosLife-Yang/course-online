@@ -234,9 +234,12 @@
                         size: this.size
                     })
                     .then((response) => {
-                        let result = response.data;
-                        this.users = result.data.list;
-                        this.total = result.count;
+                        if (response.data != null) {
+                            let result = response.data;
+                            this.users = result.data.list;
+                            this.total = result.count;
+
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -244,8 +247,10 @@
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/auth/role/all")
                     .then((response) => {
-                        let result = response.data;
-                        this.roles = result.data;
+                        if (response.data != null) {
+                            let result = response.data;
+                            this.roles = result.data;
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -258,7 +263,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.$ajax
-                        .get(process.env.VUE_APP_SERVER + "/api/auth/user/reset/"+id)
+                        .get(process.env.VUE_APP_SERVER + "/api/auth/user/reset/" + id)
                         .then((response) => {
                             let result = response.data;
                             if (result.code === 200) {

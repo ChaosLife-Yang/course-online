@@ -163,12 +163,15 @@
                     this.$ajax
                         .get(process.env.VUE_APP_SERVER + "/api/service/category/delete/" + id)
                         .then((response) => {
-                            let result = response.data;
-                            if (result.code === 200) {
-                                this.msg('success', result.msg);
-                                this.list();
-                            } else {
-                                this.msg('error', result.msg);
+                            if (response.data != null) {
+                                let result = response.data;
+                                if (result.code === 200) {
+                                    this.msg('success', result.msg);
+                                    this.list();
+                                } else {
+                                    this.msg('error', result.msg);
+                                }
+
                             }
                         })
                         .catch(error => {
@@ -187,8 +190,10 @@
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/category/" + id)
                     .then((response) => {
-                        let result = response.data;
-                        this.categoryDto = result.data;
+                        if (response.data != null) {
+                            let result = response.data;
+                            this.categoryDto = result.data;
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
@@ -202,16 +207,18 @@
                         this.$ajax
                             .post(process.env.VUE_APP_SERVER + "/api/service/category/saveOrUpdate", this.categoryDto)
                             .then((response) => {
-                                let result = response.data;
-                                this.categoryDto.id = "";
-                                if (result.code === 200) {
-                                    this.msg('success', result.msg);
-                                }else {
-                                    this.msg('error', result.msg);
+                                if (response.data != null) {
+                                    let result = response.data;
+                                    if (result.code === 200) {
+                                        this.msg('success', result.msg);
+                                    } else {
+                                        this.msg('error', result.msg);
+                                    }
+                                    this.dialogFormVisible = false;
+                                    this.loading = false;
+                                    this.list();
                                 }
-                                this.dialogFormVisible = false;
-                                this.loading = false;
-                                this.list();
+
                             })
                             .catch(error => {
                                 this.msg('error', error);
@@ -229,16 +236,18 @@
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/category/list")
                     .then((response) => {
-                        let result = response.data;
-                        this.level1 = result.data;
-                        if (this.showLv2) {
-                            for (let i = 0; i < this.level1.length; i++) {
-                                if (this.level1[i].id === SessionStorage.get("lv2")) {
-                                    this.level2 = this.level1[i].children;
+                        if (response.data != null) {
+                            let result = response.data;
+                            this.level1 = result.data;
+                            if (this.showLv2) {
+                                for (let i = 0; i < this.level1.length; i++) {
+                                    if (this.level1[i].id === SessionStorage.get("lv2")) {
+                                        this.level2 = this.level1[i].children;
+                                    }
                                 }
                             }
-
                         }
+
                     })
                     .catch(error => {
                         this.msg('error', error);

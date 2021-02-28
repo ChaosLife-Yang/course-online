@@ -29,7 +29,8 @@
                                             <fieldset>
                                                 <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control"
+															<input type="text" v-model="loginDto.username"
+                                                                   class="form-control"
                                                                    placeholder="Username"/>
 															<i class="ace-icon fa fa-user"></i>
 														</span>
@@ -37,7 +38,8 @@
 
                                                 <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control"
+															<input type="password" v-model="loginDto.password"
+                                                                   class="form-control"
                                                                    placeholder="Password"/>
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
@@ -83,9 +85,19 @@
             $("body").removeClass("login-layout blur-login");
             $('body').attr('class', 'login-layout blur-login');
         },
+        data() {
+            return {
+                loginDto: {
+                    username: '',
+                    password: '',
+                    clientId: this.$client_id,
+                    clientSecret: this.$client_secret,
+                }
+            }
+        },
         methods: {
             login() {
-                this.$router.push("/welcome")
+                this.$router.push("/welcome");
             }
         }
     }

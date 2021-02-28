@@ -266,9 +266,12 @@
                         size: this.size
                     })
                     .then((response) => {
-                        let result = response.data;
-                        this.sections = result.data.list;
-                        this.total = result.count;
+                        if (response.data != null) {
+                            let result = response.data;
+                            this.sections = result.data.list;
+                            this.total = result.count;
+
+                        }
                     })
                     .catch(error => {
                         this.msg('error', error);
