@@ -69,6 +69,7 @@ public class JwtTokenStoreConfig {
             //添加jwt扩展信息
             Map<String, Object> map = new HashMap<>(2);
             map.put("user_id", principal.getId());
+            map.put("name", principal.getName());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(map);
             return accessToken;
         }

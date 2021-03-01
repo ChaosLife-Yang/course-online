@@ -75,6 +75,7 @@
 
 <script>
     import {parseInfo} from '../utils/tokenParser'
+
     export default {
         name: 'login',
         mounted() {
@@ -83,6 +84,7 @@
         },
         data() {
             return {
+                gateway: process.env.VUE_APP_SERVER,
                 loginDto: {
                     username: '',
                     password: '',
@@ -93,7 +95,29 @@
         },
         methods: {
             login() {
-                this.$router.push("/welcome");
+                let formData = new window.FormData();
+                formData.append("username", this.loginDto.username);
+                formData.append("password", this.loginDto.password);
+                formData.append("clientId", this.loginDto.clientId);
+                formData.append("clientSecret", this.loginDto.clientSecret);
+                this.$ajax.post(process.env.VUE_APP_SERVER + "/api/auth/login", formData)
+                    .then((response) => {
+                        if (response.data) {
+                            let result = response.data;
+                            if (result.code === 200) {
+                                let token = result.data;
+                                //保存token和刷新token
+                                LocalStorage.set("accessToken", token.access_token);
+                                LocalStorage.set("refreshToken", token.refresh_token);
+                                //保存用户信息
+                                let info = parseInfo(token.access_token);
+                                LocalStorage.set("userInfo",info);
+                                LocalStorage.set("authorities",info.authorities);
+                                console.log(result);
+                                this.$router.push("/welcome");
+                            }
+                        }
+                    });
             }
         }
     }

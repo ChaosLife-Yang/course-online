@@ -308,8 +308,8 @@
                                      :src="baseUrl+'ace/assets/images/avatars/user.jpg'"
                                      alt="Jason's Photo"/>
                                 <span class="user-info">
-                                  <small>Welcome,</small>
-                                  Jason
+                                  <small>Welcome</small>
+                                  {{name}}
                                 </span>
 
                                 <i class="ace-icon fa fa-caret-down"></i>
@@ -512,13 +512,15 @@
 
     export default {
         name: "admin",
-        data(){
+        data() {
             return {
-                baseUrl : process.env.BASE_URL
+                baseUrl: process.env.BASE_URL,
+                name: '',
             }
         },
         mounted() {
             let _this = this;
+            _this.name = LocalStorage.get("userInfo").name || '';
             $("body").removeClass("login-layout blur-login");
             $("body").attr("class", "no-skin");
             _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");

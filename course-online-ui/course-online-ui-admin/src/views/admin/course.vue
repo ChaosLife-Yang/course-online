@@ -267,9 +267,7 @@
                             this.msg('error', result.msg);
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
             },
             addContent() {
                 this.$ajax
@@ -282,9 +280,7 @@
                             this.msg('error', result.msg);
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
             },
             msg(type, message) {
                 this.$message({
@@ -318,9 +314,7 @@
                                 this.msg('error', result.msg);
                             }
                         })
-                        .catch(error => {
-                            this.msg('error', error);
-                        });
+                        ;
                 }).catch(() => {
                     this.msg('info', '已取消删除');
                 });
@@ -343,9 +337,7 @@
                             this.imageUrl = "";
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/courseCategory/" + id)
                     .then((response) => {
@@ -356,9 +348,7 @@
                             this.$refs.tree.setCheckedKeys([]);
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
             },
             //添加或更新
             saveOrUpdate(formName) {
@@ -386,13 +376,9 @@
                                     }
                                     this.dialogFormVisible = false;
                                     this.list();
-                                }).catch(error => {
-                                    this.msg('error', error);
                                 });
 
-                            }).catch(error => {
-                            this.msg('error', error);
-                        });
+                            });
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -419,9 +405,7 @@
                         }
 
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/category/list")
                     .then((response) => {
@@ -435,9 +419,7 @@
                         }
 
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/teacher/all")
                     .then((response) => {
@@ -452,9 +434,7 @@
                         }
 
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
             },
             handleSizeChange(val) {
                 this.size = val;

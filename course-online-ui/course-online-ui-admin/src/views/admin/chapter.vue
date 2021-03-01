@@ -163,9 +163,7 @@
                                 this.msg('error', result.msg);
                             }
                         })
-                        .catch(error => {
-                            this.msg('error', error);
-                        });
+                        ;
                 }).catch(() => {
                     this.msg('info', '已取消删除');
                 });
@@ -182,9 +180,7 @@
                         let result = response.data;
                         this.chapterDto = result.data;
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
             },
             //添加或更新
             saveOrUpdate(formName) {
@@ -204,9 +200,7 @@
                                 this.loading = false;
                                 this.list();
                             })
-                            .catch(error => {
-                                this.msg('error', error);
-                            });
+                            ;
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -230,9 +224,7 @@
                             this.total = result.count;
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
 
             },
             handleClose(done) {

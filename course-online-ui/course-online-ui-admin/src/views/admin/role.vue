@@ -140,9 +140,7 @@
                                 this.msg('error', result.msg);
                             }
                         })
-                        .catch(error => {
-                            this.msg('error', error);
-                        });
+                        ;
                 }).catch(() => {
                     this.msg('info', '已取消删除');
                 });
@@ -159,9 +157,7 @@
                         let result = response.data;
                         this.roleDto = result.data;
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/auth/roleResource/" + id)
                     .then((response) => {
@@ -172,9 +168,7 @@
                             this.$refs.tree.setCheckedKeys([]);
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
             },
             //添加或更新
             saveOrUpdate(formName) {
@@ -197,8 +191,6 @@
                                         } else {
                                             this.msg('error', result2.msg);
                                         }
-                                    }).catch(error => {
-                                        this.msg('error', error);
                                     });
 
                                 } else {
@@ -208,9 +200,7 @@
                                 this.dialogFormVisible = false;
                                 this.list();
                             })
-                            .catch(error => {
-                                this.msg('error', error);
-                            });
+                            ;
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -233,9 +223,7 @@
                             this.total = result.count;
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/auth/resource/list")
                     .then((response) => {
@@ -244,9 +232,7 @@
                             this.resources = result.data;
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
             },
             handleSizeChange(val) {
                 this.size = val;

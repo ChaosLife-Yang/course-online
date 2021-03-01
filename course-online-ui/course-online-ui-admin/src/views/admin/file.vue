@@ -82,9 +82,7 @@
 
                         }
                     })
-                    .catch(error => {
-                        this.msg('error', error);
-                    });
+                    ;
 
             },
             handleSizeChange(val) {
