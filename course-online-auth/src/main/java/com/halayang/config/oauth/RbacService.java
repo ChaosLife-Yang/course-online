@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -59,7 +60,7 @@ public class RbacService {
                     String token = oAuth2AuthenticationDetails.getTokenValue();
                     Jwt jwt = JwtHelper.decode(token);
                     Map<String, Object> map = JacksonUtils.toMap(jwt.getClaims(), String.class, Object.class);
-                    String userId = (String) map.get("user_id");
+                    String userId = (String) Objects.requireNonNull(map).get("user_id");
                     log.info("用户id:{},要访问的restful url:{}", userId, urlPattern);
                     if (!StringUtils.isEmpty(userId)) {
                         //查询用户权限能否访问此url
