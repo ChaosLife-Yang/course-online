@@ -93,7 +93,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             //登录完成可以把token存入redis username为key 申请令牌中的expires_in为过期时间
             return getMap(url, paramMap, userLoginDto.getClientId(), userLoginDto.getClientSecret());
         } catch (IOException e) {
-            log.error("令牌请求失败");
+            log.error("令牌请求失败", e);
             throw new IllegalArgumentException("登录失败");
         }
     }

@@ -55,8 +55,7 @@ public class RbacService {
                 //解析jwt
                 Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
                 if (details instanceof OAuth2AuthenticationDetails) {
-                    OAuth2AuthenticationDetails oAuth2AuthenticationDetails =
-                            (OAuth2AuthenticationDetails) details;
+                    OAuth2AuthenticationDetails oAuth2AuthenticationDetails = (OAuth2AuthenticationDetails) details;
                     String token = oAuth2AuthenticationDetails.getTokenValue();
                     Jwt jwt = JwtHelper.decode(token);
                     Map<String, Object> map = JacksonUtils.toMap(jwt.getClaims(), String.class, Object.class);
@@ -85,7 +84,6 @@ public class RbacService {
                 .map(re -> JacksonUtils.toList(re, String.class))
                 .flatMap(List::stream)
                 .distinct()
-                .parallel()
                 .collect(Collectors.toList());
     }
 
