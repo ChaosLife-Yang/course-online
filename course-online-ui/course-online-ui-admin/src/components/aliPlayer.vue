@@ -65,7 +65,7 @@
                         this.msg('error', result.msg);
                     }
                 }).catch(err => {
-                    this.msg('error', err);
+                    console.log(err);
                 })
             },
             msg(type, message) {

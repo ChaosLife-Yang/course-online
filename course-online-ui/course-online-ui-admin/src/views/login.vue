@@ -111,8 +111,7 @@
                                 LocalStorage.set("refreshToken", token.refresh_token);
                                 //保存用户信息
                                 let info = parseInfo(token.access_token);
-                                LocalStorage.set("userInfo",info);
-                                LocalStorage.set("authorities",info.authorities);
+                                LocalStorage.set("userInfo", info);
                                 console.log(result);
                                 this.$router.push("/welcome");
                             }

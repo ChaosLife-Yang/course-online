@@ -88,6 +88,11 @@ axios.interceptors.response.use(response => {
     return response;
 }, error => {
     console.log(error);
+    Message({
+        showClose: true,
+        type: 'error',
+        message: error
+    });
     // router.replace({
     //     path: '/login',
     //     query: {redirect: router.currentRoute.fullPath}

@@ -123,7 +123,7 @@
                             this.shardUpload(file, start, end, fileShard, suffix, shardIndex, shardSize, shardTotal, size, fileName, newName, key16);
 
                         }).catch(error => {
-                            this.msg('error', error);
+                            console.log(error);
                             this.percentage = 0;
                             this.$emit('changePercent', this.percentage);
                             this.$refs.upload.clearFiles();
@@ -141,7 +141,7 @@
                     this.$emit('changePercent', this.percentage);
                     this.$refs.upload.clearFiles();
                     this.flag = false;
-                    this.msg('error', error);
+                    console.log(error);
                 });
 
             },
@@ -201,7 +201,7 @@
                     this.$emit('changePercent', this.percentage);
                     this.$refs.upload.clearFiles();
                     this.flag = false;
-                    this.msg('error', error);
+                    console.log(error);
                 });
 
             }

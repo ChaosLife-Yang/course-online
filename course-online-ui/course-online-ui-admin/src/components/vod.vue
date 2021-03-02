@@ -108,7 +108,7 @@
                         }).catch(error => {
                             this.$refs.upload.clearFiles();
                             this.flag = false;
-                            this.msg('error', error);
+                            console.log(error);
                         });
                     } else {
                         this.$refs.upload.clearFiles();
@@ -118,7 +118,7 @@
                 }).catch(error => {
                     this.$refs.upload.clearFiles();
                     this.flag = false;
-                    this.msg('error', error);
+                    console.log(error);
                 });
             }
         }
