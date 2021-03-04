@@ -524,7 +524,6 @@
             $("body").attr("class", "no-skin");
             _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
             _this.name = LocalStorage.get("userInfo").name || '';
-
         },
         //监听路由跳转
         watch: {
@@ -553,6 +552,13 @@
                     parentLi.addClass("open active");
                 }
             },
+            logout() {
+                LocalStorage.remove(ACCESS_TOKEN);
+                LocalStorage.remove(REFRESH_TOKEN);
+                LocalStorage.remove(USER_INFO);
+                LocalStorage.remove(REFRESH_INFO);
+                this.$router.push("/login");
+            }
 
         }
     };

@@ -33,6 +33,7 @@ import jQuery from 'jquery';
 import UUID from 'vue-uuid'
 import Message from "element-ui/packages/message";
 import {parseInfo} from "./utils/tokenParser";
+import el from "element-ui/src/locale/lang/el";
 
 window.$ = jQuery;
 window.jQuery = jQuery;
@@ -73,15 +74,86 @@ Vue.prototype.$SMS_STATUS_ARRAY = [{key: "U", value: "已使用"}, {key: "N", va
 Vue.prototype.$client_id = clientId;
 Vue.prototype.$client_secret = clientSecret;
 
+
+
 //路由监听
 router.beforeEach((to, from, next) => {
-    next();
+    //路由需要鉴权 而缺失令牌或令牌过期就看刷新令牌申请令牌 刷新令牌也过期就重定向登录 令牌申请出错就重新登录
+    let time = Date.parse(new Date()) / 1000;
+    if (to.meta.requiresAuth === true) {
+        if (!Tool.isEmpty(LocalStorage.get(ACCESS_TOKEN)) && !Tool.isEmpty(LocalStorage.get(USER_INFO)) && LocalStorage.get(USER_INFO).exp > time) {
+            next();
+        } else if (!Tool.isEmpty(LocalStorage.get(REFRESH_TOKEN)) && !Tool.isEmpty(LocalStorage.get(REFRESH_INFO)) && LocalStorage.get(REFRESH_INFO).exp > time) {
+            axios.post(process.env.VUE_APP_SERVER + "/api/auth/refreshToken",
+                {
+                    clientId: clientId,
+                    clientSecret: clientSecret,
+                    token: LocalStorage.get(REFRESH_TOKEN)
+                }).then(response => {
+                let result = response.data;
+                if (result.code === 200) {
+                    let _token = result.data;
+                    LocalStorage.set(ACCESS_TOKEN, _token.access_token);
+                    LocalStorage.set(REFRESH_TOKEN, _token.refresh_token);
+                    //保存用户信息
+                    let info = parseInfo(_token.access_token);
+                    let refresh = parseInfo(_token.refresh_token);
+                    LocalStorage.set(USER_INFO, info);
+                    LocalStorage.set(REFRESH_INFO, refresh);
+                    next();
+                } else {
+                    //刷新令牌申请失败 就重新登录吧
+                    LocalStorage.remove(ACCESS_TOKEN);
+                    LocalStorage.remove(REFRESH_TOKEN);
+                    LocalStorage.remove(USER_INFO);
+                    LocalStorage.remove(REFRESH_INFO);
+                    router.replace({
+                        path: '/login',
+                        query: {redirect: router.currentRoute.fullPath}
+                    });
+                }
+            });
+        } else {
+            console.log("重新登录");
+            router.replace({
+                path: '/login',
+                query: {redirect: router.currentRoute.fullPath}
+            });
+        }
+    } else {
+        next();
+    }
 });
 
 /**
  * axios拦截器
  */
 axios.interceptors.request.use(config => {
+    //前端判断令牌是否过期 如果过期而刷新令牌没有过期就重新申请令牌 否则重新登录 令牌申请出错也重新登录
+    let time = Date.parse(new Date()) / 1000;
+    let exp;
+    let refreshExp;
+    if (!Tool.isEmpty(LocalStorage.get(USER_INFO)) && !Tool.isEmpty(LocalStorage.get(REFRESH_INFO))) {
+        exp = LocalStorage.get(USER_INFO).exp;
+        refreshExp = LocalStorage.get(REFRESH_INFO).exp;
+    } else {
+        exp = 0;
+        refreshExp = 0;
+    }
+    if (exp > time) {
+        config.headers.Authorization = `Bearer ${LocalStorage.get(ACCESS_TOKEN)}`;
+    } else if (refreshExp > time) {
+        console.log("刷新令牌请求");
+    } else {
+        LocalStorage.remove(ACCESS_TOKEN);
+        LocalStorage.remove(REFRESH_TOKEN);
+        LocalStorage.remove(USER_INFO);
+        LocalStorage.remove(REFRESH_INFO);
+        router.replace({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath}
+        });
+    }
     console.log("请求：", config);
     return config;
 }, error => {
@@ -98,10 +170,6 @@ axios.interceptors.response.use(response => {
         type: 'error',
         message: error
     });
-    // router.replace({
-    //     path: '/login',
-    //     query: {redirect: router.currentRoute.fullPath}
-    // });
 });
 
 new Vue({
