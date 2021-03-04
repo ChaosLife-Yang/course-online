@@ -114,7 +114,7 @@ const refreshApply = next => {
 const pushHandler = (next) => {
     let time = Date.parse(new Date()) / 1000;
     if (!Tool.isEmpty(LocalStorage.get(ACCESS_TOKEN)) && !Tool.isEmpty(LocalStorage.get(USER_INFO)) && LocalStorage.get(USER_INFO).exp > time) {
-        if (next){
+        if (next) {
             next();
         }
     } else if (!Tool.isEmpty(LocalStorage.get(REFRESH_TOKEN)) && !Tool.isEmpty(LocalStorage.get(REFRESH_INFO)) && LocalStorage.get(REFRESH_INFO).exp > time) {
@@ -181,6 +181,19 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(response => {
     console.log("返回结果：", response);
+    console.log("返回结果码：", response.data.code);
+    let code = response.data.code;
+    if (code === 401 || code === 402 || code === 609) {
+        console.log("登录信息失效");
+        LocalStorage.remove(ACCESS_TOKEN);
+        LocalStorage.remove(REFRESH_TOKEN);
+        LocalStorage.remove(USER_INFO);
+        LocalStorage.remove(REFRESH_INFO);
+        router.replace({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath}
+        });
+    }
     return response;
 }, error => {
     console.log(error);
