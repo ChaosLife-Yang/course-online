@@ -95,25 +95,32 @@
         },
         methods: {
             login() {
-                let formData = new window.FormData();
-                formData.append("username", this.loginDto.username);
-                formData.append("password", this.loginDto.password);
-                formData.append("clientId", this.loginDto.clientId);
-                formData.append("clientSecret", this.loginDto.clientSecret);
-                this.$ajax.post(process.env.VUE_APP_SERVER + "/api/auth/login", formData)
+                LocalStorage.remove(ACCESS_TOKEN);
+                LocalStorage.remove(REFRESH_TOKEN);
+                LocalStorage.remove(USER_INFO);
+                LocalStorage.remove(REFRESH_INFO);
+                this.$ajax.post(process.env.VUE_APP_SERVER + "/api/auth/login", this.loginDto)
                     .then((response) => {
                         if (response.data) {
                             let result = response.data;
                             if (result.code === 200) {
                                 let token = result.data;
                                 //保存token和刷新token
-                                LocalStorage.set("accessToken", token.access_token);
-                                LocalStorage.set("refreshToken", token.refresh_token);
+                                LocalStorage.set(ACCESS_TOKEN, token.access_token);
+                                LocalStorage.set(REFRESH_TOKEN, token.refresh_token);
                                 //保存用户信息
                                 let info = parseInfo(token.access_token);
-                                LocalStorage.set("userInfo", info);
+                                let refresh = parseInfo(token.refresh_token);
+                                LocalStorage.set(USER_INFO, info);
+                                LocalStorage.set(REFRESH_INFO, refresh);
                                 console.log(result);
-                                this.$router.push("/welcome");
+                                this.$router.push("/");
+                            } else {
+                                this.$message({
+                                    showClose: true,
+                                    type: 'error',
+                                    message: result.msg
+                                });
                             }
                         }
                     });

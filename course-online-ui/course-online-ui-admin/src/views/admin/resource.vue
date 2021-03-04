@@ -168,7 +168,6 @@
                             .post(process.env.VUE_APP_SERVER + "/api/auth/resource/saveOrUpdate", this.resourceDto)
                             .then((response) => {
                                 let result = response.data;
-                                this.resourceDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
                                 } else {

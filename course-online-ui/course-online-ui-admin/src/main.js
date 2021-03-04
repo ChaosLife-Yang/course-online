@@ -32,6 +32,7 @@ import 'froala-editor/js/froala_editor.pkgd.min.js'
 import jQuery from 'jquery';
 import UUID from 'vue-uuid'
 import Message from "element-ui/packages/message";
+import {parseInfo} from "./utils/tokenParser";
 
 window.$ = jQuery;
 window.jQuery = jQuery;
@@ -50,6 +51,9 @@ Object.keys(filter).forEach(key => {
     Vue.filter(key, filter[key])
 });
 
+const clientId = "auth_server";
+const clientSecret = "123456";
+
 Vue.prototype.$SECTION_CHARGE = [{key: "C", value: "收费"}, {key: "F", value: "免费"}];
 Vue.prototype.$YES_NO = [{key: "1", value: "是"}, {key: "0", value: "否"}];
 Vue.prototype.$COURSE_LEVEL = [{key: "1", value: "初级"}, {key: "2", value: "中级"}, {key: "3", value: "高级"}];
@@ -66,8 +70,9 @@ Vue.prototype.$COURSE_STATUS_ARRAY = [{key: "P", value: "发布"}, {key: "D", va
 Vue.prototype.$FILE_USE_ARRAY = [{key: "C", value: "课程"}, {key: "T", value: "讲师"}];
 Vue.prototype.$SMS_USE_ARRAY = [{key: "R", value: "注册"}, {key: "F", value: "忘记密码"}];
 Vue.prototype.$SMS_STATUS_ARRAY = [{key: "U", value: "已使用"}, {key: "N", value: "未使用"}];
-Vue.prototype.$client_id = 'auth_server';
-Vue.prototype.$client_secret = '123456';
+Vue.prototype.$client_id = clientId;
+Vue.prototype.$client_secret = clientSecret;
+
 //路由监听
 router.beforeEach((to, from, next) => {
     next();

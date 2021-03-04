@@ -212,7 +212,6 @@
                             .post(process.env.VUE_APP_SERVER + "/api/service/teacher/saveOrUpdate", this.teacherDto)
                             .then((response) => {
                                 let result = response.data;
-                                this.teacherDto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
                                     this.dialogFormVisible = false;

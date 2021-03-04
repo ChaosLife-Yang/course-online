@@ -158,7 +158,6 @@
                             .post(process.env.VUE_APP_SERVER + "${gateway}/${domain}/saveOrUpdate", this.${domain}Dto)
                             .then((response) => {
                                 let result = response.data;
-                                this.${domain}Dto.id = "";
                                 if (result.code === 200) {
                                     this.msg('success', result.msg);
                                 }else {

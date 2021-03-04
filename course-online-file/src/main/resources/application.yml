@@ -1,5 +1,8 @@
 server:
   port: 8750
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
 spring:
   application:
@@ -51,17 +54,19 @@ pagehelper:
   support-methods-arguments: true
 # Feign 配置
 feign:
+  httpclient:
+    enabled: true
   compression:
     request:
       # 开启请求压缩
       enabled: true
-      # 配置压缩的 MIME TYPE
-      mime-types: text/xml,application/xml,application/json
-      # 配置压缩数据大小的下限
+      mime-types: application/json,application/xml,text/html,text/xml,text/plain
       min-request-size: 1024
     response:
       # 开启响应压缩
       enabled: true
+      useGzipDecoder: true
+
 
 logging:
   level:

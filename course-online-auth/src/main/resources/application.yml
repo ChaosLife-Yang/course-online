@@ -1,5 +1,8 @@
 server:
   port: 8250
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
 spring:
   application:
@@ -18,6 +21,18 @@ spring:
       max-lifetime: 120000
       auto-commit: true
       connection-test-query: SELECT 1
+
+feign:
+  httpclient:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: application/json,application/xml,text/html,text/xml,text/plain
+      min-request-size: 1024
+    response:
+      enabled: true
+      useGzipDecoder: true
 
 mybatis-plus:
   configuration:

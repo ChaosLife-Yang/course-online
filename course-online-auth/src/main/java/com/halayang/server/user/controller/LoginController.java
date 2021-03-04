@@ -7,6 +7,7 @@ import com.halayang.server.user.dto.UserLoginDto;
 import com.halayang.server.user.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,12 +40,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseObject<Map<String, Object>> login(UserLoginDto userLoginDto) {
+    public ResponseObject<Map<String, Object>> login(@RequestBody @Validated UserLoginDto userLoginDto) {
         return ResponseResult.success(userService.login(userLoginDto));
     }
 
     @PostMapping("/refreshToken")
-    public ResponseObject<Map<String, Object>> refreshToken(RefreshTokenDto refreshTokenDto) {
+    public ResponseObject<Map<String, Object>> refreshToken(@RequestBody @Validated RefreshTokenDto refreshTokenDto) {
         return ResponseResult.success(userService.refreshToken(refreshTokenDto));
     }
 

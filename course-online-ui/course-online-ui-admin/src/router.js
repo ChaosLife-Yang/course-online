@@ -39,51 +39,81 @@ export default new Router({
                     path: 'welcome',
                     name: 'welcome',
                     component: Welcome,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'business/chapter',
                     name: 'business/chapter',
                     component: Chapter,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'business/course',
                     name: 'business/course',
                     component: Course,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'business/section',
                     name: 'business/section',
                     component: Section,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'business/category',
                     name: 'business/category',
                     component: Category,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'business/teacher',
                     name: 'business/teacher',
                     component: Teacher,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'system/file',
                     name: 'system/file',
                     component: File,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'authority/user',
                     name: 'authority/user',
                     component: User,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'authority/resource',
                     name: 'authority/resource',
                     component: Resource,
+                    meta:{
+                        requiresAuth: true
+                    }
                 }, {
                     //子路由不用加斜杠
                     path: 'authority/role',
                     name: 'authority/role',
                     component: Role,
+                    meta:{
+                        requiresAuth: true
+                    }
                 },
             ]
         },

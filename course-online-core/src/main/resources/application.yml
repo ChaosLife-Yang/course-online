@@ -1,5 +1,8 @@
 server:
   port: 8000
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
 spring:
   application:
@@ -48,6 +51,7 @@ feign:
     response:
       # 开启响应压缩
       enabled: true
+      useGzipDecoder: true
 
 mybatis-plus:
   configuration:

@@ -520,10 +520,10 @@
         },
         mounted() {
             let _this = this;
-            _this.name = LocalStorage.get("userInfo").name || '';
             $("body").removeClass("login-layout blur-login");
             $("body").attr("class", "no-skin");
             _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+            _this.name = LocalStorage.get("userInfo").name || '';
 
         },
         //监听路由跳转
