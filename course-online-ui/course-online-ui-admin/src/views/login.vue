@@ -81,6 +81,11 @@
         mounted() {
             $("body").removeClass("login-layout blur-login");
             $('body').attr('class', 'login-layout blur-login');
+            LocalStorage.remove(ACCESS_TOKEN);
+            LocalStorage.remove(REFRESH_TOKEN);
+            LocalStorage.remove(USER_INFO);
+            LocalStorage.remove(REFRESH_INFO);
+            console.log(this.$route.params.redirect);
         },
         data() {
             return {
@@ -95,10 +100,6 @@
         },
         methods: {
             login() {
-                LocalStorage.remove(ACCESS_TOKEN);
-                LocalStorage.remove(REFRESH_TOKEN);
-                LocalStorage.remove(USER_INFO);
-                LocalStorage.remove(REFRESH_INFO);
                 this.$ajax.post(process.env.VUE_APP_SERVER + "/api/auth/login", this.loginDto)
                     .then((response) => {
                         if (response.data) {
@@ -113,7 +114,7 @@
                                 let refresh = parseInfo(token.refresh_token);
                                 LocalStorage.set(USER_INFO, info);
                                 LocalStorage.set(REFRESH_INFO, refresh);
-                                console.log(result);
+                                console.log("令牌申请成功:" + result);
                                 this.$router.push("/");
                             } else {
                                 this.$message({
