@@ -6,6 +6,7 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.role.dto.RoleResourceDTO;
 import com.halayang.server.role.po.RoleResourcePO;
 import com.halayang.server.role.service.RoleResourceService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * @author YangYuDi
  * @since 2021-02-19 14:36:42
  */
+@Api(tags = {"角色权限管理"})
 @RestController
 @RequestMapping("/roleResource")
 public class RoleResourceController {
@@ -56,6 +58,7 @@ public class RoleResourceController {
      * @author YangYudi
      * @date 2021-02-19 14:36:42
      */
+    @ApiOperation(value = "角色资源添加或更新", httpMethod = "POST", notes = "角色资源添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated RoleResourceDTO roleResourceDTO) {
         boolean option = roleResourceService.saveOrUpdate(roleResourceDTO);
@@ -74,6 +77,7 @@ public class RoleResourceController {
      * @author YangYudi
      * @date 2021-02-19 14:36:42
      */
+    @ApiOperation(value = "删除角色资源", httpMethod = "GET", notes = "删除角色资源")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = roleResourceService.removeById(id);

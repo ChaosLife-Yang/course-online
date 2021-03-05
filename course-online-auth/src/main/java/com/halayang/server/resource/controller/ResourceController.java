@@ -1,11 +1,6 @@
 package com.halayang.server.resource.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.utils.CopyUtils;
-import com.halayang.common.utils.JacksonUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.config.oauth.RbacService;
@@ -15,14 +10,14 @@ import com.halayang.server.resource.po.ResourcePO;
 import com.halayang.server.resource.service.ResourceService;
 import com.halayang.server.role.po.RoleResourcePO;
 import com.halayang.server.role.service.RoleResourceService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,6 +27,7 @@ import java.util.stream.Collectors;
  * @author YangYuDi
  * @since 2021-02-16 13:48:23
  */
+@Api(tags = {"资源管理"})
 @RestController
 @RequestMapping("/resource")
 public class ResourceController {
@@ -50,6 +46,7 @@ public class ResourceController {
      * @author YangYudi
      * @date 2021-02-16 13:48:23
      */
+    @ApiOperation(value = "获取课资源对象信息", httpMethod = "GET", notes = "获取课资源对象信息")
     @GetMapping("/{id}")
     public ResponseObject<ResourceDTO> getOne(@PathVariable String id) {
         ResourcePO po = resourceService.getById(id);
@@ -65,6 +62,7 @@ public class ResourceController {
      * @author YangYudi
      * @date 2021-02-16 13:48:23
      */
+    @ApiOperation(value = "资源查询", httpMethod = "GET", notes = "资源查询")
     @GetMapping("/list")
     public ResponseObject<List<ResourceDTO>> resourceList() {
         return ResponseResult.success(resourceService.resourceList());
@@ -78,6 +76,7 @@ public class ResourceController {
      * @author YangYudi
      * @date 2021-02-16 13:48:23
      */
+    @ApiOperation(value = "资源管理添加或更新", httpMethod = "POST", notes = "资源管理添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated ResourceDTO resourceDTO) {
         ResourcePO resourcePo = new ResourcePO();
@@ -98,6 +97,7 @@ public class ResourceController {
      * @author YangYudi
      * @date 2021-02-16 13:48:23
      */
+    @ApiOperation(value = "删除资源管理", httpMethod = "GET", notes = "删除资源管理")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         roleResourceService.remove(new LambdaQueryWrapper<RoleResourcePO>().eq(RoleResourcePO::getResourceId, id));
@@ -109,6 +109,7 @@ public class ResourceController {
         }
     }
 
+    @ApiOperation(value = "用户拥有的资源", httpMethod = "GET", notes = "用户拥有的资源")
     @GetMapping("/userResources/{id}")
     public ResponseObject<List<String>> getUserResources(@PathVariable String id) {
         List<ResourceAuthorityDTO> permission = resourceService.getPermissionByUserId(id);

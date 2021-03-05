@@ -6,6 +6,7 @@ import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.server.user.dto.RoleUserDTO;
 import com.halayang.server.user.po.RoleUserPO;
 import com.halayang.server.user.service.RoleUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * @author YangYuDi
  * @since 2021-02-19 14:38:32
  */
+@Api(tags = {"用户角色管理"})
 @RestController
 @RequestMapping("/roleUser")
 public class RoleUserController {
@@ -56,6 +58,7 @@ public class RoleUserController {
      * @author YangYudi
      * @date 2021-02-19 14:38:32
      */
+    @ApiOperation(value = "用户角色添加或更新", httpMethod = "POST", notes = "用户角色添加或更新")
     @PostMapping("/saveOrUpdate")
     public ResponseObject<String> saveOrUpdate(@RequestBody @Validated RoleUserDTO roleUserDTO) {
         boolean option = roleUserService.saveOrUpdate(roleUserDTO);
@@ -74,6 +77,7 @@ public class RoleUserController {
      * @author YangYudi
      * @date 2021-02-19 14:38:32
      */
+    @ApiOperation(value = "删除用户角色", httpMethod = "GET", notes = "删除用户角色")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = roleUserService.removeById(id);
