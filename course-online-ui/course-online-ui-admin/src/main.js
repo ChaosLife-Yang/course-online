@@ -180,22 +180,22 @@ axios.interceptors.request.use(config => {
 });
 const queue = [];
 //避免重复请求刷新令牌
-let refresh = false;
+let refreshFlag = false;
 axios.interceptors.response.use(response => {
     console.log("返回结果：", response);
     console.log("返回结果码：", response.data.code);
     let code = response.data.code;
     if (code === 401 || code === 402 || code === 609) {
         //重新申请令牌 申请成功就重新请求失败的接口
-        //令牌失效将请求放入队列 请求一次刷新令牌之后再依次执行失败的方法
+        //令牌失效将请求放入队列 请求一次刷新令牌之后再依次执行失败的方法 方法都是异步的所以不会阻塞
         queue.push(response.config);
-        if (refresh === false) {
-            refresh = true;
+        if (refreshFlag === false) {
+            refreshFlag = true;
             refreshApply(() => {
                 for (let i = 0; i < queue.length; i++) {
                     axios.request(queue.pop());
                 }
-                refresh = false;
+                refreshFlag = false;
             });
         }
         return undefined;
