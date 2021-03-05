@@ -97,6 +97,7 @@ const refreshApply = next => {
                 next();
             }
         } else {
+            //刷新令牌都请求失败了那就重新登录
             LocalStorage.remove(ACCESS_TOKEN);
             LocalStorage.remove(REFRESH_TOKEN);
             LocalStorage.remove(USER_INFO);
@@ -178,9 +179,11 @@ axios.interceptors.request.use(config => {
     console.log(error);
     return Promise.reject(error);
 });
+//请求队列
 const queue = [];
 //避免重复请求刷新令牌
 let refreshFlag = false;
+//响应拦截器
 axios.interceptors.response.use(response => {
     console.log("返回结果：", response);
     console.log("返回结果码：", response.data.code);
@@ -188,11 +191,13 @@ axios.interceptors.response.use(response => {
     if (code === 401 || code === 402 || code === 609) {
         //重新申请令牌 申请成功就重新请求失败的接口
         //令牌失效将请求放入队列 请求一次刷新令牌之后再依次执行失败的方法 方法都是异步的所以不会阻塞
+        console.log("请求入队列");
         queue.push(response.config);
         if (refreshFlag === false) {
             refreshFlag = true;
             refreshApply(() => {
                 for (let i = 0; i < queue.length; i++) {
+                    console.log("重新请求");
                     axios.request(queue.pop());
                 }
                 refreshFlag = false;
