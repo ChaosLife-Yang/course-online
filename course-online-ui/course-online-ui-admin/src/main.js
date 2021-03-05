@@ -97,7 +97,6 @@ const refreshApply = next => {
                 next();
             }
         } else {
-            //刷新令牌申请失败 就重新登录吧
             LocalStorage.remove(ACCESS_TOKEN);
             LocalStorage.remove(REFRESH_TOKEN);
             LocalStorage.remove(USER_INFO);
@@ -110,7 +109,7 @@ const refreshApply = next => {
     });
 };
 
-//按钮监控
+//监控
 const pushHandler = (next) => {
     let time = Date.parse(new Date()) / 1000;
     if (!Tool.isEmpty(LocalStorage.get(ACCESS_TOKEN)) && !Tool.isEmpty(LocalStorage.get(USER_INFO)) && LocalStorage.get(USER_INFO).exp > time) {
@@ -177,22 +176,29 @@ axios.interceptors.request.use(config => {
     return config;
 }, error => {
     console.log(error);
+    return Promise.reject(error);
 });
-
+const queue = [];
+//避免重复请求刷新令牌
+let refresh = false;
 axios.interceptors.response.use(response => {
     console.log("返回结果：", response);
     console.log("返回结果码：", response.data.code);
     let code = response.data.code;
     if (code === 401 || code === 402 || code === 609) {
-        console.log("登录信息失效");
-        LocalStorage.remove(ACCESS_TOKEN);
-        LocalStorage.remove(REFRESH_TOKEN);
-        LocalStorage.remove(USER_INFO);
-        LocalStorage.remove(REFRESH_INFO);
-        router.replace({
-            path: '/login',
-            query: {redirect: router.currentRoute.fullPath}
-        });
+        //重新申请令牌 申请成功就重新请求失败的接口
+        //令牌失效将请求放入队列 请求一次刷新令牌之后再依次执行失败的方法
+        queue.push(response.config);
+        if (refresh === false) {
+            refresh = true;
+            refreshApply(() => {
+                for (let i = 0; i < queue.length; i++) {
+                    axios.request(queue.pop());
+                }
+                refresh = false;
+            });
+        }
+        return undefined;
     }
     return response;
 }, error => {

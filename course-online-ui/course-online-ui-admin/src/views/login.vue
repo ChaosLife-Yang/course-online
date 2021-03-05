@@ -85,7 +85,6 @@
             LocalStorage.remove(REFRESH_TOKEN);
             LocalStorage.remove(USER_INFO);
             LocalStorage.remove(REFRESH_INFO);
-            console.log(this.$route.params.redirect);
         },
         data() {
             return {
@@ -114,7 +113,6 @@
                                 let refresh = parseInfo(token.refresh_token);
                                 LocalStorage.set(USER_INFO, info);
                                 LocalStorage.set(REFRESH_INFO, refresh);
-                                console.log("令牌申请成功:" + result);
                                 this.$router.push("/");
                             } else {
                                 this.$message({
