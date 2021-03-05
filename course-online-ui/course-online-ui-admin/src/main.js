@@ -75,37 +75,44 @@ Vue.prototype.$client_id = clientId;
 Vue.prototype.$client_secret = clientSecret;
 
 //刷新令牌请求
-const refreshApply = next => {
-    axios.post(process.env.VUE_APP_SERVER + "/api/auth/refreshToken",
-        {
+const refreshApply = (next, isAsync = true) => {
+    //ajax使用同步请求更方便
+    $.ajax({
+        type: "post",
+        async: isAsync,
+        url: process.env.VUE_APP_SERVER + "/api/auth/refreshToken",
+        contentType: "application/json;charset=UTF-8",
+        data: JSON.stringify({
             clientId: clientId,
             clientSecret: clientSecret,
             token: LocalStorage.get(REFRESH_TOKEN)
-        }).then(response => {
-        let result = response.data;
-        if (result.code === 200) {
-            let _token = result.data;
-            LocalStorage.set(ACCESS_TOKEN, _token.access_token);
-            LocalStorage.set(REFRESH_TOKEN, _token.refresh_token);
-            //保存用户信息
-            let info = parseInfo(_token.access_token);
-            let refresh = parseInfo(_token.refresh_token);
-            LocalStorage.set(USER_INFO, info);
-            LocalStorage.set(REFRESH_INFO, refresh);
-            //使用刷新令牌请求成功 进行路由跳转
-            if (next) {
-                next();
+        }),
+        dataType: "json",
+        success: result => {
+            if (result.code === 200) {
+                let _token = result.data;
+                LocalStorage.set(ACCESS_TOKEN, _token.access_token);
+                LocalStorage.set(REFRESH_TOKEN, _token.refresh_token);
+                //保存用户信息
+                let info = parseInfo(_token.access_token);
+                let refresh = parseInfo(_token.refresh_token);
+                LocalStorage.set(USER_INFO, info);
+                LocalStorage.set(REFRESH_INFO, refresh);
+                //使用刷新令牌请求成功 进行路由跳转
+                if (next) {
+                    next();
+                }
+            } else {
+                //刷新令牌都请求失败了那就重新登录
+                LocalStorage.remove(ACCESS_TOKEN);
+                LocalStorage.remove(REFRESH_TOKEN);
+                LocalStorage.remove(USER_INFO);
+                LocalStorage.remove(REFRESH_INFO);
+                router.replace({
+                    path: '/login',
+                    query: {redirect: router.currentRoute.fullPath}
+                });
             }
-        } else {
-            //刷新令牌都请求失败了那就重新登录
-            LocalStorage.remove(ACCESS_TOKEN);
-            LocalStorage.remove(REFRESH_TOKEN);
-            LocalStorage.remove(USER_INFO);
-            LocalStorage.remove(REFRESH_INFO);
-            router.replace({
-                path: '/login',
-                query: {redirect: router.currentRoute.fullPath}
-            });
         }
     });
 };
@@ -118,7 +125,7 @@ const pushHandler = (next) => {
             next();
         }
     } else if (!Tool.isEmpty(LocalStorage.get(REFRESH_TOKEN)) && !Tool.isEmpty(LocalStorage.get(REFRESH_INFO)) && LocalStorage.get(REFRESH_INFO).exp > time) {
-        refreshApply(next);
+        refreshApply(next, true);
     } else {
         console.log("重新登录");
         router.replace({
@@ -144,6 +151,8 @@ router.afterEach((to, from) => {
     }
 });
 
+//避免重复请求刷新令牌
+let refreshFlag = false;
 /**
  * axios拦截器
  */
@@ -162,7 +171,16 @@ axios.interceptors.request.use(config => {
     if (exp > time) {
         config.headers.Authorization = `Bearer ${LocalStorage.get(ACCESS_TOKEN)}`;
     } else if (refreshExp > time) {
+        //重新申请令牌
         console.log("刷新令牌请求");
+        if (refreshFlag === false) {
+            refreshFlag = true;
+            //要阻塞住 请求到令牌了才能继续请求
+            refreshApply(() => {
+                config.headers.Authorization = `Bearer ${LocalStorage.get(ACCESS_TOKEN)}`;
+                refreshFlag = false;
+            }, false);
+        }
     } else {
         LocalStorage.remove(ACCESS_TOKEN);
         LocalStorage.remove(REFRESH_TOKEN);
@@ -179,30 +197,22 @@ axios.interceptors.request.use(config => {
     console.log(error);
     return Promise.reject(error);
 });
-//请求队列
-const queue = [];
-//避免重复请求刷新令牌
-let refreshFlag = false;
+
 //响应拦截器
 axios.interceptors.response.use(response => {
     console.log("返回结果：", response);
     console.log("返回结果码：", response.data.code);
     let code = response.data.code;
     if (code === 401 || code === 402 || code === 609) {
-        //重新申请令牌 申请成功就重新请求失败的接口
-        //令牌失效将请求放入队列 请求一次刷新令牌之后再依次执行失败的方法 方法都是异步的所以不会阻塞
-        console.log("请求入队列");
-        queue.push(response.config);
-        if (refreshFlag === false) {
-            refreshFlag = true;
-            refreshApply(() => {
-                for (let i = 0; i < queue.length; i++) {
-                    console.log("重新请求");
-                    axios.request(queue.pop());
-                }
-                refreshFlag = false;
-            });
-        }
+        console.log("鉴权失败");
+        LocalStorage.remove(ACCESS_TOKEN);
+        LocalStorage.remove(REFRESH_TOKEN);
+        LocalStorage.remove(USER_INFO);
+        LocalStorage.remove(REFRESH_INFO);
+        router.replace({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath}
+        });
         return undefined;
     }
     return response;
