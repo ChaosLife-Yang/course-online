@@ -104,14 +104,7 @@ const refreshApply = (next, isAsync = true) => {
                 }
             } else {
                 //刷新令牌都请求失败了那就重新登录
-                LocalStorage.remove(ACCESS_TOKEN);
-                LocalStorage.remove(REFRESH_TOKEN);
-                LocalStorage.remove(USER_INFO);
-                LocalStorage.remove(REFRESH_INFO);
-                router.replace({
-                    path: '/login',
-                    query: {redirect: router.currentRoute.fullPath}
-                });
+                leave();
             }
         }
     });
@@ -128,13 +121,20 @@ const pushHandler = (next) => {
         refreshApply(next, true);
     } else {
         console.log("重新登录");
-        router.replace({
-            path: '/login',
-            query: {redirect: router.currentRoute.fullPath}
-        });
+        leave();
     }
 };
 
+const leave = () => {
+    LocalStorage.remove(ACCESS_TOKEN);
+    LocalStorage.remove(REFRESH_TOKEN);
+    LocalStorage.remove(USER_INFO);
+    LocalStorage.remove(REFRESH_INFO);
+    router.replace({
+        path: '/login',
+        query: {redirect: router.currentRoute.fullPath}
+    });
+};
 //路由前置监听
 router.beforeEach((to, from, next) => {
     //路由需要鉴权 而缺失令牌或令牌过期就看刷新令牌申请令牌 刷新令牌也过期就重定向登录 令牌申请出错就重新登录
@@ -182,14 +182,7 @@ axios.interceptors.request.use(config => {
             }, false);
         }
     } else {
-        LocalStorage.remove(ACCESS_TOKEN);
-        LocalStorage.remove(REFRESH_TOKEN);
-        LocalStorage.remove(USER_INFO);
-        LocalStorage.remove(REFRESH_INFO);
-        router.replace({
-            path: '/login',
-            query: {redirect: router.currentRoute.fullPath}
-        });
+        leave();
     }
     console.log("请求：", config);
     return config;
@@ -205,14 +198,7 @@ axios.interceptors.response.use(response => {
     let code = response.data.code;
     if (code === 401 || code === 402 || code === 609) {
         console.log("鉴权失败");
-        LocalStorage.remove(ACCESS_TOKEN);
-        LocalStorage.remove(REFRESH_TOKEN);
-        LocalStorage.remove(USER_INFO);
-        LocalStorage.remove(REFRESH_INFO);
-        router.replace({
-            path: '/login',
-            query: {redirect: router.currentRoute.fullPath}
-        });
+        leave();
         return undefined;
     }
     return response;
