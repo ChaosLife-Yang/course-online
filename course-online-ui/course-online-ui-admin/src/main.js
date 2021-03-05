@@ -106,6 +106,15 @@ const refreshApply = (next, isAsync = true) => {
                 //刷新令牌都请求失败了那就重新登录
                 leave();
             }
+        },
+        error: (error)=>{
+            leave();
+            console.log(error);
+            Message({
+                showClose: true,
+                type: 'error',
+                message: error
+            });
         }
     });
 };
