@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: course-online-auth
+    name: yudi-auth
   datasource:
     address: jdbc:mysql://localhost:3306/course-online
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -23,8 +23,6 @@ spring:
       connection-test-query: SELECT 1
 
 feign:
-  httpclient:
-    enabled: true
   compression:
     request:
       enabled: true

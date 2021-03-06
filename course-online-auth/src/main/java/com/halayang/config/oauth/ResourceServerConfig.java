@@ -65,7 +65,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // 过滤不需要认证的资源
         http.authorizeRequests()
-                .antMatchers("/login", "/refreshToken","/callback", "/oauth/**", "/client", "/resource/userResources/**","/role/userRoles/**",
+                .antMatchers("/login", "/refreshToken", "/callback", "/oauth/**", "/client", "/resource/userResources/**", "/role/userRoles/**",
                         "/doc.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/actuator", "/actuator/**")
                 .permitAll()
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")

@@ -134,8 +134,7 @@ const leave = () => {
     LocalStorage.remove(USER_INFO);
     LocalStorage.remove(REFRESH_INFO);
     router.replace({
-        path: '/login',
-        query: {redirect: router.currentRoute.fullPath}
+        path: '/login'
     });
 };
 //路由前置监听

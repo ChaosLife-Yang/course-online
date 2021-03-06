@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: course-online-file
+    name: yudi-file
   datasource:
     address: jdbc:mysql://localhost:3306/course-online
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -25,6 +25,21 @@ spring:
     multipart:
       max-file-size: 10GB
       max-request-size: 10GB
+
+security:
+  address: 127.0.0.1:9000/api/auth
+  oauth2:
+    client:
+      client-id: yudi_client
+      client-secret: 123456
+      resource-ids: course-online
+      user-authorization-uri: http://${security.address}/oauth/authorize
+      access-token-uri: http://${security.address}/oauth/token
+    resource:
+      # 认证中心id
+      id: auth_server
+      token-info-uri: http://${security.address}/oauth/check_token
+      user-info-uri: http://${security.address}/oauth/principal
 
 mybatis-plus:
   configuration:
@@ -52,20 +67,23 @@ pagehelper:
   params: count=countSql
   reasonable: true
   support-methods-arguments: true
+
 # Feign 配置
 feign:
-  httpclient:
-    enabled: true
   compression:
     request:
       # 开启请求压缩
       enabled: true
-      mime-types: application/json,application/xml,text/html,text/xml,text/plain
+      # 配置压缩的 MIME TYPE
+      mime-types: text/xml,application/xml,application/json
+      # 配置压缩数据大小的下限
       min-request-size: 1024
     response:
       # 开启响应压缩
       enabled: true
       useGzipDecoder: true
+  sentinel:
+    enabled: true
 
 
 logging:

@@ -28,7 +28,7 @@ spring:
           filters:
             - RewritePath=/api/service(?<segment>/?.*),$\{segment}
         # 设置路由id 文件服务
-        - id: course-online-file
+        - id: yudi-file
           # 设置路由uri lb://nacos中注册的服务名
           uri: lb://${spring.cloud.gateway.routes[1].id}
           # 断言 路由规则
@@ -38,7 +38,7 @@ spring:
           filters:
             - RewritePath=/api/file(?<segment>/?.*),$\{segment}
           # 设置路由id 认证服务
-        - id: course-online-auth
+        - id: yudi-auth
           # 设置路由uri lb://nacos中注册的服务名
           uri: lb://${spring.cloud.gateway.routes[2].id}
           # 断言 路由规则

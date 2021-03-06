@@ -2,8 +2,7 @@ package com.halayang.common.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
@@ -19,6 +18,9 @@ import java.io.Serializable;
  * @since 2021-02-26 13:31:14
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "OauthClientDetailsDTO对象", description = "oauth2客户端信息DTO数据交互对象")

@@ -23,17 +23,17 @@ spring:
       connection-test-query: SELECT 1
 
 security:
-  address: 127.0.0.1:8250
+  address: 127.0.0.1:9000/api/auth
   oauth2:
     client:
-      client-id: core
+      client-id: yudi_client
       client-secret: 123456
       resource-ids: course-online
       user-authorization-uri: http://${security.address}/oauth/authorize
       access-token-uri: http://${security.address}/oauth/token
     resource:
       # 认证中心id
-      id: server
+      id: auth_server
       token-info-uri: http://${security.address}/oauth/check_token
       user-info-uri: http://${security.address}/oauth/principal
 
@@ -52,6 +52,8 @@ feign:
       # 开启响应压缩
       enabled: true
       useGzipDecoder: true
+  sentinel:
+    enabled: true
 
 mybatis-plus:
   configuration:

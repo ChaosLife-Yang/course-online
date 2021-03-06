@@ -8,6 +8,7 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
+import com.halayang.feign.AuthFeign;
 import com.halayang.server.course.dto.CourseDTO;
 import com.halayang.server.course.po.CoursePO;
 import com.halayang.server.course.service.CourseContentService;
@@ -83,6 +84,7 @@ public class CourseController {
 
     /**
      * 课程添加或更新
+     *
      * @param courseDTO 请求参数
      * @return com.halayang.common.utils.response.ResponseObject<java.lang.String>
      * @author YangYudi

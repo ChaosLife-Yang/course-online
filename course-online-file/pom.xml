@@ -12,6 +12,11 @@
     <artifactId>course-online-file</artifactId>
 
     <dependencies>
+        <!--加入sentinel-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
         <!-- Spring Cloud OpenFeign的Starter的依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
