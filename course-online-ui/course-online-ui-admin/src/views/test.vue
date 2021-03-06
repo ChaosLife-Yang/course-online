@@ -1,60 +1,8 @@
 <template>
     <div>
-        <shard-upload
-                :url="url"
-                :check-url="checkUrl"
-                :get-md5="getMd5"
-                :button-name="'点击上传'"
-                :before-upload="beforeAvatarUpload"
-                @changePercent="changePercent"
-                @getUrl="getUrl">
-        </shard-upload>
-        <el-progress :percentage="percentage" :stroke-width="24"
-                     :status="success"></el-progress>
-        {{fileUrl}}
-        <el-image :fit="'scale-down'" style="width: 350px; height: 200px"
-                  :src="require('@/assets/demo-course.jpg')"></el-image>
-
-        <vod :before-upload="beforeAvatarUpload"
-             :get-md5="getMd5"
-             :upload-url="vod"
-             :button-name="'点击上传'"
-             :file-name="'测试'"
-             @getVod="getVod"
-        />
-        {{vodName}}
-
-        {{info}}
-
-        <el-table
-                :data="tableData1"
-                style="width: 100%"
-                row-key="id"
-                border
-                highlight-current-row
-                :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-            <el-table-column
-                    prop="date"
-                    label="日期"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="address"
-                    label="地址">
-            </el-table-column>
-            <el-table-column
-                    label="操作">
-                <template slot-scope="scope">
-                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="get(scope.row)"
-                               circle></el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+        <input type="text" v-model="resource"><br/>
+        {{'permission: '+$hasPermission(resource)}}<br/>
+        {{'menu permission: '+$hasMenuPermission(resource)}}
     </div>
 </template>
 
@@ -78,44 +26,7 @@
                 fileUrl: "",
                 vodName: '',
                 info: {},
-                tableData1: [{
-                    id: 1,
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    id: 2,
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    id: 3,
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄',
-                    children: [{
-                        id: 31,
-                        date: '2016-05-01',
-                        name: '王小虎',
-                        address: '上海市普陀区金沙江路 1519 弄',
-                        children: [{
-                            id: 33,
-                            date: '2016-05-01',
-                            name: '王小虎',
-                            address: '上海市普陀区金沙江路 1519 弄'
-                        }]
-                    }, {
-                        id: 32,
-                        date: '2016-05-01',
-                        name: '王小虎',
-                        address: '上海市普陀区金沙江路 1519 弄'
-                    }]
-                }, {
-                    id: 4,
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }]
+                resource: '',
             }
         },
         created() {
@@ -160,6 +71,7 @@
             get(obj) {
                 console.log(obj.id);
             }
+
         }
 
     }

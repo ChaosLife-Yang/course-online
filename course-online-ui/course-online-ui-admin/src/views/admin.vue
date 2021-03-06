@@ -523,7 +523,7 @@
             $("body").removeClass("login-layout blur-login");
             $("body").attr("class", "no-skin");
             _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
-            _this.name = LocalStorage.get("userInfo").name || '';
+            _this.name = LocalStorage.get(USER_INFO).name || '';
         },
         //监听路由跳转
         watch: {

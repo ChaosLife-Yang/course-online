@@ -34,6 +34,7 @@ import UUID from 'vue-uuid'
 import Message from "element-ui/packages/message";
 import {parseInfo} from "./utils/tokenParser";
 import locale from "element-ui/src/locale/lang/zh-CN";
+import {hasPermission,hasMenuPermission} from './utils/permissionTool';
 
 window.$ = jQuery;
 window.jQuery = jQuery;
@@ -73,6 +74,8 @@ Vue.prototype.$SMS_USE_ARRAY = [{key: "R", value: "注册"}, {key: "F", value: "
 Vue.prototype.$SMS_STATUS_ARRAY = [{key: "U", value: "已使用"}, {key: "N", value: "未使用"}];
 Vue.prototype.$client_id = clientId;
 Vue.prototype.$client_secret = clientSecret;
+Vue.prototype.$hasPermission = hasPermission;
+Vue.prototype.$hasMenuPermission = hasMenuPermission;
 
 //刷新令牌请求
 const refreshApply = (next, isAsync = true) => {
