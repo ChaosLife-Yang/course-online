@@ -3,6 +3,7 @@
         <el-button type="primary"
                    size="mini"
                    plain
+                   v-if="$hasPermission('authority.resource.add')"
                    @click="add">添加资源
         </el-button>
         <el-dialog :before-close="handleClose" :title="title" :visible.sync="dialogFormVisible">
@@ -56,20 +57,20 @@
             <el-table-column
                     label="操作">
                 <template slot-scope="scope">
-                    <el-tooltip class="item" effect="dark" content="添加子节点" placement="top">
+                    <el-tooltip class="item" effect="dark" content="添加子节点" placement="top" v-if="$hasPermission('authority.resource.children')">
                         <el-button @click="addChild(scope.row.id)"
                                    type="primary"
                                    icon="el-icon-plus"
                                    plain
                                    size="mini"/>
                     </el-tooltip>
-                    <el-tooltip class="item" effect="dark" content="更新" placement="top">
+                    <el-tooltip class="item" effect="dark" content="更新" placement="top" v-if="$hasPermission('authority.resource.update')">
                         <el-button @click="get(scope.row.id)"
                                    type="primary"
                                    icon="el-icon-edit"
                                    size="mini"/>
                     </el-tooltip>
-                    <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                    <el-tooltip class="item" effect="dark" content="删除" placement="top" v-if="$hasPermission('authority.resource.delete')">
                         <el-button @click="remove(scope.row.id)"
                                    type="danger"
                                    icon="el-icon-delete"
