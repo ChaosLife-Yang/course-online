@@ -33,6 +33,7 @@
         <jjwt.token.wersion>0.11.1</jjwt.token.wersion>
         <!-- 斯瓦格api版本配置 -->
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <swagger-models.version>1.5.22</swagger-models.version>
         <!-- 斯瓦格注解包版本配置 -->
         <swagger-annotations.verion>1.5.20</swagger-annotations.verion>
         <!-- 斯瓦格UI版本配置 -->
@@ -150,6 +151,11 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-models.version}</version>
             </dependency>
             <!-- 定义swagger核心注解插件依赖 -->
             <dependency>

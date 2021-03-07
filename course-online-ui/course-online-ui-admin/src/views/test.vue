@@ -1,8 +1,9 @@
 <template>
     <div>
         <input type="text" v-model="resource"><br/>
-        {{'permission: '+$hasPermission(resource)}}<br/>
-        {{'menu permission: '+$hasMenuPermission(resource)}}
+        <input type="text" v-model="resource"><br/>
+        {{'permission: '+$hasPermission(resource,authorities)}}<br/>
+        {{'menu permission: '+$hasMenuPermission(resource,authorities)}}
     </div>
 </template>
 
@@ -27,10 +28,12 @@
                 vodName: '',
                 info: {},
                 resource: '',
+                authorities:[],
             }
         },
         created() {
-            this.decode();
+            let info = LocalStorage.get(USER_INFO) || {};
+            this.authorities = info.authorities !== undefined ? info.authorities : [];
         },
         methods: {
             changePercent(percentage) {

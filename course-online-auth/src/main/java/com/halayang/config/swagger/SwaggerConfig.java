@@ -2,6 +2,7 @@ package com.halayang.config.swagger;
 
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -24,6 +25,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableSwaggerBootstrapUI
 public class SwaggerConfig {
+
+    @Value("${spring.application.name}")
+    private String applicationName;
 
     /**
      * 创建SwaggerApi
@@ -51,10 +55,10 @@ public class SwaggerConfig {
      * @date 2020/12/14 14:02
      */
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("yudi", "http://localhost:9000/doc.html", "529699377@qq.com");
+        Contact contact = new Contact("yudi", "https://www.yuque.com/kelisidiyanuodi", "529699377@qq.com");
         return new ApiInfoBuilder()
-                .title("course-online-swagger-ui RESTFul APIs")
-                .description("course-online-swagger-ui")
+                .title(applicationName + " RESTFul APIs")
+                .description(applicationName + " swagger-ui")
                 .termsOfServiceUrl("http://localhost:9000/")
                 .contact(contact)
                 .version("1.0")

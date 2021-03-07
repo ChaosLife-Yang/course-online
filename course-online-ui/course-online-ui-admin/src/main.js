@@ -186,8 +186,6 @@ axios.interceptors.request.use(config => {
                 refreshFlag = false;
             }, false);
         }
-    } else {
-        leave();
     }
     console.log("请求：", config);
     return config;

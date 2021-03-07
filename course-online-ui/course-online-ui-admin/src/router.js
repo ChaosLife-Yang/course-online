@@ -13,7 +13,10 @@ import User from "./views/admin/user"
 import Resource from "./views/admin/resource"
 import Role from "./views/admin/role"
 import Test from "./views/test"
-
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+};
 Vue.use(Router);
 
 export default new Router({
