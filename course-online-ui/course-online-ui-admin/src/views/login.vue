@@ -74,7 +74,7 @@
 </template>
 
 <script>
-    import {parseInfo} from '../utils/tokenParser'
+    import {parseInfo} from '../utils/token-parser'
 
     export default {
         name: 'login',

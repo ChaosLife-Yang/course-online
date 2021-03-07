@@ -28,7 +28,7 @@
                 <div class="navbar-buttons navbar-header pull-right" role="navigation">
                     <ul class="nav ace-nav">
                         <li class="grey dropdown-modal">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:">
                                 <i class="ace-icon fa fa-tasks"></i>
                                 <span class="badge badge-grey">4</span>
                             </a>
@@ -41,7 +41,7 @@
                                 <li class="dropdown-content">
                                     <ul class="dropdown-menu dropdown-navbar">
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <div class="clearfix">
                                                     <span class="pull-left">Software Update</span>
                                                     <span class="pull-right">65%</span>
@@ -54,7 +54,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <div class="clearfix">
                                                     <span class="pull-left">Hardware Upgrade</span>
                                                     <span class="pull-right">35%</span>
@@ -70,7 +70,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <div class="clearfix">
                                                     <span class="pull-left">Unit Testing</span>
                                                     <span class="pull-right">15%</span>
@@ -86,7 +86,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <div class="clearfix">
                                                     <span class="pull-left">Bug Fixes</span>
                                                     <span class="pull-right">90%</span>
@@ -102,7 +102,7 @@
                                 </li>
 
                                 <li class="dropdown-footer">
-                                    <a href="#">
+                                    <a href="javascript:">
                                         See tasks with details
                                         <i class="ace-icon fa fa-arrow-right"></i>
                                     </a>
@@ -111,7 +111,7 @@
                         </li>
 
                         <li class="purple dropdown-modal">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:">
                                 <i class="ace-icon fa fa-bell icon-animated-bell"></i>
                                 <span class="badge badge-important">8</span>
                             </a>
@@ -125,7 +125,7 @@
                                 <li class="dropdown-content">
                                     <ul class="dropdown-menu dropdown-navbar navbar-pink">
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <div class="clearfix">
                                                     <span class="pull-left">
                                                       <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
@@ -137,14 +137,14 @@
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <i class="btn btn-xs btn-primary fa fa-user"></i>
                                                 Bob just signed up as an editor ...
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <div class="clearfix">
                                                     <span class="pull-left">
                                                       <i
@@ -158,7 +158,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="javascript:">
                                                 <div class="clearfix">
                                                     <span class="pull-left">
                                                       <i
@@ -174,7 +174,7 @@
                                 </li>
 
                                 <li class="dropdown-footer">
-                                    <a href="#">
+                                    <a href="javascript:">
                                         See all notifications
                                         <i class="ace-icon fa fa-arrow-right"></i>
                                     </a>
@@ -183,7 +183,7 @@
                         </li>
 
                         <li class="green dropdown-modal">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:">
                                 <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
                                 <span class="badge badge-success">5</span>
                             </a>
@@ -197,7 +197,7 @@
                                 <li class="dropdown-content">
                                     <ul class="dropdown-menu dropdown-navbar">
                                         <li>
-                                            <a href="#" class="clearfix">
+                                            <a href="javascript:" class="clearfix">
                                                 <img :src="baseUrl+'ace/assets/images/avatars/avatar.png'"
                                                      class="msg-photo"
                                                      alt="Alex's Avatar"/>
@@ -216,7 +216,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#" class="clearfix">
+                                            <a href="javascript:" class="clearfix">
                                                 <img :src="baseUrl+'ace/assets/images/avatars/avatar3.png'"
                                                      class="msg-photo"
                                                      alt="Susan's Avatar"/>
@@ -235,7 +235,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#" class="clearfix">
+                                            <a href="javascript:" class="clearfix">
                                                 <img :src="baseUrl+'ace/assets/images/avatars/avatar4.png'"
                                                      class="msg-photo"
                                                      alt="Bob's Avatar"/>
@@ -254,7 +254,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#" class="clearfix">
+                                            <a href="javascript:" class="clearfix">
                                                 <img :src="baseUrl+'ace/assets/images/avatars/avatar2.png'"
                                                      class="msg-photo"
                                                      alt="Kate's Avatar"/>
@@ -273,7 +273,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#" class="clearfix">
+                                            <a href="javascript:" class="clearfix">
                                                 <img :src="baseUrl+'ace/assets/images/avatars/avatar5.png'"
                                                      class="msg-photo"
                                                      alt="Fred's Avatar"/>
@@ -303,7 +303,7 @@
                         </li>
 
                         <li class="light-blue dropdown-modal">
-                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <a data-toggle="dropdown" href="javascript:" class="dropdown-toggle">
                                 <img class="nav-user-photo"
                                      :src="baseUrl+'ace/assets/images/avatars/user.jpg'"
                                      alt="Jason's Photo"/>
@@ -317,7 +317,7 @@
 
                             <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                                 <li>
-                                    <a href="#">
+                                    <a href="javascript:">
                                         <i class="ace-icon fa fa-cog"></i>
                                         Settings
                                     </a>
@@ -333,9 +333,9 @@
                                 <li class="divider"></li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="javascript:" @click="logout">
                                         <i class="ace-icon fa fa-power-off"></i>
-                                        Logout
+                                        退出登录
                                     </a>
                                 </li>
                             </ul>
@@ -361,7 +361,7 @@
                         <b class="arrow"></b>
                     </li>
 
-                    <li class="">
+                    <li class="" v-if="$hasMenuPermission('business')">
                         <a href="javascript:" class="dropdown-toggle">
                             <i class="menu-icon fa fa-pencil-square-o"></i>
                             <span class="menu-text"> 业务管理 </span>
@@ -372,7 +372,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="business-category-sidebar">
+                            <li class="" id="business-category-sidebar" v-if="$hasPermission('business.category.view')">
                                 <router-link to="/business/category">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     分类管理
@@ -380,7 +380,7 @@
 
                                 <b class="arrow"></b>
                             </li>
-                            <li class="" id="business-course-sidebar">
+                            <li class="" id="business-course-sidebar" v-if="$hasPermission('business.course.view')">
                                 <router-link to="/business/course">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     课程管理
@@ -388,7 +388,7 @@
 
                                 <b class="arrow"></b>
                             </li>
-                            <li class="" id="business-teacher-sidebar">
+                            <li class="" id="business-teacher-sidebar" v-if="$hasPermission('business.teacher.view')">
                                 <router-link to="/business/teacher">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     教师管理
@@ -399,7 +399,7 @@
 
                         </ul>
                     </li>
-                    <li class="">
+                    <li class="" v-if="$hasMenuPermission('authority')">
                         <a href="javascript:" class="dropdown-toggle">
                             <i class="menu-icon fa fa-list"></i>
                             <span class="menu-text"> 权限管理 </span>
@@ -410,7 +410,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="authority-user-sidebar">
+                            <li class="" id="authority-user-sidebar" v-if="$hasPermission('authority.user.view')">
                                 <router-link to="/authority/user">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     用户管理
@@ -418,7 +418,7 @@
 
                                 <b class="arrow"></b>
                             </li>
-                            <li class="" id="authority-role-sidebar">
+                            <li class="" id="authority-role-sidebar" v-if="$hasPermission('authority.role.view')">
                                 <router-link to="/authority/role">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     角色管理
@@ -427,7 +427,7 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="" id="authority-resource-sidebar">
+                            <li class="" id="authority-resource-sidebar" v-if="$hasPermission('authority.resource.view')">
                                 <router-link to="/authority/resource">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     资源管理
@@ -437,7 +437,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="">
+                    <li class="" v-if="$hasMenuPermission('system')">
                         <a href="javascript:" class="dropdown-toggle">
                             <i class="menu-icon fa fa-file-o"></i>
                             <span class="menu-text"> 系统管理 </span>
@@ -448,7 +448,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="system-file-sidebar">
+                            <li class="" id="system-file-sidebar" v-if="$hasPermission('system.file.view')">
                                 <router-link to="/system/file">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     文件管理
@@ -498,7 +498,7 @@
                 </div>
             </div>
 
-            <a href="#"
+            <a href="javascript:"
                id="btn-scroll-up"
                class="btn-scroll-up btn btn-sm btn-inverse">
                 <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>

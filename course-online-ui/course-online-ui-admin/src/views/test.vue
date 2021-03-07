@@ -2,8 +2,8 @@
     <div>
         <input type="text" v-model="resource"><br/>
         <input type="text" v-model="resource"><br/>
-        {{'permission: '+$hasPermission(resource,authorities)}}<br/>
-        {{'menu permission: '+$hasMenuPermission(resource,authorities)}}
+        {{'permission: '+$hasPermission(resource)}}<br/>
+        {{'menu permission: '+$hasMenuPermission(resource)}}
     </div>
 </template>
 

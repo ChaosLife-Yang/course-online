@@ -32,9 +32,9 @@ import 'froala-editor/js/froala_editor.pkgd.min.js'
 import jQuery from 'jquery';
 import UUID from 'vue-uuid'
 import Message from "element-ui/packages/message";
-import {parseInfo} from "./utils/tokenParser";
+import {parseInfo} from "./utils/token-parser";
 import locale from "element-ui/src/locale/lang/zh-CN";
-import {hasPermission,hasMenuPermission} from './utils/permissionTool';
+import {hasPermission,hasMenuPermission} from './utils/permission-tool';
 
 window.$ = jQuery;
 window.jQuery = jQuery;

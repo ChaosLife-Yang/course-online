@@ -30,7 +30,6 @@
                 style="width: 100%;"
                 row-key="id"
                 border
-                maxHeight="600"
                 default-expand-all
                 highlight-current-row
                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
