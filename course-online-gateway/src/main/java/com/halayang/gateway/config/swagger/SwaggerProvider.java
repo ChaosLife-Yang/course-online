@@ -18,11 +18,11 @@ import java.util.List;
  * @program hatech-framework
  * @package cn.com.hatechframework.config.swagger
  * @className SwaggerProvider
- * @author YeMeng
+ * @author yangyudi
  * @create 2020/1/2 14:51
  * @version 1.0
  * <Author>                <Time>                  <Version>                   <Description>
- * YeMeng              2020/1/2 14:51             1.0                          配置SwaggerProvider，获取Api-doc，即SwaggerResources
+ * yangyudi              2020/1/2 14:51             1.0                          配置SwaggerProvider，获取Api-doc，即SwaggerResources
  */
 @Component
 @Primary

@@ -14,11 +14,11 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
  * @program hatech-framework
  * @package cn.com.hatechframework.config.swagger
  * @className SwaggerHandlerController
- * @author YeMeng
+ * @author yangyudi
  * @create 2020/1/2 14:51
  * @version 1.0
  * <Author>                <Time>                  <Version>                   <Description>
- * YeMeng              2020/1/2 14:51             1.0                          自定义建立相应的swagger-resource端点控制类
+ * yangyudi              2020/1/2 14:51             1.0                          自定义建立相应的swagger-resource端点控制类
  */
 @RestController
 public class SwaggerHandlerController {
