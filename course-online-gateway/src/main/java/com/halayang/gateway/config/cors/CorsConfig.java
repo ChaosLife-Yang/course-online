@@ -1,4 +1,4 @@
-package com.halayang.gateway.config;
+package com.halayang.gateway.config.cors;
 
 
 import org.springframework.context.annotation.Bean;

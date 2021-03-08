@@ -18,7 +18,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, CoursePO> implements CourseService {
 
-    @Autowired
-    private CourseMapper courseMapper;
-
 }
