@@ -14,15 +14,16 @@ import java.util.List;
 
 /**
  * Copyright (C), 2020, 北京同创永益科技发展有限公司
+ *
+ * @author yangyudi
+ * @version 1.0
+ * <Author>                <Time>                  <Version>                   <Description>
+ * yangyudi              2020/1/2 14:51             1.0                          配置SwaggerProvider，获取Api-doc，即SwaggerResources
  * @description 配置SwaggerProvider，获取Api-doc，即SwaggerResources
  * @program hatech-framework
  * @package cn.com.hatechframework.config.swagger
  * @className SwaggerProvider
- * @author yangyudi
  * @create 2020/1/2 14:51
- * @version 1.0
- * <Author>                <Time>                  <Version>                   <Description>
- * yangyudi              2020/1/2 14:51             1.0                          配置SwaggerProvider，获取Api-doc，即SwaggerResources
  */
 @Component
 @Primary
@@ -34,7 +35,6 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
 
     private final GatewayProperties gatewayProperties;
 
-    @Autowired
     public SwaggerProvider(RouteLocator routeLocator, GatewayProperties gatewayProperties) {
         this.routeLocator = routeLocator;
         this.gatewayProperties = gatewayProperties;
@@ -53,8 +53,8 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
                         .filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
                         .forEach(predicateDefinition ->
                                 resources.add(swaggerResource(routeDefinition.getId(),
-                                predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0")
-                                        .replace("/**", API_URI)))));
+                                        predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0")
+                                                .replace("/**", API_URI)))));
         return resources;
     }
 

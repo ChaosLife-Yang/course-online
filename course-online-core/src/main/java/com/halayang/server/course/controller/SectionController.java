@@ -113,7 +113,7 @@ public class SectionController {
      * @author YangYudi
      * @date 2020-12-20 12:28:51
      */
-    @ApiOperation(value = "小节分删除", httpMethod = "GET", notes = "根据id删除")
+    @ApiOperation(value = "小节删除", httpMethod = "GET", notes = "根据id删除")
     @GetMapping("/delete/{id}")
     public ResponseObject<String> delete(@PathVariable String id) {
         boolean option = sectionService.removeById(id);
