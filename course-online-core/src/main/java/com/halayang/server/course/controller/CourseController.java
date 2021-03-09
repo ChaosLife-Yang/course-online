@@ -15,6 +15,7 @@ import com.halayang.server.course.service.CourseContentService;
 import com.halayang.server.course.service.CourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -51,7 +52,7 @@ public class CourseController {
      */
     @ApiOperation(value = "根据id", httpMethod = "GET", notes = "获取课程对象信息")
     @GetMapping("/{id}")
-    public ResponseObject<CourseDTO> getOne(@PathVariable String id) {
+    public ResponseObject<CourseDTO> getOne(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id) {
         CoursePO po = courseService.getById(id);
         CourseDTO courseDTO = new CourseDTO();
         BeanUtils.copyProperties(po, courseDTO);
