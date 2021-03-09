@@ -40,6 +40,8 @@ security:
 
 # Feign 配置
 feign:
+  httpclient:
+    enabled: true
   compression:
     request:
       # 开启请求压缩
