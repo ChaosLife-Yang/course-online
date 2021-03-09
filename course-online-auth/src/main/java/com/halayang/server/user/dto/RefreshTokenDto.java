@@ -20,15 +20,15 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class RefreshTokenDto {
 
-    @ApiModelProperty(value = "刷新令牌")
+    @ApiModelProperty(value = "刷新令牌", required = true, example = "test")
     @NotBlank(message = "刷新令牌不为空")
     private String token;
 
-    @ApiModelProperty(value = "客户端Id")
+    @ApiModelProperty(value = "客户端Id", required = true, example = "client")
     @NotBlank(message = "客户端Id不为空")
     private String clientId;
 
-    @ApiModelProperty(value = "客户端秘钥")
+    @ApiModelProperty(value = "客户端秘钥", required = true, example = "123456")
     @NotBlank(message = "客户端秘钥不为空")
     private String clientSecret;
 

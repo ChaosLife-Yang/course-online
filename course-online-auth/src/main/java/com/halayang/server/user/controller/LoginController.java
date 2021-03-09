@@ -7,6 +7,7 @@ import com.halayang.server.user.dto.UserLoginDto;
 import com.halayang.server.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,13 +43,13 @@ public class LoginController {
 
     @ApiOperation(value = "登录获取令牌", httpMethod = "POST", notes = "登录获取令牌")
     @PostMapping("/login")
-    public ResponseObject<Map<String, Object>> login(@RequestBody @Validated UserLoginDto userLoginDto) {
+    public ResponseObject<Map<String, Object>> login(@ApiParam @RequestBody @Validated UserLoginDto userLoginDto) {
         return ResponseResult.success(userService.login(userLoginDto));
     }
 
     @ApiOperation(value = "刷新令牌", httpMethod = "POST", notes = "刷新令牌")
     @PostMapping("/refreshToken")
-    public ResponseObject<Map<String, Object>> refreshToken(@RequestBody @Validated RefreshTokenDto refreshTokenDto) {
+    public ResponseObject<Map<String, Object>> refreshToken(@ApiParam @RequestBody @Validated RefreshTokenDto refreshTokenDto) {
         return ResponseResult.success(userService.refreshToken(refreshTokenDto));
     }
 
