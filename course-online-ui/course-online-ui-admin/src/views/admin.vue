@@ -319,7 +319,7 @@
                                 <li>
                                     <a href="javascript:">
                                         <i class="ace-icon fa fa-cog"></i>
-                                        Settings
+                                        设置
                                     </a>
                                 </li>
 

@@ -20,12 +20,12 @@ public interface UserService extends IService<UserPO> {
     /**
      * 新增或更新用户
      *
-     * @param userPO 用户po
+     * @param userPo 用户po
      * @return boolean
      * @author YangYudi
      * @date 2021/2/1 10:02
      */
-    boolean saveOrUpdateUser(UserPO userPO);
+    boolean saveOrUpdateUser(UserPO userPo);
 
     Map<String, Object> login(UserLoginDto userLoginDto);
 
