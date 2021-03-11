@@ -12,7 +12,6 @@ import File from "./views/admin/file"
 import User from "./views/admin/user"
 import Resource from "./views/admin/resource"
 import Role from "./views/admin/role"
-import Test from "./views/test"
 const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
@@ -28,9 +27,6 @@ export default new Router({
         }, {
             path: "/login",
             component: Login,
-        }, {
-            path: "/test",
-            component: Test,
         }, {
             path: "/",
             name: "admin",

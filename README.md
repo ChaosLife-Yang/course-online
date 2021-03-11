@@ -18,3 +18,6 @@
 
 ## 技术体系
 
+使用 Spring Boot2.2.4.RELEASE 
+整合 Spring Cloud Hoxton.RELEASE, Spring-Cloud-Alibaba 2.2.0.RELEASE,
+mybatis-plus 3.3.1,spring security oauth2.0 ,使用jwt作为令牌

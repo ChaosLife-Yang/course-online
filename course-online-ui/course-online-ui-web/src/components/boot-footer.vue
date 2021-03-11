@@ -4,9 +4,8 @@
             <p class="float-right">
                 <a href="#">Back to top</a>
             </p>
-            <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-            <p>New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                    href="../getting-started/introduction/">getting started guide</a>.</p>
+            <p>基于微服务的在线课程平台</p>
+            <p>Copyright © 2021 YangYudi</p>
         </div>
     </footer>
 </template>
