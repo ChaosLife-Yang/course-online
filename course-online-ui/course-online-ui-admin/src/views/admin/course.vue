@@ -22,7 +22,7 @@
                     <el-input v-model="courseDto.name" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="概述" :label-width="formLabelWidth" prop="summary">
-                    <el-input v-model="courseDto.summary" autocomplete="off"/>
+                    <el-input type="textarea" v-model="courseDto.summary" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="价格/元" :label-width="formLabelWidth" prop="price">
                     <el-input v-model="courseDto.price" autocomplete="off"/>
@@ -119,7 +119,7 @@
                         </div>
 
                         <h3 class="search-title">
-                            <span class="blue">{{ course.name }}</span>
+                            <span class="blue c-title">{{ course.name }}</span>
                         </h3>
                         <span class="pull-right label label-grey info-label">
                             {{course.time | formatSecond}}
@@ -127,7 +127,6 @@
                         <p>
                             <span class="bigger-120">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
                         </p>
-                        <p>{{ course.summary}}</p>
                         <p>
                             <el-button type="primary" @click="toChapter(course)" size="mini" plain>大章</el-button>
                             <el-button type="primary" @click="editContent(course)" size="mini" plain>内容</el-button>
@@ -267,7 +266,7 @@
                             this.msg('error', result.msg);
                         }
                     })
-                    ;
+                ;
             },
             addContent() {
                 this.$ajax
@@ -280,7 +279,7 @@
                             this.msg('error', result.msg);
                         }
                     })
-                    ;
+                ;
             },
             msg(type, message) {
                 this.$message({
@@ -314,7 +313,7 @@
                                 this.msg('error', result.msg);
                             }
                         })
-                        ;
+                    ;
                 }).catch(() => {
                     this.msg('info', '已取消删除');
                 });
@@ -337,7 +336,7 @@
                             this.imageUrl = "";
                         }
                     })
-                    ;
+                ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/courseCategory/" + id)
                     .then((response) => {
@@ -348,7 +347,7 @@
                             this.$refs.tree.setCheckedKeys([]);
                         }
                     })
-                    ;
+                ;
             },
             //添加或更新
             saveOrUpdate(formName) {
@@ -405,7 +404,7 @@
                         }
 
                     })
-                    ;
+                ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/category/list")
                     .then((response) => {
@@ -419,7 +418,7 @@
                         }
 
                     })
-                    ;
+                ;
                 this.$ajax
                     .get(process.env.VUE_APP_SERVER + "/api/service/teacher/all")
                     .then((response) => {
@@ -434,7 +433,7 @@
                         }
 
                     })
-                    ;
+                ;
             },
             handleSizeChange(val) {
                 this.size = val;
@@ -484,5 +483,14 @@
     .el-input {
         width: 80% !important;
         margin: 0 5px !important;
+    }
+
+    .c-title {
+        display: block;
+        height: 40px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 </style>

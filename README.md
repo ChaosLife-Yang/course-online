@@ -16,8 +16,64 @@
 
 ```
 
+
+
 ## 技术体系
 
 使用 Spring Boot2.2.4.RELEASE 
 整合 Spring Cloud Hoxton.RELEASE, Spring-Cloud-Alibaba 2.2.0.RELEASE,
 mybatis-plus 3.3.1,spring security oauth2.0 ,使用jwt作为令牌
+
+## Nacos配置中心的配置文件
+
+jackson-dev.yml
+
+```yaml
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      indent_output: false
+      fail_on_empty_beans: true
+    defaultPropertyInclusion: NON_EMPTY
+    deserialization:
+      fail_on_unknown_properties: false
+    parser:
+      allow_unquoted_control_chars: true
+      allow_single_quotes: true
+```
+
+aliyun.yml
+
+阿里云账号的一些信息就不暴露了
+
+```yaml
+# 阿里云
+aliyun:
+  file:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    keyid: xxxxxx
+    keysecret: xxxx
+    bucketname: xxxx
+    show: https://xxx.oss-cn-hangzhou.aliyuncs.com/
+```
+
+redis-dev.yml
+
+云服务器ip就不暴露了
+
+```yaml
+spring:
+  redis:
+    host: xxx.xxx.xx.xx
+    port: 6379
+    password: 1234
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        min-idle: 0
+        max-idle: 8
+```
+

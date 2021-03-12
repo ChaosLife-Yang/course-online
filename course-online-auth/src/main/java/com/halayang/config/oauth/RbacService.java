@@ -66,8 +66,10 @@ public class RbacService {
                         //查询用户权限能否访问此url
                         List<ResourceAuthorityDTO> permission = resourceService.getPermissionByUserId(userId);
                         List<String> collect = getPermissionUrls(permission);
-                        log.info("用户能访问的url:{}", collect);
-                        return collect.contains(urlPattern);
+                        log.info("用户id:{} 能访问的url:{}", userId, collect);
+                        boolean contains = collect.contains(urlPattern);
+                        log.info("用户id:{} 能否访问:{}", userId, contains);
+                        return contains;
                     }
                 }
             }
