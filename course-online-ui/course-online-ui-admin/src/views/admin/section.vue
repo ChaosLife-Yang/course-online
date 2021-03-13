@@ -215,7 +215,7 @@
                 this.percentage = 0;
                 //获取要更新的对象
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/section/" + id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/section/info/" + id)
                     .then((response) => {
                         let result = response.data;
                         this.sectionDto = result.data;

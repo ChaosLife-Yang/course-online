@@ -45,7 +45,7 @@ public class TeacherController {
      * @date 2021-01-11 13:37:22
      */
     @ApiOperation(value = "获取教师对象信息", httpMethod = "GET", notes = "获取教师对象信息")
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public ResponseObject<TeacherDTO> getOne(@PathVariable String id) {
         TeacherPO po = teacherService.getById(id);
         TeacherDTO teacherDTO = new TeacherDTO();

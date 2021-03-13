@@ -45,7 +45,7 @@ public class ChapterController {
      * @date 2020-12-20 12:34:23
      */
     @ApiOperation(value = "获取大章对象信息", httpMethod = "GET", notes = "获取大章对象信息")
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public ResponseObject<ChapterDTO> getOne(@PathVariable String id) {
         ChapterPO po = chapterService.getById(id);
         ChapterDTO chapterDTO = new ChapterDTO();

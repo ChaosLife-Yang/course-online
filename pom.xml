@@ -9,6 +9,7 @@
         <module>course-online-auth</module>
         <module>course-online-file</module>
         <module>generator</module>
+        <module>course-online-front</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

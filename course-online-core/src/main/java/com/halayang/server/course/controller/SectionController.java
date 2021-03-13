@@ -46,7 +46,7 @@ public class SectionController {
      * @date 2020-12-20 12:28:51
      */
     @ApiOperation(value = "小节查询", httpMethod = "GET", notes = "根据id小节详情")
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public ResponseObject<SectionDTO> getOne(@PathVariable String id) {
         SectionPO po = sectionService.getById(id);
         SectionDTO sectionDTO = new SectionDTO();

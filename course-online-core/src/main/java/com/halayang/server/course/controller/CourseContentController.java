@@ -44,7 +44,7 @@ public class CourseContentController {
      * @date 2021-01-09 21:59:29
      */
     @ApiOperation(value = "获取课程内容对象信息", httpMethod = "GET", notes = "获取课程内容对象信息")
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public ResponseObject<CourseContentDTO> getOne(@PathVariable String id) {
         CourseContentPO po = courseContentService.getById(id);
         CourseContentDTO courseContentDTO = null;

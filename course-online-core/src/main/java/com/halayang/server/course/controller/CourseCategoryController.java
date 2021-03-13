@@ -46,7 +46,7 @@ public class CourseCategoryController {
      * @date 2020-12-20 15:39:06
      */
     @ApiOperation(value = "通过课程id获取分类id列表", httpMethod = "GET", notes = "通过课程id获取分类id列表")
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public ResponseObject<List<String>> getOne(@PathVariable String id) {
         List<String> collect = courseCategoryService.list(new LambdaQueryWrapper<CourseCategoryPO>()
                 .eq(CourseCategoryPO::getCourseId, id))

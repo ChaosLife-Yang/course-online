@@ -254,7 +254,7 @@
                 this.courseContentDto.id = course.id;
                 this.contentTitle = course.name;
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/courseContent/" + course.id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/courseContent/info/" + course.id)
                     .then((response) => {
                         let result = response.data;
                         if (result.data != null) {
@@ -326,7 +326,7 @@
                 this.percentage = 0;
                 //获取要更新的对象
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/course/" + id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/course/info/" + id)
                     .then((response) => {
                         let result = response.data;
                         this.courseDto = result.data;
@@ -338,7 +338,7 @@
                     })
                 ;
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/courseCategory/" + id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/courseCategory/info/" + id)
                     .then((response) => {
                         let result = response.data;
                         if (result.data != null) {

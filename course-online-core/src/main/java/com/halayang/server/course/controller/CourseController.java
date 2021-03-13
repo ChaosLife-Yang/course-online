@@ -8,8 +8,7 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.feign.AuthFeign;
-import com.halayang.server.course.dto.CourseDTO;
+import com.halayang.common.dto.CourseDTO;
 import com.halayang.server.course.po.CoursePO;
 import com.halayang.server.course.service.CourseContentService;
 import com.halayang.server.course.service.CourseService;
@@ -51,7 +50,7 @@ public class CourseController {
      * @date 2020-12-15 16:07:35
      */
     @ApiOperation(value = "根据id", httpMethod = "GET", notes = "获取课程对象信息")
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public ResponseObject<CourseDTO> getOne(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id) {
         CoursePO po = courseService.getById(id);
         CourseDTO courseDTO = new CourseDTO();

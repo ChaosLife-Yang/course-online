@@ -192,7 +192,7 @@
                 this.percentage = 0;
                 //获取要更新的对象
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/teacher/" + id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/teacher/info/" + id)
                     .then((response) => {
                         let result = response.data;
                         this.teacherDto = result.data;

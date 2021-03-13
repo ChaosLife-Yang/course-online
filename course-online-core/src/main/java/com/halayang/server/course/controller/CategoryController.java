@@ -45,7 +45,7 @@ public class CategoryController {
      * @date 2020-12-28 15:22:50
      */
     @ApiOperation(value = "获取课程分类对象信息", httpMethod = "GET", notes = "获取课程分类对象信息")
-    @GetMapping("/{id}")
+    @GetMapping("/info/{id}")
     public ResponseObject<CategoryDTO> getOne(@PathVariable String id) {
         CategoryPO po = categoryService.getById(id);
         CategoryDTO categoryDTO = new CategoryDTO();

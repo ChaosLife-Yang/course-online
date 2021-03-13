@@ -186,7 +186,7 @@
                 this.dialogFormVisible = true;
                 //获取要更新的对象
                 this.$ajax
-                    .get(process.env.VUE_APP_SERVER + "/api/service/category/" + id)
+                    .get(process.env.VUE_APP_SERVER + "/api/service/category/info/" + id)
                     .then((response) => {
                         if (response.data != null) {
                             let result = response.data;

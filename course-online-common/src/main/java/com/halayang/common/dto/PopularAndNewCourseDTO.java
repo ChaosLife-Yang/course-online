@@ -1,6 +1,5 @@
-package com.halayang.server.front.dto;
+package com.halayang.common.dto;
 
-import com.halayang.server.course.dto.CourseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

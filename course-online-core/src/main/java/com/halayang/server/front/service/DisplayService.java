@@ -1,21 +1,19 @@
 package com.halayang.server.front.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.halayang.common.dto.PopularAndNewCourseDTO;
 import com.halayang.common.enums.CourseStatusEnum;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.server.course.dto.CategoryDTO;
-import com.halayang.server.course.dto.CourseDTO;
+import com.halayang.common.dto.CourseDTO;
 import com.halayang.server.course.po.CoursePO;
 import com.halayang.server.course.service.CategoryService;
 import com.halayang.server.course.service.CourseContentService;
 import com.halayang.server.course.service.CourseService;
-import com.halayang.server.front.dto.PopularAndNewCourseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -38,17 +36,6 @@ public class DisplayService {
 
     @Autowired
     private CategoryService categoryService;
-
-    /**
-     * 前台分类展示
-     *
-     * @author YangYudi
-     * @date 2021/3/12 17:39
-     * @return java.util.List<com.halayang.server.course.dto.CategoryDTO>
-     */
-    public List<CategoryDTO> categoryList() {
-        return categoryService.getCategoryList();
-    }
 
     /**
      * 热门课程和新课程列表展示
