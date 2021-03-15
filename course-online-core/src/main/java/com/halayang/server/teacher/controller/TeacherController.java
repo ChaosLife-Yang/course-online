@@ -7,7 +7,7 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.teacher.dto.TeacherDTO;
+import com.halayang.common.dto.TeacherDTO;
 import com.halayang.server.teacher.po.TeacherPO;
 import com.halayang.server.teacher.service.TeacherService;
 import io.swagger.annotations.Api;
@@ -82,7 +82,7 @@ public class TeacherController {
      *
      * @author YangYudi
      * @date 2021/1/11 16:26
-     * @return com.halayang.common.utils.response.ResponseObject<java.util.List < com.halayang.server.teacher.dto.TeacherDTO>>
+     * @return com.halayang.common.utils.response.ResponseObject<java.util.List < com.halayang.common.dto.TeacherDTO>>
      */
     @ApiOperation(value = "获取所有老师信息", httpMethod = "GET", notes = "获取所有老师信息")
     @GetMapping("/all")

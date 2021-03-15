@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.halayang.common.dto.PageDTO;
+import com.halayang.common.dto.PopularAndNewCourseDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.common.dto.CourseDTO;
+import com.halayang.common.vo.CourseWebVo;
 import com.halayang.server.course.po.CoursePO;
 import com.halayang.server.course.service.CourseContentService;
 import com.halayang.server.course.service.CourseService;
@@ -58,6 +60,18 @@ public class CourseController {
         return ResponseResult.success(courseDTO);
     }
 
+    @ApiOperation(value = "获取课程下所有章节和小节", httpMethod = "GET", notes = "根据id获取该课程所有章节和小节")
+    @GetMapping("/web/{id}")
+    public ResponseObject<CourseWebVo> web(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id) {
+        return ResponseResult.success(courseService.getCourseWeb(id));
+    }
+
+    @ApiOperation(value = "热门课程与新上好课", httpMethod = "GET", notes = "热门课程与新上好课")
+    @GetMapping("/front")
+    public ResponseObject<PopularAndNewCourseDTO> courseList() {
+        return ResponseResult.success(courseService.popularAndNewCourse());
+    }
+
     /**
      * 课程分页查询
      *
@@ -68,7 +82,7 @@ public class CourseController {
      */
     @ApiOperation(value = "课程分页查询", httpMethod = "POST", notes = "课程分页查询")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<CourseDTO>> courseList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageDTO<CourseDTO>> courseList(@RequestBody @Validated PageDTO<CourseDTO> pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<CoursePO> pageInfo = new PageInfo<>(courseService.list(new LambdaQueryWrapper<CoursePO>().orderByDesc(CoursePO::getId)));

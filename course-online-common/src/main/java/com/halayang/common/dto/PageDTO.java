@@ -57,4 +57,11 @@ public class PageDTO<T> {
      */
     @Null
     private List<T> list;
+
+    /**
+     * 查询条件
+     */
+    @Null
+    private T query;
+
 }

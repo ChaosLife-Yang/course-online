@@ -8,5 +8,35 @@
         where c.id=#{id}
     </update>
 
+    <resultMap type="com.halayang.common.vo.ChapterWebVo" id="courseWebMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="sections" ofType="com.halayang.common.dto.SectionDTO" column="section_id">
+            <id column="section_id" property="id"/>
+            <result column="title" property="title"/>
+            <result column="video" property="video"/>
+            <result column="time" property="time"/>
+            <result column="charge" property="charge"/>
+            <result column="vod" property="vod"/>
+        </collection>
+    </resultMap>
+
+    <select id="getCourseChapterWeb" resultMap="courseWebMap">
+        select
+        c.id,
+        c.name,
+        s.id section_id,
+        s.title ,
+        s.video,
+        s.time,
+        s.charge,
+        s.vod
+        from chapter c
+        left join section s
+        on c.id = s.chapter_id
+        where c.course_id = #{id} and is_delete=0
+        order by c.sort,s.sort
+    </select>
+
 
 </mapper>

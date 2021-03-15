@@ -37,7 +37,7 @@
 
             <el-table-column
                     prop="name"
-                    label="姓名"
+                    label="名称"
                     width="180">
             </el-table-column>
             <el-table-column

@@ -8,7 +8,7 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.course.dto.SectionDTO;
+import com.halayang.common.dto.SectionDTO;
 import com.halayang.server.course.dto.SectionPageDTO;
 import com.halayang.server.course.po.SectionPO;
 import com.halayang.server.course.service.SectionService;
