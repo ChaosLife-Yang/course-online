@@ -91,9 +91,10 @@ public class CourseController {
         PageDTO<CourseDTO> page = new PageDTO<CourseDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
+                .setTotal(pageInfo.getTotal())
                 .setPages(pageInfo.getPages())
                 .setList(dtoList);
-        return ResponseResult.success(pageInfo.getTotal(), page);
+        return ResponseResult.success(page.getTotal(), page);
     }
 
     /**
