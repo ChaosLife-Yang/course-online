@@ -46,7 +46,7 @@ public class FrontController {
 
     @ApiOperation(value = "课程列表展示", httpMethod = "POST", notes = "课程列表展示")
     @PostMapping("/coursePage/")
-    public ResponseObject<PageDTO<CourseDTO>> coursePage(PageDTO<CourseDTO> pageDTO) {
+    public ResponseObject<PageDTO<CourseDTO>> coursePage(@RequestBody PageDTO<CourseDTO> pageDTO) {
         PageDTO<CourseDTO> page = frontService.courseList(pageDTO);
         return ResponseResult.success(page.getTotal(), page);
     }

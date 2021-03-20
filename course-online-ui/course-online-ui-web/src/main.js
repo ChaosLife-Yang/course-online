@@ -3,9 +3,16 @@ import App from './App.vue'
 import router from "./router";
 import axios from "axios";
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from "element-ui/src/locale/lang/zh-CN";
+
+
+Vue.use(ElementUI, {locale});
+
 Vue.config.productionTip = false;
 
-Vue.prototype.$ajax = axios;
+Vue.prototype.$store = axios;
 
 axios.interceptors.request.use(config => {
     console.log("请求：", config);
@@ -17,7 +24,8 @@ axios.interceptors.request.use(config => {
 
 //响应拦截器
 axios.interceptors.response.use(response => {
-
+    console.log("响应：", response);
+    return response;
 }, error => {
     console.log(error);
 });

@@ -2,7 +2,7 @@
     <div id="app">
         <bootHeader/>
 
-        <index/>
+        <router-view/>
 
         <bootFooter/>
     </div>
@@ -11,12 +11,10 @@
 <script>
     import bootHeader from './components/boot-header'
     import bootFooter from './components/boot-footer'
-    import index from "./components/index";
     export default {
         name: 'App',
         components: {
             bootHeader,
-            index,
             bootFooter
         }
     }
