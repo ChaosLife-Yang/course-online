@@ -1,7 +1,7 @@
 package com.halayang.server.course.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.halayang.server.course.dto.CategoryDTO;
+import com.halayang.common.dto.CategoryDTO;
 import com.halayang.server.course.po.CategoryPO;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface CategoryService extends IService<CategoryPO> {
      *
      * @author YangYudi
      * @date 2021/2/1 9:55
-     * @return java.util.List<com.halayang.server.course.dto.CategoryDTO>
+     * @return java.util.List<com.halayang.common.dto.CategoryDTO>
      */
     List<CategoryDTO> getCategoryList();
 

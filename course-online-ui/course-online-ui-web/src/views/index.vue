@@ -3,10 +3,12 @@
 
         <el-carousel type="card">
             <el-carousel-item v-for="course in newCourse" :key="course.id">
-                <el-image v-if="!course.image" style="width: 100%;height: 100%"
-                          :src="require('@/assets/demo-course.jpg')"/>
-                <el-image v-if="course.image" style="width: 100%;height: 100%"
-                          :src="course.image"/>
+                <a href="#">
+                    <el-image v-if="course.image" style="width: 100%;height: 100%"
+                              :src="course.image"/>
+                    <el-image v-if="!course.image" style="width: 100%;height: 100%"
+                              :src="require('@/assets/demo-course.jpg')"/>
+                </a>
             </el-carousel-item>
         </el-carousel>
 
@@ -17,19 +19,19 @@
                         新上好课
                     </li>
                 </ol>
-            </div>
-            <div class="container">
                 <el-row :gutter="20">
-                    <el-col :span="6" v-for="course in newCourse" :key="course.id">
-                        <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                            <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
-                                      :src="require('@/assets/demo-course.jpg')"/>
-                            <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
-                                      :src="course.image"/>
-                            <div style="padding: 14px;">
-                                <span>{{course.name}}</span>
-                            </div>
-                        </el-card>
+                    <el-col :xs="12" :sm="8" :md="6" v-for="course in newCourse" :key="course.id">
+                        <a href="#">
+                            <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                                <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                          :src="require('@/assets/demo-course.jpg')"/>
+                                <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                          :src="course.image"/>
+                                <div style="padding: 14px;">
+                                    <span>{{course.name}}</span>
+                                </div>
+                            </el-card>
+                        </a>
                     </el-col>
                 </el-row>
             </div>
@@ -39,19 +41,19 @@
                         热门课程
                     </li>
                 </ol>
-            </div>
-            <div class="container">
                 <el-row :gutter="20">
-                    <el-col :span="6" v-for="course in popular" :key="course.id">
-                        <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                            <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
-                                      :src="require('@/assets/demo-course.jpg')"/>
-                            <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
-                                      :src="course.image"/>
-                            <div style="padding: 14px;">
-                                <span>{{course.name}}</span>
-                            </div>
-                        </el-card>
+                    <el-col :xs="12" :sm="8" :md="6" v-for="course in popular" :key="course.id">
+                        <a href="#">
+                            <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                                <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                          :src="require('@/assets/demo-course.jpg')"/>
+                                <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                          :src="course.image"/>
+                                <div style="padding: 14px;">
+                                    <span>{{course.name}}</span>
+                                </div>
+                            </el-card>
+                        </a>
                     </el-col>
                 </el-row>
             </div>
@@ -72,7 +74,6 @@
         created() {
             this.list();
         },
-
         methods: {
             list() {
                 this.$store
@@ -96,5 +97,7 @@
         margin-bottom: 20px;
     }
 
-
+    a {
+        text-decoration: none;
+    }
 </style>

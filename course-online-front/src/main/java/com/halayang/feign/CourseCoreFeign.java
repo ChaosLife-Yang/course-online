@@ -1,20 +1,17 @@
 package com.halayang.feign;
 
-import com.halayang.common.dto.CourseDTO;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.dto.PopularAndNewCourseDTO;
-import com.halayang.common.dto.TeacherDTO;
+import com.halayang.common.dto.*;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.vo.CourseWebVo;
 import com.halayang.feign.factory.CourseCoreFeignFallbackFactory;
-import io.swagger.annotations.ApiParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -46,4 +43,6 @@ public interface CourseCoreFeign {
     @GetMapping("/teacher/info/{id}")
     ResponseObject<TeacherDTO> getTeacherOne(@PathVariable String id);
 
+    @GetMapping("/category/list")
+    ResponseObject<List<CategoryDTO>> categoryList();
 }

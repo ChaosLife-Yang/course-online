@@ -1,14 +1,12 @@
 package com.halayang.server.front.service;
 
-import com.halayang.common.dto.CourseDTO;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.dto.PopularAndNewCourseDTO;
-import com.halayang.common.dto.TeacherDTO;
+import com.halayang.common.dto.*;
 import com.halayang.common.vo.CourseWebVo;
 import com.halayang.feign.CourseCoreFeign;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -37,6 +35,10 @@ public class FrontService {
 
     public PageDTO<CourseDTO> courseList(PageDTO<CourseDTO> pageDTO) {
         return coreFeign.courseList(pageDTO).getData();
+    }
+
+    public List<CategoryDTO> categoryList() {
+        return coreFeign.categoryList().getData();
     }
 
     public PopularAndNewCourseDTO popularAndNewCourseList() {

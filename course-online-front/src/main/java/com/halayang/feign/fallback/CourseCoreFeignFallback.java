@@ -1,14 +1,13 @@
 package com.halayang.feign.fallback;
 
-import com.halayang.common.dto.CourseDTO;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.dto.PopularAndNewCourseDTO;
-import com.halayang.common.dto.TeacherDTO;
+import com.halayang.common.dto.*;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.common.vo.CourseWebVo;
 import com.halayang.feign.CourseCoreFeign;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -43,6 +42,11 @@ public class CourseCoreFeignFallback implements CourseCoreFeign {
 
     @Override
     public ResponseObject<TeacherDTO> getTeacherOne(String id) {
+        throw new IllegalArgumentException(ERR_MSG);
+    }
+
+    @Override
+    public ResponseObject<List<CategoryDTO>> categoryList() {
         throw new IllegalArgumentException(ERR_MSG);
     }
 

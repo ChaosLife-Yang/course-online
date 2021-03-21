@@ -2,7 +2,7 @@ package com.halayang.server.course.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.halayang.server.course.dto.CategoryDTO;
+import com.halayang.common.dto.CategoryDTO;
 import com.halayang.server.course.mapper.CategoryMapper;
 import com.halayang.server.course.po.CategoryPO;
 import com.halayang.server.course.service.CategoryService;

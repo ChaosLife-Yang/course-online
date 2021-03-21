@@ -1,9 +1,6 @@
 package com.halayang.server.front.controller;
 
-import com.halayang.common.dto.CourseDTO;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.dto.PopularAndNewCourseDTO;
-import com.halayang.common.dto.TeacherDTO;
+import com.halayang.common.dto.*;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.common.vo.CourseWebVo;
@@ -12,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
@@ -55,6 +54,12 @@ public class FrontController {
     @GetMapping("/coursePop")
     public ResponseObject<PopularAndNewCourseDTO> popularAndNewCourseList() {
         return ResponseResult.success(frontService.popularAndNewCourseList());
+    }
+
+    @ApiOperation(value = "课程分类", httpMethod = "GET", notes = "课程分类")
+    @GetMapping("/category")
+    public ResponseObject<List<CategoryDTO>> categoryList() {
+        return ResponseResult.success(frontService.categoryList());
     }
 
     @ApiOperation(value = "获取老师信息", httpMethod = "GET", notes = "根据老师id获取老师信息")
