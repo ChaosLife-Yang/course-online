@@ -1,6 +1,7 @@
 package com.halayang.server.course.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.halayang.common.dto.CourseDTO;
 import com.halayang.common.vo.ChapterWebVo;
 import com.halayang.server.course.po.CoursePO;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,7 @@ public interface CourseMapper extends BaseMapper<CoursePO> {
     int updateCourseTime(@Param("id") String id);
 
     List<ChapterWebVo> getCourseChapterWeb(@Param("id") String id);
+
+    List<CourseDTO> getCourseByCategoryId(@Param("id") String id);
+
 }
