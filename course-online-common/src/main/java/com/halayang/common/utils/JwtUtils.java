@@ -2,6 +2,7 @@ package com.halayang.common.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +15,13 @@ import java.util.Date;
  * @author helen
  * @since 2019/10/16
  */
+@Slf4j
 public class JwtUtils {
 
     /**
-     * token过期时间 一天
+     * token过期时间 一周
      */
-    public static final long EXPIRE = 1000 * 60 * 60 * 24;
+    public static final long EXPIRE = 1000 * 60 * 60 * 24 * 7;
     /**
      * 秘钥
      */
@@ -79,7 +81,7 @@ public class JwtUtils {
         try {
             Jwts.parser().setSigningKey(KEY).parseClaimsJws(jwtToken);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("解密有误",e);
             return false;
         }
         return true;
@@ -99,7 +101,7 @@ public class JwtUtils {
             }
             Jwts.parser().setSigningKey(KEY).parseClaimsJws(jwtToken);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("解密有误",e);
             return false;
         }
         return true;

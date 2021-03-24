@@ -1,5 +1,6 @@
 package com.halayang.config.exception;
 
+import com.halayang.common.exception.BusinessException;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,11 @@ public class GlobalExceptionHandler {
     public ResponseObject<Object> error(IllegalArgumentException e) {
         log.error(e.getMessage());
         return ResponseResult.error(e.getMessage());
+    }
+
+    @ExceptionHandler(value = BusinessException.class)
+    public ResponseObject<Object> handlerBusinessException(BusinessException exception) {
+        return ResponseResult.error(exception.getCode(), exception.getMessage());
     }
 
     /**
