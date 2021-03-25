@@ -9,8 +9,8 @@
 |——course-online-file 			文件模块
 |——course-online-gateway		网关模块
 |——course-online-ui    	        前端工程
-   |——course-online-ui-admin    后台管理页面
-   |——course-online-ui-web      前台页面
+   |——admin                     后台管理页面
+   |——website                   前台页面
 |——generator                    代码生成器
 |——nacos-1.3.0                  项目所用nacos,内含一些配置文件,没有上传至git
 
