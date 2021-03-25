@@ -28,8 +28,25 @@ public interface CourseMapper extends BaseMapper<CoursePO> {
      */
     int updateCourseTime(@Param("id") String id);
 
+    /**
+     * 获取课程展示信息
+     *
+     * @param id 课程id
+     * @author YangYudi
+     * @date 2021/3/25 11:15
+     * @return java.util.List<com.halayang.common.vo.ChapterWebVo>
+     */
     List<ChapterWebVo> getCourseChapterWeb(@Param("id") String id);
 
-    List<CourseDTO> getCourseByCategoryId(@Param("id") String id);
+    /**
+     * 根据分类id获取课程列表
+     *
+     * @param level1 一级分类id
+     * @param level2 二级分类id
+     * @author YangYudi
+     * @date 2021/3/25 11:16
+     * @return java.util.List<com.halayang.common.dto.CourseDTO>
+     */
+    List<CourseDTO> getCourseByCategoryId(@Param("level1") String level1,@Param("level2") String level2);
 
 }

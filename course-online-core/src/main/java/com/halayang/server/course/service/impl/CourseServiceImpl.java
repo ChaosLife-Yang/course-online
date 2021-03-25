@@ -2,6 +2,7 @@ package com.halayang.server.course.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.halayang.common.dto.CategoryCourseSearchDto;
 import com.halayang.common.dto.CourseDTO;
 import com.halayang.common.dto.PopularAndNewCourseDTO;
 import com.halayang.common.enums.CourseStatusEnum;
@@ -42,9 +43,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CoursePO> imple
     /**
      * 热门课程和新课程列表展示
      *
+     * @return com.halayang.server.front.dto.PopularAndNewCourseDTO
      * @author YangYudi
      * @date 2021/3/12 17:40
-     * @return com.halayang.server.front.dto.PopularAndNewCourseDTO
      */
     @Override
     public PopularAndNewCourseDTO popularAndNewCourse() {
@@ -60,5 +61,10 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CoursePO> imple
         return new PopularAndNewCourseDTO()
                 .setPopular(CopyUtils.copyList(popularPoList, CourseDTO.class))
                 .setFresh(CopyUtils.copyList(newPoList, CourseDTO.class));
+    }
+
+    @Override
+    public List<CourseDTO> getCourseByCategoryId(String level1, String level2) {
+        return courseMapper.getCourseByCategoryId(level1, level2);
     }
 }

@@ -41,6 +41,11 @@ public class CourseCoreFeignFallback implements CourseCoreFeign {
     }
 
     @Override
+    public ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(CategoryCourseSearchDto categoryCourseSearchDto ) {
+        throw new IllegalArgumentException(ERR_MSG);
+    }
+
+    @Override
     public ResponseObject<TeacherDTO> getTeacherOne(String id) {
         throw new IllegalArgumentException(ERR_MSG);
     }

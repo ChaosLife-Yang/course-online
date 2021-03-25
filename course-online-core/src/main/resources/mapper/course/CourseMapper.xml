@@ -39,14 +39,22 @@
     </select>
 
     <select id="getCourseByCategoryId" resultType="com.halayang.common.dto.CourseDTO">
-        select distinct c.id, c.name, c.summary, c.time, c.price, c.image, c.level, c.charge, c.enroll, c.create_time, c.edit_time
+        select distinct
+        c.id, c.name, c.summary, c.time, c.price, c.image, c.level, c.charge, c.enroll, c.create_time, c.edit_time
         from course c
         join course_category cc on c.id=cc.course_id
         join category ca on ca.id=cc.category_id
         where c.status='P' and c.is_delete=0 and ca.id in
         (
-            select id from category ca
-            where ca.id=#{id} or ca.parent=#{id}
+        select id from category ca
+        <where>
+            <if test="level2 !='' and level2!=null">
+                ca.id=#{level2}
+            </if>
+            <if test="level1 !='' and level1!=null">
+                and ca.parent=#{level1}
+            </if>
+        </where>
         )
         order by c.create_time
     </select>

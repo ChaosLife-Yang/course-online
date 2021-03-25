@@ -68,7 +68,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // 过滤不需要认证的资源
         http.authorizeRequests()
-                .antMatchers("/course/front", "/**/info/**", "/course/web/**", "/course/list", "/category/list",
+                .antMatchers("/course/front", "/**/info/**", "/course/web/**", "/course/list", "/course/category", "/category/list",
                         "/doc.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/actuator", "/actuator/**")
                 .permitAll()
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")

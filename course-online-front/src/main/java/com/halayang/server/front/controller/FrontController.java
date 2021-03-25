@@ -43,6 +43,12 @@ public class FrontController {
         return ResponseResult.success(frontService.getCourseWeb(id));
     }
 
+    @ApiOperation(value = "根据分类获取课程", httpMethod = "GET", notes = "根据分类id获取课程列表")
+    @PostMapping("/categoryCourse")
+    public ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto ) {
+        return ResponseResult.success(frontService.getCategoryCourse(categoryCourseSearchDto));
+    }
+
     @ApiOperation(value = "课程列表展示", httpMethod = "POST", notes = "课程列表展示")
     @PostMapping("/coursePage/")
     public ResponseObject<PageDTO<CourseDTO>> coursePage(@RequestBody PageDTO<CourseDTO> pageDTO) {

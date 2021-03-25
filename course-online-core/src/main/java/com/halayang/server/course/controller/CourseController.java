@@ -4,6 +4,7 @@ package com.halayang.server.course.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.halayang.common.dto.CategoryCourseSearchDto;
 import com.halayang.common.dto.PageDTO;
 import com.halayang.common.dto.PopularAndNewCourseDTO;
 import com.halayang.common.utils.CopyUtils;
@@ -64,6 +65,20 @@ public class CourseController {
     @GetMapping("/web/{id}")
     public ResponseObject<CourseWebVo> web(@ApiParam(name = "id", value = "课程id", required = true) @PathVariable String id) {
         return ResponseResult.success(courseService.getCourseWeb(id));
+    }
+
+    @ApiOperation(value = "根据分类获取课程", httpMethod = "POST", notes = "根据分类id获取课程列表")
+    @PostMapping("/category")
+    public ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto) {
+        PageHelper.startPage(categoryCourseSearchDto.getPage(), 40);
+        PageInfo<CourseDTO> pageInfo = new PageInfo<>(courseService.getCourseByCategoryId(categoryCourseSearchDto.getLevel1(), categoryCourseSearchDto.getLevel2()));
+        PageDTO<CourseDTO> page = new PageDTO<CourseDTO>()
+                .setPage(Long.valueOf(categoryCourseSearchDto.getPage()))
+                .setSize(40L)
+                .setTotal(pageInfo.getTotal())
+                .setPages(pageInfo.getPages())
+                .setList(pageInfo.getList());
+        return ResponseResult.success(page.getTotal(), page);
     }
 
     @ApiOperation(value = "热门课程与新上好课", httpMethod = "GET", notes = "热门课程与新上好课")

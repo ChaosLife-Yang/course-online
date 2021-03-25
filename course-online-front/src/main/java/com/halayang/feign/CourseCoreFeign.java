@@ -40,6 +40,9 @@ public interface CourseCoreFeign {
     @GetMapping("/course/front")
     ResponseObject<PopularAndNewCourseDTO> popularAndNewCourseList();
 
+    @PostMapping("/course/category")
+    ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto );
+
     @GetMapping("/teacher/info/{id}")
     ResponseObject<TeacherDTO> getTeacherOne(@PathVariable String id);
 

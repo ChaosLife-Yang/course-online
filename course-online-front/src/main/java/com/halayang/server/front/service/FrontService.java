@@ -37,6 +37,10 @@ public class FrontService {
         return coreFeign.courseList(pageDTO).getData();
     }
 
+    public PageDTO<CourseDTO> getCategoryCourse(CategoryCourseSearchDto categoryCourseSearchDto ) {
+        return coreFeign.getCategoryCourse(categoryCourseSearchDto).getData();
+    }
+
     public List<CategoryDTO> categoryList() {
         return coreFeign.categoryList().getData();
     }
