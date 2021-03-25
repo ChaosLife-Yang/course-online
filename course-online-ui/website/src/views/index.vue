@@ -1,14 +1,14 @@
 <template>
     <main role="main">
 
-        <el-carousel type="card">
+        <el-carousel :interval="4000" :height="bannerHeight + 'px'" type="card">
             <el-carousel-item v-for="course in newCourse" :key="course.id">
-                <a href="#">
+                <router-link :to="'/detail/'+course.id">
                     <el-image v-if="course.image" style="width: 100%;height: 100%"
                               :src="course.image"/>
                     <el-image v-if="!course.image" style="width: 100%;height: 100%"
                               :src="require('@/assets/demo-course.jpg')"/>
-                </a>
+                </router-link>
             </el-carousel-item>
         </el-carousel>
 
@@ -23,9 +23,9 @@
                     <el-col :xs="12" :sm="8" :md="6" v-for="course in newCourse" :key="course.id">
                         <a href="#">
                             <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                                <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                <el-image v-if="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                           :src="require('@/assets/demo-course.jpg')"/>
-                                <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                <el-image v-if="course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                           :src="course.image"/>
                                 <div style="padding: 14px;">
                                     <span>{{course.name}}</span>
@@ -45,9 +45,9 @@
                     <el-col :xs="12" :sm="8" :md="6" v-for="course in popular" :key="course.id">
                         <a href="#">
                             <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                                <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                <el-image v-if="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                           :src="require('@/assets/demo-course.jpg')"/>
-                                <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                <el-image v-if="course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                           :src="course.image"/>
                                 <div style="padding: 14px;">
                                     <span>{{course.name}}</span>
@@ -68,13 +68,28 @@
         data() {
             return {
                 newCourse: [],
+                bannerHeight: 400,
                 popular: [],
             }
         },
         created() {
             this.list();
         },
+        mounted() {
+            // 首次加载时,需要调用一次
+            this.screenWidth = window.innerWidth;
+            this.setSize();
+            // 窗口大小发生改变时,调用一次
+            window.onresize = () => {
+                this.screenWidth = window.innerWidth;
+                this.setSize();
+            }
+        },
         methods: {
+            setSize () {
+                // 通过浏览器宽度(图片宽度)计算高度
+                this.bannerHeight = 600 / 1920 * this.screenWidth;
+            },
             list() {
                 this.$store
                     .get(`${process.env.VUE_APP_SERVER}/api/front/display/coursePop`)

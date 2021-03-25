@@ -40,9 +40,9 @@
                         <el-col :xs="12" :sm="8" :md="6" v-for="course in courses" :key="course.id">
                             <a href="#">
                                 <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                                    <el-image v-show="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                    <el-image v-if="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                               :src="require('@/assets/demo-course.jpg')"/>
-                                    <el-image v-show="course.image" :fit="'contain'" style="width: 100%; height: 50%"
+                                    <el-image v-if="course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                               :src="course.image"/>
                                     <div style="padding: 14px;">
                                         <span>{{course.name}}</span>
