@@ -28,7 +28,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryPO>
     @Override
     public List<CategoryDTO> getCategoryList() {
         List<CategoryPO> list = this.list(new LambdaQueryWrapper<CategoryPO>()
-                .orderByDesc(CategoryPO::getId));
+                .orderByAsc(CategoryPO::getSort));
         List<CategoryDTO> result = new ArrayList<>();
         ArrayList<CategoryDTO> children;
         CategoryDTO parentDto;

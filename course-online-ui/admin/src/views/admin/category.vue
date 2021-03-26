@@ -6,6 +6,9 @@
                 <el-form-item label="名称" :label-width="formLabelWidth" prop="name">
                     <el-input v-model="categoryDto.name" autocomplete="off"/>
                 </el-form-item>
+                <el-form-item label="顺序" :label-width="formLabelWidth" prop="sort">
+                    <el-input v-model="categoryDto.sort" autocomplete="off"/>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
@@ -18,21 +21,11 @@
                            plain
                            @click="add">添加一级分类
                 </el-button>
-                <el-dialog :title="title" :visible.sync="dialogFormVisible">
-                    <el-form :rules="rules" ref="ruleForm" :model="categoryDto">
-                        <el-input v-model="categoryDto.id" style="display: none"/>
-                        <el-form-item label="名称" :label-width="formLabelWidth" prop="name">
-                            <el-input v-model="categoryDto.name" autocomplete="off"/>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveOrUpdate('ruleForm')">确 定</el-button>
-                    </div>
-                </el-dialog>
                 <table id="simple-table" class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th>名称</th>
+                        <th>顺序</th>
                         <th>创建时间</th>
                         <th>操作</th>
                     </tr>
@@ -41,6 +34,7 @@
                     <tbody>
                     <tr v-for="category in level1" v-on:click="onLevel1(category)">
                         <th>{{ category.name}}</th>
+                        <th>{{ category.sort}}</th>
                         <th>{{ category.createTime}}</th>
                         <td>
                             <div class="btn-group">
@@ -77,6 +71,7 @@
                     <thead>
                     <tr>
                         <th>名称</th>
+                        <th>顺序</th>
                         <th>创建时间</th>
                         <th>操作</th>
                     </tr>
@@ -85,6 +80,7 @@
                     <tbody>
                     <tr v-for="category in level2">
                         <th>{{ category.name}}</th>
+                        <th>{{ category.sort}}</th>
                         <th>{{ category.createTime}}</th>
                         <td>
                             <div class="btn-group">
@@ -129,6 +125,9 @@
                 rules: {
                     name: [
                         {required: true, message: '请输入名称', trigger: 'blur'},
+                    ],
+                    sort: [
+                        {required: true, message: '请输入顺序', trigger: 'blur'},
                     ],
                 },
             }

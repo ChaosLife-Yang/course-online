@@ -21,7 +21,7 @@
                 </ol>
                 <el-row :gutter="20">
                     <el-col :xs="12" :sm="8" :md="6" v-for="course in newCourse" :key="course.id">
-                        <a href="#">
+                        <router-link :to="'/detail/'+course.id">
                             <el-card :body-style="{ padding: '0px' }" shadow="hover">
                                 <el-image v-if="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                           :src="require('@/assets/demo-course.jpg')"/>
@@ -31,7 +31,7 @@
                                     <span>{{course.name}}</span>
                                 </div>
                             </el-card>
-                        </a>
+                        </router-link>
                     </el-col>
                 </el-row>
             </div>
@@ -43,7 +43,7 @@
                 </ol>
                 <el-row :gutter="20">
                     <el-col :xs="12" :sm="8" :md="6" v-for="course in popular" :key="course.id">
-                        <a href="#">
+                        <router-link :to="'/detail/'+course.id">
                             <el-card :body-style="{ padding: '0px' }" shadow="hover">
                                 <el-image v-if="!course.image" :fit="'contain'" style="width: 100%; height: 50%"
                                           :src="require('@/assets/demo-course.jpg')"/>
@@ -53,7 +53,7 @@
                                     <span>{{course.name}}</span>
                                 </div>
                             </el-card>
-                        </a>
+                        </router-link>
                     </el-col>
                 </el-row>
             </div>
@@ -86,7 +86,7 @@
             }
         },
         methods: {
-            setSize () {
+            setSize() {
                 // 通过浏览器宽度(图片宽度)计算高度
                 this.bannerHeight = 600 / 1920 * this.screenWidth;
             },
