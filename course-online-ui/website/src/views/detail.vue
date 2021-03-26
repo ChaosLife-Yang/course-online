@@ -23,7 +23,6 @@
                 if (this.$route.params && this.$route.params.id) {
                     //从路径获取id值
                     const id = this.$route.params.id;
-                    console.log(id);
                     //调用根据id查询的方法
                     this.getInfo(id);
                 }
