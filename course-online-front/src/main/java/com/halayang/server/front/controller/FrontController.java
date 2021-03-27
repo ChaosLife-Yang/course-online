@@ -36,6 +36,11 @@ public class FrontController {
     public ResponseObject<CourseDTO> getCourseOne(@PathVariable String id) {
         return ResponseResult.success(frontService.getCourseOne(id));
     }
+    @ApiOperation(value = "获取课程详情", httpMethod = "GET", notes = "根据课程id获取课程详情")
+    @GetMapping("/courseContent/{id}")
+    public ResponseObject<CourseContentDTO> getCourseContent(@PathVariable String id) {
+        return ResponseResult.success(frontService.getCourseContentOne(id));
+    }
 
     @ApiOperation(value = "获取课程下所有章节和小节", httpMethod = "GET", notes = "根据课程id获取该课程所有章节和小节")
     @GetMapping("/courseWeb/{id}")

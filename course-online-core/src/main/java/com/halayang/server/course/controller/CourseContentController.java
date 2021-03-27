@@ -7,7 +7,7 @@ import com.halayang.common.dto.PageDTO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.server.course.dto.CourseContentDTO;
+import com.halayang.common.dto.CourseContentDTO;
 import com.halayang.server.course.po.CourseContentPO;
 import com.halayang.server.course.service.CourseContentService;
 import io.swagger.annotations.Api;

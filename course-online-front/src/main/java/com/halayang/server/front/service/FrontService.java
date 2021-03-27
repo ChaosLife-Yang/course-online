@@ -29,6 +29,10 @@ public class FrontService {
         return coreFeign.getCourseOne(id).getData();
     }
 
+    public CourseContentDTO getCourseContentOne(String id) {
+        return coreFeign.getCourseContent(id).getData();
+    }
+
     public CourseWebVo getCourseWeb(String id) {
         return coreFeign.getCourseWeb(id).getData();
     }

@@ -1,4 +1,4 @@
-package com.halayang.server.course.dto;
+package com.halayang.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;

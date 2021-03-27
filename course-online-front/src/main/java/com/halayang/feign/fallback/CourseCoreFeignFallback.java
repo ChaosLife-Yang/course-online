@@ -31,6 +31,11 @@ public class CourseCoreFeignFallback implements CourseCoreFeign {
     }
 
     @Override
+    public ResponseObject<CourseContentDTO> getCourseContent(String id) {
+        throw new IllegalArgumentException(ERR_MSG);
+    }
+
+    @Override
     public ResponseObject<CourseWebVo> getCourseWeb(String id) {
         throw new IllegalArgumentException(ERR_MSG);
     }

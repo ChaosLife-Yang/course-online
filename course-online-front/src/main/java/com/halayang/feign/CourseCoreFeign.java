@@ -31,6 +31,9 @@ public interface CourseCoreFeign {
     @GetMapping("/course/info/{id}")
     ResponseObject<CourseDTO> getCourseOne(@PathVariable String id);
 
+    @GetMapping("/courseContent/info/{id}")
+    ResponseObject<CourseContentDTO> getCourseContent(@PathVariable String id);
+
     @GetMapping("/course/web/{id}")
     ResponseObject<CourseWebVo> getCourseWeb(@PathVariable String id);
 
@@ -41,7 +44,7 @@ public interface CourseCoreFeign {
     ResponseObject<PopularAndNewCourseDTO> popularAndNewCourseList();
 
     @PostMapping("/course/category")
-    ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto );
+    ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto);
 
     @GetMapping("/teacher/info/{id}")
     ResponseObject<TeacherDTO> getTeacherOne(@PathVariable String id);
