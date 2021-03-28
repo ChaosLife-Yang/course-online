@@ -3,9 +3,9 @@
         <el-backtop></el-backtop>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="javascript:">
+                <router-link class="navbar-brand" to="/">
                     <i class="fa fa-video-camera"></i>&nbsp;YUDI
-                </a>
+                </router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +22,8 @@
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0" :action="baseUrl+'index'">
-                        <input class="form-control mr-sm-2" name="words" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control mr-sm-2" name="words" type="search" placeholder="Search"
+                               aria-label="Search">
                     </form>
                     <button class="btn btn-dark">登录</button>
                     <button class="btn btn-outline-light">注册</button>
