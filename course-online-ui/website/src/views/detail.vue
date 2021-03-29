@@ -30,7 +30,7 @@
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="18" :md="18">
                         <el-card class="box-card">
-                            <el-tabs v-model="activeName" type="card">
+                            <el-tabs v-model="activeName">
                                 <el-tab-pane label="课程介绍" name="first">
                                     <div class="fr-wrapper" dir="ltr">
                                         <div class="fr-element fr-view" dir="ltr" aria-disabled="false"
@@ -41,17 +41,25 @@
                                 </el-tab-pane>
                                 <el-tab-pane label="章节目录" name="second">
                                     <ul style="font-family: 'Microsoft YaHei UI'" class="list-group list-group-flush">
-                                        <li v-for="c in chapter" :key="c.id" class="list-group-item">
+                                        <li v-for="(c,i) in chapter" :key="c.id" class="list-group-item">
                                             <span style="font-weight: bold;font-size: 15px">{{c.name}}</span>
                                             <p style="font-size: 8px;color: grey;" v-if="c.sections">
                                                 共{{c.sections.length}}节
-                                                <el-button type="text" style="font-size: 8px;">展开</el-button>
+                                                <el-button type="text" @click="doHide(c,i)" v-if="c.hide"
+                                                           style="font-size: 8px;">展开
+                                                </el-button>
+                                                <el-button type="text" @click="doHide(c,i)" v-if="!c.hide"
+                                                           style="font-size: 8px;">收起
+                                                </el-button>
                                             </p>
-                                            <ul v-if="c.sections" class="list-group list-group-flush">
-                                                <li style="font-size: 15px" v-for="section in c.sections" :key="section.id" class="list-group-item">
+                                            <ul v-if="c.sections&&(c.hide===false)" class="list-group list-group-flush">
+                                                <li style="font-size: 15px" v-for="section in c.sections"
+                                                    :key="section.id" class="list-group-item">
                                                     <i class="fa fa-video-camera"></i> {{section.title}}
                                                     ({{(section.time) | formatSecond}})
-                                                    <el-button style="float: right" v-if="isPlay(section.charge)" type="danger" size="mini" plain round>播放</el-button>
+                                                    <el-button style="float: right" v-if="isPlay(section.charge)"
+                                                               type="danger" size="mini" plain round>播放
+                                                    </el-button>
                                                 </li>
                                             </ul>
                                         </li>
@@ -127,6 +135,10 @@
                                         this.teacher = res.data;
                                     }
                                 });
+                            for (let i = 0; i < this.chapter.length; i++) {
+                                this.chapter[i].hide = true;
+                            }
+                            console.log(this.chapter);
                         }
                     });
                 this.$store.get(`${process.env.VUE_APP_SERVER}/api/front/display/courseContent/${id}`)
@@ -153,6 +165,11 @@
             isJoin() {
                 //会员是否加入此课程
                 return false;
+            },
+            doHide(c,i){
+                c.hide = !c.hide;
+                // 在v-for里写v-show，只修改属性不起作用，需要$set
+                this.$set(this.chapter, i, c);
             }
         }
     }
