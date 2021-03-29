@@ -5,8 +5,10 @@
                 <el-card class="box-card">
                     <el-row :gutter="20">
                         <el-col :xs="24" :sm="12" :md="12">
-                            <el-image :fit="'contain'" style="width: 100%;" :src="course.image">
-                            </el-image>
+                            <el-image v-if="course.image" :fit="'contain'" style="width: 100%;"
+                                      :src="course.image"/>
+                            <el-image v-if="!course.image" :fit="'contain'" style="width: 100%;"
+                                      :src="require('@/assets/demo-course.jpg')"/>
                         </el-col>
                         <el-col :xs="24" :sm="12" :md="12">
                             <h1>{{course.name}}</h1>
@@ -25,7 +27,7 @@
                         </el-col>
                     </el-row>
                 </el-card>
-                <el-row :gutter="20">
+                <el-row :gutter="10">
                     <el-col :xs="24" :sm="18" :md="18">
                         <el-card class="box-card">
                             <el-tabs v-model="activeName" type="card">
@@ -38,7 +40,22 @@
                                     </div>
                                 </el-tab-pane>
                                 <el-tab-pane label="章节目录" name="second">
-
+                                    <ul style="font-family: 'Microsoft YaHei UI'" class="list-group list-group-flush">
+                                        <li v-for="c in chapter" :key="c.id" class="list-group-item">
+                                            <span style="font-weight: bold;font-size: 15px">{{c.name}}</span>
+                                            <p style="font-size: 8px;color: grey;" v-if="c.sections">
+                                                共{{c.sections.length}}节
+                                                <el-button type="text" style="font-size: 8px;">展开</el-button>
+                                            </p>
+                                            <ul v-if="c.sections" class="list-group list-group-flush">
+                                                <li style="font-size: 15px" v-for="section in c.sections" :key="section.id" class="list-group-item">
+                                                    <i class="fa fa-video-camera"></i> {{section.title}}
+                                                    ({{(section.time) | formatSecond}})
+                                                    <el-button style="float: right" v-if="isPlay(section.charge)" type="danger" size="mini" plain round>播放</el-button>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </el-tab-pane>
                             </el-tabs>
                         </el-card>
@@ -51,8 +68,8 @@
                             <el-row :gutter="20">
                                 <el-avatar :size="80" style="display: block;float: left;"
                                            :src="teacher.image"></el-avatar>
-                                <div style="float: left;">
-                                    <span>{{teacher.nickname}}</span><br>
+                                <div style="float: left;margin-left:1em;font-size: 14px;font-family: Consolas;">
+                                    <p>{{teacher.nickname}}</p>
                                     <p>{{teacher.position}}</p>
                                 </div>
                             </el-row>
@@ -71,6 +88,7 @@
         name: "detail",
         data() {
             return {
+                dialogVisible: false,
                 COURSE_LEVEL: this.$COURSE_LEVEL,
                 COURSE_CHARGE: this.$COURSE_CHARGE,
                 COURSE_STATUS: this.$COURSE_STATUS,
@@ -118,6 +136,23 @@
                             this.content = result.data;
                         }
                     })
+            },
+            //判断该小节是否可播放视频
+            isPlay(charge) {
+                //课程是免费的可播放
+                if (this.course.charge === "F") {
+                    return true;
+                }
+                //小节是免费的可播放
+                if (charge === "F") {
+                    return true;
+                }
+                //会员参加了此课也为true 否则为false
+                return this.isJoin();
+            },
+            isJoin() {
+                //会员是否加入此课程
+                return false;
             }
         }
     }

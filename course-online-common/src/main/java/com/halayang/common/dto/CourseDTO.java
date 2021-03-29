@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,6 +42,7 @@ public class CourseDTO implements Serializable {
     * 概述
     */
     @ApiModelProperty(value = "概述")
+    @Size(message = "概述应小于{max}字", max = 200)
     private String summary;
     /**
     * 时长|单位秒
