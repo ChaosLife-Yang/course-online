@@ -38,26 +38,10 @@ Vue.use(VueFroala);
 Vue.use(ElementUI, {locale});
 
 Vue.config.productionTip = false;
-
+//用来做消息总线
+Vue.prototype.$EventBus = new Vue();
 Vue.prototype.$store = axios;
-
-Vue.prototype.$SECTION_CHARGE = [{key: "C", value: "收费"}, {key: "F", value: "免费"}];
-Vue.prototype.$YES_NO = [{key: "1", value: "是"}, {key: "0", value: "否"}];
-Vue.prototype.$COURSE_LEVEL = [{key: "1", value: "初级"}, {key: "2", value: "中级"}, {key: "3", value: "高级"}];
-Vue.prototype.$COURSE_CHARGE = [{key: "C", value: "收费"}, {key: "F", value: "免费"}];
-Vue.prototype.$COURSE_STATUS = [{key: "P", value: "发布"}, {key: "D", value: "草稿"}];
-Vue.prototype.$FILE_USE = [{key: "C", value: "课程"}, {key: "T", value: "讲师"}];
-Vue.prototype.$SMS_USE = [{key: "R", value: "注册"}, {key: "F", value: "忘记密码"}];
-Vue.prototype.$SMS_STATUS = [{key: "U", value: "已使用"}, {key: "N", value: "未使用"}];
-Vue.prototype.$SECTION_CHARGE_ARRAY = [{key: "C", value: "收费"}, {key: "F", value: "免费"}];
-Vue.prototype.$YES_NO_ARRAY = [{key: "1", value: "是"}, {key: "0", value: "否"}];
 Vue.prototype.$COURSE_LEVEL_ARRAY = [{key: "1", value: "初级"}, {key: "2", value: "中级"}, {key: "3", value: "高级"}];
-Vue.prototype.$COURSE_CHARGE_ARRAY = [{key: "C", value: "收费"}, {key: "F", value: "免费"}];
-Vue.prototype.$COURSE_STATUS_ARRAY = [{key: "P", value: "发布"}, {key: "D", value: "草稿"}];
-Vue.prototype.$FILE_USE_ARRAY = [{key: "C", value: "课程"}, {key: "T", value: "讲师"}];
-Vue.prototype.$SMS_USE_ARRAY = [{key: "R", value: "注册"}, {key: "F", value: "忘记密码"}];
-Vue.prototype.$SMS_STATUS_ARRAY = [{key: "U", value: "已使用"}, {key: "N", value: "未使用"}];
-Vue.prototype.$leave = leave;
 
 const leave = () => {
     LocalStorage.remove(ACCESS_TOKEN);
@@ -67,6 +51,15 @@ const leave = () => {
         path: '/login'
     });
 };
+
+//路由前置监听
+router.beforeEach((to, from, next) => {
+    next();
+});
+//路由后置监听
+router.afterEach((to, from) => {
+
+});
 
 axios.interceptors.request.use(config => {
     let time = Date.parse(new Date()) / 1000;

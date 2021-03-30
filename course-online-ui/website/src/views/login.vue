@@ -4,7 +4,7 @@
             <p style="text-align: center;font-weight: bold;font-size: 35px">
                 Sign in
             </p>
-            <el-card class="box-card" shadow="never">
+            <el-card class="box-card" shadow="always">
                 <el-form style="font-size: 8px" label-position="top" label-width="200px" :ref="login" :rules="rules"
                          :model="login">
                     <el-form-item label="手机号" prop="mobile">
@@ -60,6 +60,9 @@
             }
         },
         created() {
+            LocalStorage.remove(ACCESS_TOKEN);
+            LocalStorage.remove(TOKEN_INFO);
+            LocalStorage.remove(USER_INFO);
         },
         methods: {
             toLogin() {
@@ -74,6 +77,8 @@
                                 .then(resp => {
                                     if (resp.data && resp.data.code === 200) {
                                         LocalStorage.set(USER_INFO, resp.data.data);
+                                        this.$EventBus.$emit('getUser', resp.data.data);
+                                        this.$router.push("/");
                                     }
                                 });
                         }

@@ -4,7 +4,7 @@
             <p style="text-align: center;font-weight: bold;font-size: 35px">
                 Sign up
             </p>
-            <el-card class="box-card" shadow="never">
+            <el-card class="box-card" shadow="always">
                 <el-form style="font-size: 8px" label-position="top" :rules="rules" label-width="200px"
                          :model="register">
                     <el-form-item label="手机号" prop="mobile">
@@ -16,7 +16,7 @@
                     </el-form-item>
                     <el-form-item label="头像" prop="image">
                     </el-form-item>
-                    <el-form-item label="密码" prop="pass">
+                    <el-form-item label="密码" prop="password">
                         <el-input placeholder="请输入密码" type="password" v-model="register.password"
                                   autocomplete="off"></el-input>
                     </el-form-item>
@@ -62,7 +62,7 @@
                     name: [
                         {required: true, message: '请输入昵称', trigger: 'blur'}
                     ],
-                    pass: [
+                    password: [
                         {required: true, message: '请输入密码', trigger: 'blur'}
                     ],
                     checkPass: [

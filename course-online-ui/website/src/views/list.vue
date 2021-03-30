@@ -89,7 +89,6 @@
         },
         methods: {
             list(page = 1) {
-                console.log(page, this.level1Id, this.level2Id);
                 this.$store.post(`${process.env.VUE_APP_SERVER}/api/front/display/categoryCourse`,
                     {
                         level1: this.level1Id,

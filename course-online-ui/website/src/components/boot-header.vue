@@ -25,8 +25,10 @@
                         <input class="form-control mr-sm-2" name="words" type="search" placeholder="Search"
                                aria-label="Search">
                     </form>
-                    <button @click="$router.push('/login')" class="btn btn-dark">登录</button>
-                    <button @click="$router.push('/register')" class="btn btn-outline-light">注册</button>
+                    <span v-if="user.id" class="text-white pr-3">您好：{{user.name}}</span>
+                    <button v-if="user.id" @click="logout()" class="btn btn-outline-light">退出</button>
+                    <button v-if="!user.id" @click="$router.push('/login')" class="btn btn-dark">登录</button>
+                    <button v-if="!user.id" @click="$router.push('/register')" class="btn btn-outline-light">注册</button>
                 </div>
             </div>
 
@@ -40,6 +42,21 @@
         data() {
             return {
                 baseUrl: process.env.BASE_URL,
+                user: {},
+            }
+        },
+        mounted() {
+            this.user = LocalStorage.get(USER_INFO) || {};
+            this.$EventBus.$on('getUser', (data) => {
+                this.user = data || {};
+            })
+        },
+        methods: {
+            logout() {
+                this.user = {};
+                LocalStorage.remove(ACCESS_TOKEN);
+                LocalStorage.remove(TOKEN_INFO);
+                LocalStorage.remove(USER_INFO);
             }
         }
     }

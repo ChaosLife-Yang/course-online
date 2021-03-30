@@ -104,21 +104,4 @@ const Tool = {
     return uuid.join('');
   },
 
-  /**
-   * 查找是否有权限
-   * @param value 资源权限标识
-   */
-  hasResource: function (value) {
-    let _this = this;
-    let resources = _this.getLoginUser().resources;
-    if (_this.isEmpty(resources)) {
-      return false;
-    }
-    for (let i = 0; i < resources.length; i++) {
-      if (id === resources[i].id) {
-        return true;
-      }
-    }
-    return false;
-  }
 };
