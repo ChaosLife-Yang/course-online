@@ -57,8 +57,28 @@ Vue.prototype.$COURSE_STATUS_ARRAY = [{key: "P", value: "发布"}, {key: "D", va
 Vue.prototype.$FILE_USE_ARRAY = [{key: "C", value: "课程"}, {key: "T", value: "讲师"}];
 Vue.prototype.$SMS_USE_ARRAY = [{key: "R", value: "注册"}, {key: "F", value: "忘记密码"}];
 Vue.prototype.$SMS_STATUS_ARRAY = [{key: "U", value: "已使用"}, {key: "N", value: "未使用"}];
+Vue.prototype.$leave = leave;
+
+const leave = () => {
+    LocalStorage.remove(ACCESS_TOKEN);
+    LocalStorage.remove(TOKEN_INFO);
+    LocalStorage.remove(USER_INFO);
+    router.replace({
+        path: '/login'
+    });
+};
 
 axios.interceptors.request.use(config => {
+    let time = Date.parse(new Date()) / 1000;
+    let exp;
+    if (!Tool.isEmpty(LocalStorage.get(TOKEN_INFO))) {
+        exp = LocalStorage.get(TOKEN_INFO).exp;
+    } else {
+        exp = 0;
+    }
+    if (exp > time) {
+        config.headers.Authorization = `Bearer ${LocalStorage.get(ACCESS_TOKEN)}`;
+    }
     console.log("请求：", config);
     return config;
 }, error => {
@@ -68,6 +88,11 @@ axios.interceptors.request.use(config => {
 
 //响应拦截器
 axios.interceptors.response.use(response => {
+    let code = response.data.code;
+    if (code === 401) {
+        leave();
+        return undefined;
+    }
     console.log("响应：", response);
     return response;
 }, error => {

@@ -5,7 +5,8 @@
                 Sign in
             </p>
             <el-card class="box-card" shadow="never">
-                <el-form style="font-size: 8px" label-position="top" label-width="200px" :rules="rules" :model="login">
+                <el-form style="font-size: 8px" label-position="top" label-width="200px" :ref="login" :rules="rules"
+                         :model="login">
                     <el-form-item label="手机号" prop="mobile">
                         <el-input placeholder="请输入手机号" v-model="login.mobile" autocomplete="off"></el-input>
                     </el-form-item>
@@ -14,7 +15,7 @@
                                   autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button style="width: 100%" type="success">登录</el-button>
+                        <el-button style="width: 100%" @click="toLogin" type="success">登录</el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -24,6 +25,8 @@
 </template>
 
 <script>
+    import {parseInfo} from '../utils/token-parser'
+
     export default {
         name: "login",
         data() {
@@ -56,9 +59,25 @@
                 }
             }
         },
+        created() {
+        },
         methods: {
             toLogin() {
-
+                this.$store.post(`${process.env.VUE_APP_SERVER}/api/front/login`, this.login)
+                    .then(response => {
+                        if (response.data && response.data.code === 200) {
+                            let result = response.data;
+                            LocalStorage.set(ACCESS_TOKEN, result.data);
+                            let data = parseInfo(result.data);
+                            LocalStorage.set(TOKEN_INFO, data);
+                            this.$store.get(`${process.env.VUE_APP_SERVER}/api/front/info/${data.id}`)
+                                .then(resp => {
+                                    if (resp.data && resp.data.code === 200) {
+                                        LocalStorage.set(USER_INFO, resp.data.data);
+                                    }
+                                });
+                        }
+                    });
             }
         }
     }
