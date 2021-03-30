@@ -25,8 +25,8 @@
                         <input class="form-control mr-sm-2" name="words" type="search" placeholder="Search"
                                aria-label="Search">
                     </form>
-                    <button class="btn btn-dark">登录</button>
-                    <button class="btn btn-outline-light">注册</button>
+                    <button @click="$router.push('/login')" class="btn btn-dark">登录</button>
+                    <button @click="$router.push('/register')" class="btn btn-outline-light">注册</button>
                 </div>
             </div>
 

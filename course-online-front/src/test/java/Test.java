@@ -1,3 +1,5 @@
+import com.halayang.common.utils.JwtUtils;
+
 /**
  * copyright (C), 2021, 北京同创永益科技发展有限公司
  * @program course-online
@@ -9,5 +11,10 @@
  *  YangYuDi               2021/3/22 8:57           1.0                         
  */
 public class Test {
+
+    public static void main(String[] args) {
+        String token = JwtUtils.getJwtToken("656656", "yudi");
+        System.out.println(token);
+    }
 
 }

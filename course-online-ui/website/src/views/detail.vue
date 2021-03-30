@@ -138,7 +138,6 @@
                             for (let i = 0; i < this.chapter.length; i++) {
                                 this.chapter[i].hide = true;
                             }
-                            console.log(this.chapter);
                         }
                     });
                 this.$store.get(`${process.env.VUE_APP_SERVER}/api/front/display/courseContent/${id}`)
@@ -168,7 +167,7 @@
             },
             doHide(c,i){
                 c.hide = !c.hide;
-                // 在v-for里写v-show，只修改属性不起作用，需要$set
+                // 只修改属性不起作用，需要$set
                 this.$set(this.chapter, i, c);
             }
         }

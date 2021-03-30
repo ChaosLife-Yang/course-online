@@ -3,7 +3,7 @@ package com.halayang.common.enums;
 public enum FileUseEnum {
 
     COURSE("C", "课程"),
-    TEACHER("T", "讲师");
+    TEACHER("T", "头像");
 
     private String code;
 

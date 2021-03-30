@@ -21,13 +21,16 @@ public class JwtUtils {
     /**
      * token过期时间 一周
      */
-    public static final long EXPIRE = 1000 * 60 * 60 * 24 * 7;
+    public static final long EXPIRE = 604800000;
     /**
      * 秘钥
      */
     public static final String APP_SECRET = "kUPWKwnJSw2h2Gg2GBaRX/yVGY+YQmoKZQNXMWh28x0=";
 
     public static final Key KEY = Keys.hmacShaKeyFor(APP_SECRET.getBytes());
+
+    private JwtUtils() {
+    }
 
     /**
      * 生成token字符串的方法
@@ -40,8 +43,6 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setSubject("halayang-user")
-                //发行时间
-                .setIssuedAt(new Date())
                 //过期时间
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 .signWith(KEY, SignatureAlgorithm.HS256)
@@ -55,8 +56,6 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setSubject(nickname)
-                //发行时间
-                .setIssuedAt(new Date())
                 //过期时间
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 .signWith(KEY, SignatureAlgorithm.HS256)
@@ -81,7 +80,7 @@ public class JwtUtils {
         try {
             Jwts.parser().setSigningKey(KEY).parseClaimsJws(jwtToken);
         } catch (Exception e) {
-            log.error("解密有误",e);
+            log.error("解密有误");
             return false;
         }
         return true;
@@ -101,7 +100,7 @@ public class JwtUtils {
             }
             Jwts.parser().setSigningKey(KEY).parseClaimsJws(jwtToken);
         } catch (Exception e) {
-            log.error("解密有误",e);
+            log.error("解密有误");
             return false;
         }
         return true;
