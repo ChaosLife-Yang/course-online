@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
- * YangYuDi               2021/3/30 13:32           1.0                        根据token拦截登录状态
+ * YangYuDi               2021/3/30 13:32           1.0                        根据token登录状态拦截
  * @program course-online
  * @description
  * @create 2021/3/30 13:32

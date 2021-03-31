@@ -36,8 +36,8 @@ window.jQuery = jQuery;
 
 Vue.use(VueFroala);
 Vue.use(ElementUI, {locale});
-const bus = new Vue();
 Vue.config.productionTip = false;
+const bus = new Vue();
 //用来做消息总线
 Vue.prototype.$EventBus = bus;
 Vue.prototype.$store = axios;
@@ -52,7 +52,7 @@ const leave = () => {
     });
 };
 //判断令牌过期
-const judgment=()=>{
+const judgment = () => {
     let time = Date.parse(new Date()) / 1000;
     let exp;
     if (!Tool.isEmpty(LocalStorage.get(TOKEN_INFO))) {
@@ -77,7 +77,7 @@ router.afterEach((to, from) => {
 axios.interceptors.request.use(config => {
     let time = Date.parse(new Date()) / 1000;
     let exp;
-    if (!Tool.isEmpty(LocalStorage.get(TOKEN_INFO))) {
+    if (!Tool.isEmpty(LocalStorage.get(TOKEN_INFO))&&!Tool.isEmpty(LocalStorage.get(ACCESS_TOKEN))) {
         exp = LocalStorage.get(TOKEN_INFO).exp;
     } else {
         exp = 0;

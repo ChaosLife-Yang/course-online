@@ -5,7 +5,7 @@
                 Sign in
             </p>
             <el-card class="box-card" shadow="always">
-                <el-form style="font-size: 8px" label-position="top" label-width="200px" :ref="login" :rules="rules"
+                <el-form style="font-size: 8px" label-position="top" label-width="200px" ref="ruleForm" :rules="rules"
                          :model="login">
                     <el-form-item label="手机号" prop="mobile">
                         <el-input placeholder="请输入手机号" v-model="login.mobile" autocomplete="off"></el-input>
@@ -15,7 +15,9 @@
                                   autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button style="width: 100%" @click="toLogin" :loading="loading" type="success">登录</el-button>
+                        <el-button style="width: 100%" @click="submitForm('ruleForm')" :loading="loading"
+                                   type="success">登录
+                        </el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -66,6 +68,15 @@
             LocalStorage.remove(USER_INFO);
         },
         methods: {
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.toLogin();
+                    } else {
+                        return false;
+                    }
+                });
+            },
             toLogin() {
                 this.loading = true;
                 this.$store.post(`${process.env.VUE_APP_SERVER}/api/front/login`, this.login)
@@ -82,12 +93,24 @@
                                         this.$EventBus.$emit('getUser', resp.data.data);
                                         this.loading = false;
                                         this.$router.push("/");
+                                    } else {
+                                        this.$notify.error({
+                                            title: '登录失败',
+                                            message: response.data.msg || "账号或密码不正确"
+                                        });
+                                        this.loading = false;
                                     }
                                 })
                                 .catch(error => {
                                     console.log(error);
                                     this.loading = false;
                                 });
+                        } else {
+                            this.$notify.error({
+                                title: '登录失败',
+                                message: response.data.msg || "账号或密码不正确"
+                            });
+                            this.loading = false;
                         }
                     })
                     .catch(error => {

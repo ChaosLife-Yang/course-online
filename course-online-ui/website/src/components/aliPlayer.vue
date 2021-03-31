@@ -35,7 +35,7 @@
             play() {
                 let formData = new window.FormData();
                 formData.append("vod", this.vod);
-                this.$ajax.post(this.getPlayAuth, formData).then(resp => {
+                this.$store.post(this.getPlayAuth, formData).then(resp => {
                     let result = resp.data;
                     if (result.code === 200) {
                         //页面渲染之后

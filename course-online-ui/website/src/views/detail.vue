@@ -23,6 +23,7 @@
                             </p>
                             <p class="course-head-button-links">
                                 <el-button type="success" round>立即参加</el-button>
+                                <i class="el-icon-check"></i>已参加
                             </p>
                         </el-col>
                     </el-row>
@@ -97,10 +98,9 @@
         data() {
             return {
                 dialogVisible: false,
-                COURSE_LEVEL: this.$COURSE_LEVEL,
-                COURSE_CHARGE: this.$COURSE_CHARGE,
-                COURSE_STATUS: this.$COURSE_STATUS,
+                COURSE_LEVEL: this.$COURSE_LEVEL_ARRAY,
                 activeName: 'first',
+                join: false,
                 course: {},
                 teacher: {},
                 content: {},
@@ -117,6 +117,9 @@
                     const id = this.$route.params.id;
                     //调用根据id查询的方法
                     this.getInfo(id);
+
+                } else {
+                    this.$router.push("/list");
                 }
             },
             getInfo(id) {
@@ -159,16 +162,15 @@
                     return true;
                 }
                 //会员参加了此课也为true 否则为false
-                return this.isJoin();
+                return this.join;
             },
-            isJoin() {
-                //会员是否加入此课程
-                return false;
-            },
-            doHide(c,i){
+            doHide(c, i) {
                 c.hide = !c.hide;
                 // 只修改属性不起作用，需要$set
                 this.$set(this.chapter, i, c);
+            },
+            joinCourse() {
+
             }
         }
     }

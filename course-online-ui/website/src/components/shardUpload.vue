@@ -11,11 +11,11 @@
                 :limit="1"
                 :before-upload="beforeUpload"
                 :show-file-list="false">
-            <el-button :loading="flag" size="small" icon="el-icon-upload2" type="primary">{{buttonName}}</el-button>
+            <el-button :loading="flag" size="small" icon="el-icon-upload2">{{buttonName}}</el-button>
         </el-upload>&nbsp;
-        <el-button type="info" class="upload-demo" size="small" :disabled="shut" @click="shut = true" plain>暂停
+        <el-button type="info" v-if="pause" class="upload-demo" size="small" :disabled="shut" @click="shut = true" plain>暂停
         </el-button>
-        <el-button type="success" class="upload-demo" size="small" :disabled="carry" @click="upload(param)" plain>继续
+        <el-button type="success" v-if="pause" class="upload-demo" size="small" :disabled="carry" @click="upload(param)" plain>继续
         </el-button>
     </div>
 </template>
@@ -33,6 +33,10 @@
             }
         },
         props: {
+            pause:{
+              type: Boolean,
+              default: true
+            },
             buttonName: {
                 type: String,
                 required: true
@@ -88,12 +92,12 @@
                 //将文件最后一片传上去获取md5
                 let shard = file.slice(index, indexEnd);
                 formData.append("file", shard);
-                this.$ajax.post(this.getMd5, formData).then((res) => {
+                this.$store.post(this.getMd5, formData).then((res) => {
                     if (res.data.code === 200) {
                         //读取文件md5值
                         let key16 = res.data.data;
                         //获取分片索引
-                        this.$ajax.get(`${this.checkUrl}/${key16}`).then((response) => {
+                        this.$store.get(`${this.checkUrl}/${key16}`).then((response) => {
                             let result = response.data;
                             let newName;
                             let percentage;
@@ -162,14 +166,14 @@
                 formData.append('newName', newName);
                 formData.append('fileKey', key16);
                 formData.append('useTo', this.use);
-                this.$ajax.post(this.url, formData).then((response) => {
+                this.$store.post(this.url, formData).then((response) => {
                     let resp = response.data;
                     if (resp.code != 200) {
                         this.percentage = 0;
                         this.$emit('changePercent', this.percentage);
                         this.$refs.upload.clearFiles();
                         this.flag = false;
-                        this.msg('error', '上传文件有误');
+                        this.msg('error', '上传有误');
                         return
                     }
                     if (shardIndex < shardTotal) {
@@ -189,11 +193,11 @@
                         this.flag = false;
                         if (resp.code != null && resp.code === 200) {
                             this.shut = true;
-                            this.msg('success', "上传文件完成");
+                            this.msg('success', "上传完成");
                             //向父组件传递文件路径
                             this.$emit('getUrl', resp.data);
                         } else {
-                            this.msg('error', "上传文件有误");
+                            this.msg('error', "上传有误");
                         }
                     }
                 }).catch(error => {
@@ -209,7 +213,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .el-input {
         width: 80% !important;
         margin: 0 5px !important;

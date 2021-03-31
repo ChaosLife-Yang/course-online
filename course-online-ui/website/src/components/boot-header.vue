@@ -25,7 +25,7 @@
                         <input class="form-control mr-sm-2" name="words" type="search" placeholder="Search"
                                aria-label="Search">
                     </form>
-                    <span v-if="user.id" class="text-white pr-3">您好：{{user.name}}</span>
+                    <span style="font-size: 12px;font-family: 'Microsoft YaHei UI Light'" v-if="user.id" class="text-white pr-3">您好, {{user.name}}</span>
                     <button v-if="user.id" @click="logout()" class="btn btn-outline-light"><i class="el-icon-switch-button"></i>退出</button>
                     <button v-if="!user.id" @click="$router.push('/login')" class="btn btn-dark">登录</button>
                     <button v-if="!user.id" @click="$router.push('/register')" class="btn btn-outline-light">注册</button>

@@ -68,6 +68,7 @@ public class MemberCourseController {
         if (option) {
             CoursePO coursePO = courseService.getById(memberCoursePo.getCourseId());
             if (!ObjectUtils.isEmpty(coursePO)) {
+                //课程参加人数加一
                 CoursePO update = new CoursePO().setEnroll(coursePO.getEnroll() + 1);
                 courseService.updateById(update);
             }
