@@ -36,10 +36,10 @@ window.jQuery = jQuery;
 
 Vue.use(VueFroala);
 Vue.use(ElementUI, {locale});
-
+const bus = new Vue();
 Vue.config.productionTip = false;
 //用来做消息总线
-Vue.prototype.$EventBus = new Vue();
+Vue.prototype.$EventBus = bus;
 Vue.prototype.$store = axios;
 Vue.prototype.$COURSE_LEVEL_ARRAY = [{key: "1", value: "初级"}, {key: "2", value: "中级"}, {key: "3", value: "高级"}];
 
@@ -51,14 +51,27 @@ const leave = () => {
         path: '/login'
     });
 };
-
-//路由前置监听
+//判断令牌过期
+const judgment=()=>{
+    let time = Date.parse(new Date()) / 1000;
+    let exp;
+    if (!Tool.isEmpty(LocalStorage.get(TOKEN_INFO))) {
+        exp = LocalStorage.get(TOKEN_INFO).exp;
+    } else {
+        exp = 0;
+    }
+    if (exp <= time) {
+        bus.$emit('getUser', {});
+    }
+};
+//路由前置监听 判断
 router.beforeEach((to, from, next) => {
+    judgment();
     next();
 });
 //路由后置监听
 router.afterEach((to, from) => {
-
+    judgment();
 });
 
 axios.interceptors.request.use(config => {

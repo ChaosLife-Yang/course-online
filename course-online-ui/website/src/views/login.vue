@@ -15,7 +15,7 @@
                                   autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button style="width: 100%" @click="toLogin" type="success">登录</el-button>
+                        <el-button style="width: 100%" @click="toLogin" :loading="loading" type="success">登录</el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -45,6 +45,7 @@
                 }
             };
             return {
+                loading: false,
                 login: {
                     mobile: '',
                     password: '',
@@ -66,6 +67,7 @@
         },
         methods: {
             toLogin() {
+                this.loading = true;
                 this.$store.post(`${process.env.VUE_APP_SERVER}/api/front/login`, this.login)
                     .then(response => {
                         if (response.data && response.data.code === 200) {
@@ -78,10 +80,19 @@
                                     if (resp.data && resp.data.code === 200) {
                                         LocalStorage.set(USER_INFO, resp.data.data);
                                         this.$EventBus.$emit('getUser', resp.data.data);
+                                        this.loading = false;
                                         this.$router.push("/");
                                     }
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                    this.loading = false;
                                 });
                         }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.loading = false;
                     });
             }
         }
