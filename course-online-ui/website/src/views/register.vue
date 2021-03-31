@@ -124,7 +124,6 @@
                                     } else {
                                         this.$notify.error({
                                             title: '注册失败',
-                                            message: response.data.msg || "账号或密码不正确"
                                         });
                                         this.loading = false;
                                     }
@@ -136,7 +135,6 @@
                         } else {
                             this.$notify.error({
                                 title: '注册失败',
-                                message: response.data.msg || "账号或密码不正确"
                             });
                             this.loading = false;
                         }

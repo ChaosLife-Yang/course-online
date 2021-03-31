@@ -43,7 +43,7 @@ public class MemberCourseController {
         int count = memberCourseService.count(new LambdaQueryWrapper<MemberCoursePO>()
                 .eq(MemberCoursePO::getCourseId, courseId)
                 .eq(MemberCoursePO::getMemberId, memberId));
-        if (count > 1) {
+        if (count > 0) {
             return ResponseResult.success();
         } else {
             return ResponseResult.error();
@@ -69,7 +69,9 @@ public class MemberCourseController {
             CoursePO coursePO = courseService.getById(memberCoursePo.getCourseId());
             if (!ObjectUtils.isEmpty(coursePO)) {
                 //课程参加人数加一
-                CoursePO update = new CoursePO().setEnroll(coursePO.getEnroll() + 1);
+                CoursePO update = new CoursePO()
+                        .setId(coursePO.getId())
+                        .setEnroll(coursePO.getEnroll() + 1);
                 courseService.updateById(update);
             }
             return ResponseResult.success();

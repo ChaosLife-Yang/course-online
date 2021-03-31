@@ -77,13 +77,16 @@ router.afterEach((to, from) => {
 axios.interceptors.request.use(config => {
     let time = Date.parse(new Date()) / 1000;
     let exp;
-    if (!Tool.isEmpty(LocalStorage.get(TOKEN_INFO))&&!Tool.isEmpty(LocalStorage.get(ACCESS_TOKEN))) {
+    if (!Tool.isEmpty(LocalStorage.get(TOKEN_INFO)) && !Tool.isEmpty(LocalStorage.get(ACCESS_TOKEN))) {
         exp = LocalStorage.get(TOKEN_INFO).exp;
     } else {
         exp = 0;
     }
     if (exp > time) {
-        config.headers.Authorization = `Bearer ${LocalStorage.get(ACCESS_TOKEN)}`;
+        let match = config.url.match("/api/file/oss") || config.url.match("/api/file/local");
+        if (!match) {
+            config.headers.Authorization = `Bearer ${LocalStorage.get(ACCESS_TOKEN)}`;
+        }
     }
     console.log("请求：", config);
     return config;

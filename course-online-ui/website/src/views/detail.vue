@@ -22,8 +22,8 @@
                                 <span class="price-now text-danger"><i class="fa fa-yen"></i>&nbsp;{{course.price}}&nbsp;&nbsp;</span>
                             </p>
                             <p class="course-head-button-links">
-                                <el-button type="success" round>立即参加</el-button>
-                                <i class="el-icon-check"></i>已参加
+                                <el-button v-if="!join" @click="joinCourse" type="success" round>立即参加</el-button>
+                                <span v-if="join"><i class="el-icon-check"></i>已参加</span>
                             </p>
                         </el-col>
                     </el-row>
@@ -59,7 +59,8 @@
                                                     <i class="fa fa-video-camera"></i> {{section.title}}
                                                     ({{(section.time) | formatSecond}})
                                                     <el-button style="float: right" v-if="isPlay(section.charge)"
-                                                               type="danger" size="mini" plain round>播放
+                                                               @click="play(section)" type="danger" size="mini"
+                                                               plain round>播放
                                                     </el-button>
                                                 </li>
                                             </ul>
@@ -88,27 +89,48 @@
                 </el-row>
 
             </div>
+            <el-dialog :title="title" :before-close="handleClose" :visible.sync="dialogVisible">
+                <div class="play-box">
+                    <ali-player width="100%" height="100%" v-if="vod" :get-play-auth="gateway+'/api/file/oss/getPlayAuth'"
+                                                  ref="player"
+                                                  :vod="vod"/>
+                </div>
+
+            </el-dialog>
         </div>
     </main>
 </template>
 
 <script>
+    import aliPlayer from "../components/aliPlayer";
+
     export default {
         name: "detail",
+        components: {aliPlayer},
         data() {
             return {
+                gateway: process.env.VUE_APP_SERVER,
                 dialogVisible: false,
+                title: '',
                 COURSE_LEVEL: this.$COURSE_LEVEL_ARRAY,
                 activeName: 'first',
                 join: false,
+                user: {},
+                vod: '',
                 course: {},
                 teacher: {},
                 content: {},
                 chapter: []
             }
         },
-        created() {
+        mounted() {
             this.init();
+            this.$EventBus.$on('getUser', (data) => {
+                this.user = data || {};
+                if (Tool.isEmpty(this.user)) {
+                    this.join = false;
+                }
+            })
         },
         methods: {
             init() {
@@ -117,9 +139,24 @@
                     const id = this.$route.params.id;
                     //调用根据id查询的方法
                     this.getInfo(id);
-
+                    this.isJoin(id);
                 } else {
                     this.$router.push("/list");
+                }
+            },
+            isJoin(id) {
+                this.user = LocalStorage.get(USER_INFO) || {};
+                if (Tool.isNotEmpty(this.user)) {
+                    this.$store.get(`${process.env.VUE_APP_SERVER}/api/front/memberCourse/course/${id}/${this.user.id}`, {
+                        memberId: this.user.id,
+                        courseId: this.$route.params.id
+                    }).then(response => {
+                        if (response.data && response.data.code === 200) {
+                            this.join = true;
+                        } else {
+                            this.join = false;
+                        }
+                    });
                 }
             },
             getInfo(id) {
@@ -134,7 +171,6 @@
                                 .then(resp => {
                                     if (resp.data && resp.data.code === 200) {
                                         let res = resp.data;
-                                        console.log(res.data);
                                         this.teacher = res.data;
                                     }
                                 });
@@ -170,7 +206,43 @@
                 this.$set(this.chapter, i, c);
             },
             joinCourse() {
-
+                this.user = LocalStorage.get(USER_INFO) || {};
+                if (Tool.isEmpty(this.user)) {
+                    this.$router.push("/login");
+                } else {
+                    this.$store.post(`${process.env.VUE_APP_SERVER}/api/front/memberCourse/saveOrUpdate`, {
+                        memberId: this.user.id,
+                        courseId: this.$route.params.id
+                    }).then(response => {
+                        if (response.data && response.data.code === 200) {
+                            this.join = true;
+                            this.$notify({
+                                title: '参加成功',
+                                type: 'success'
+                            });
+                            this.course.enroll += 1;
+                        } else {
+                            this.join = false;
+                        }
+                    });
+                }
+            },
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        this.vod = '';
+                        done();
+                    })
+                    .catch(_ => {
+                    });
+            },
+            play(section) {
+                this.dialogVisible = true;
+                this.title = section.title;
+                this.vod = section.vod;
+                if (this.course.charge === "F" && section.charge === "F" && this.join === false && Tool.isNotEmpty(this.user)) {
+                    this.joinCourse();
+                }
             }
         }
     }
@@ -179,6 +251,12 @@
 <style scoped>
     .el-card {
         margin-bottom: 20px;
+    }
+
+    .play-box {
+        width: 100%;
+        height: 500px;
+        background: RGB(43, 43, 43);
     }
 
     h1 {

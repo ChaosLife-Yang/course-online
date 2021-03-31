@@ -53,7 +53,7 @@
         },
         methods: {
             logout() {
-                this.user = {};
+                this.$EventBus.$emit('getUser', {});
                 LocalStorage.remove(ACCESS_TOKEN);
                 LocalStorage.remove(TOKEN_INFO);
                 LocalStorage.remove(USER_INFO);
