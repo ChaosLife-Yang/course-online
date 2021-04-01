@@ -9,3 +9,5 @@ spring:
         extension-configs:
           - data-id: jackson-dev.yml
             refresh: true
+          - data-id: redis-dev.yml
+            refresh: true

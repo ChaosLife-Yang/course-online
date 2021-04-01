@@ -3,6 +3,7 @@ package com.halayang.server.front.service;
 import com.halayang.common.dto.*;
 import com.halayang.common.vo.CourseWebVo;
 import com.halayang.feign.CourseCoreFeign;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,14 +42,16 @@ public class FrontService {
         return coreFeign.courseList(pageDTO).getData();
     }
 
-    public PageDTO<CourseDTO> getCategoryCourse(CategoryCourseSearchDto categoryCourseSearchDto ) {
+    public PageDTO<CourseDTO> getCategoryCourse(CategoryCourseSearchDto categoryCourseSearchDto) {
         return coreFeign.getCategoryCourse(categoryCourseSearchDto).getData();
     }
 
+    @Cacheable(cacheNames = "list", key = "'category'", unless = "#result==null")
     public List<CategoryDTO> categoryList() {
         return coreFeign.categoryList().getData();
     }
 
+    @Cacheable(cacheNames = "list", key = "'popularAndNew'", unless = "#result==null")
     public PopularAndNewCourseDTO popularAndNewCourseList() {
         return coreFeign.popularAndNewCourseList().getData();
     }

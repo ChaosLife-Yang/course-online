@@ -139,6 +139,7 @@
                     const id = this.$route.params.id;
                     //调用根据id查询的方法
                     this.getInfo(id);
+                    //查询是否加入该课
                     this.isJoin(id);
                 } else {
                     this.$router.push("/list");

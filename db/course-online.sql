@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 15/03/2021 11:08:10
+ Date: 01/04/2021 13:31:44
 */
 
 SET NAMES utf8mb4;
@@ -34,42 +34,42 @@ CREATE TABLE `category`  (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('00000100', NULL, '前端技术', 100, NULL, '2021-01-09 11:16:39');
+INSERT INTO `category` VALUES ('00000100', NULL, '前端技术', 2, NULL, '2021-03-26 14:34:51');
 INSERT INTO `category` VALUES ('00000102', '00000100', 'JavaScript', 102, NULL, '2021-01-11 21:43:40');
 INSERT INTO `category` VALUES ('00000103', '00000100', 'Vue.js', 103, NULL, '2021-01-16 11:35:28');
 INSERT INTO `category` VALUES ('00000104', '00000100', 'React.js', 104, NULL, '2021-01-16 11:35:32');
 INSERT INTO `category` VALUES ('00000105', '00000100', 'Angular', 105, NULL, '2021-01-16 11:35:36');
 INSERT INTO `category` VALUES ('00000106', '00000100', 'Node.js', 106, NULL, '2021-01-16 11:35:40');
 INSERT INTO `category` VALUES ('00000108', '00000100', '小程序', 108, NULL, NULL);
-INSERT INTO `category` VALUES ('00000200', '', '后端技术', 200, NULL, '2020-12-28 15:16:48');
+INSERT INTO `category` VALUES ('00000200', '', '后端技术', 1, NULL, '2021-03-26 14:34:45');
 INSERT INTO `category` VALUES ('00000201', '00000200', 'Java', 201, NULL, '2021-01-16 17:23:54');
 INSERT INTO `category` VALUES ('00000202', '00000200', 'SpringBoot', 202, NULL, '2021-01-16 17:24:00');
 INSERT INTO `category` VALUES ('00000205', '00000200', 'Python', 205, NULL, '2021-01-16 17:24:05');
 INSERT INTO `category` VALUES ('00000206', '00000200', '爬虫', 206, NULL, NULL);
-INSERT INTO `category` VALUES ('00000300', '', '移动开发', 300, NULL, '2020-12-28 15:17:03');
+INSERT INTO `category` VALUES ('00000300', '', '移动开发', 3, NULL, '2021-03-26 14:34:19');
 INSERT INTO `category` VALUES ('00000301', '00000300', '安卓开发', 301, NULL, '2021-01-16 17:26:17');
 INSERT INTO `category` VALUES ('00000302', '00000300', 'IOS', 302, NULL, '2021-01-16 17:26:24');
 INSERT INTO `category` VALUES ('00000303', '00000300', 'React Native', 303, NULL, '2021-01-16 17:26:35');
-INSERT INTO `category` VALUES ('00000400', NULL, '前沿技术', 400, NULL, '2021-01-09 14:45:55');
+INSERT INTO `category` VALUES ('00000400', NULL, '前沿技术', 7, NULL, '2021-03-26 14:34:37');
 INSERT INTO `category` VALUES ('00000402', '00000400', '区块链', 402, NULL, NULL);
 INSERT INTO `category` VALUES ('00000403', '00000400', '机器学习', 403, NULL, NULL);
 INSERT INTO `category` VALUES ('00000404', '00000400', '深度学习', 404, NULL, NULL);
 INSERT INTO `category` VALUES ('00000405', '00000400', '数据挖掘', 405, NULL, '2021-01-09 15:54:09');
-INSERT INTO `category` VALUES ('00000500', NULL, '云计算&大数据', 500, NULL, '2020-12-28 15:17:39');
+INSERT INTO `category` VALUES ('00000500', NULL, '云计算&大数据', 4, NULL, '2021-03-26 14:34:23');
 INSERT INTO `category` VALUES ('00000501', '00000500', '大数据', 501, NULL, NULL);
 INSERT INTO `category` VALUES ('00000507', '00000500', 'Kubernetes', 507, NULL, '2021-01-16 17:25:36');
-INSERT INTO `category` VALUES ('00000600', NULL, '运维&测试', 600, NULL, '2020-12-28 15:17:39');
+INSERT INTO `category` VALUES ('00000600', NULL, '运维&测试', 5, NULL, '2021-03-26 14:34:27');
 INSERT INTO `category` VALUES ('00000601', '00000600', '运维', 601, NULL, '2021-01-09 15:39:54');
 INSERT INTO `category` VALUES ('00000602', '00000600', '自动化运维', 602, NULL, NULL);
 INSERT INTO `category` VALUES ('00000603', '00000600', '中间件', 603, NULL, '2021-01-09 15:39:46');
 INSERT INTO `category` VALUES ('00000604', '00000600', 'Linux', 604, NULL, '2021-01-16 17:25:24');
 INSERT INTO `category` VALUES ('00000605', '00000600', '测试', 605, NULL, '2021-01-09 15:39:42');
 INSERT INTO `category` VALUES ('00000606', '00000600', '自动化测试', 606, NULL, NULL);
-INSERT INTO `category` VALUES ('00000700', NULL, '数据库', 700, NULL, '2020-12-28 15:17:39');
+INSERT INTO `category` VALUES ('00000700', NULL, '数据库', 6, NULL, '2021-03-26 14:34:33');
 INSERT INTO `category` VALUES ('00000701', '00000700', 'MySql', 701, NULL, '2021-01-16 17:24:59');
 INSERT INTO `category` VALUES ('00000702', '00000700', 'Redis', 702, NULL, '2021-01-16 17:24:53');
 INSERT INTO `category` VALUES ('1347743751056924674', '00000100', 'Typescript', NULL, '2021-01-09 11:15:25', '2021-01-16 11:35:44');
-INSERT INTO `category` VALUES ('1347795498152505346', '', '消息中间件', NULL, '2021-01-09 14:41:02', '2021-01-11 11:08:00');
+INSERT INTO `category` VALUES ('1347795498152505346', '', '消息中间件', 8, '2021-01-09 14:41:02', '2021-03-26 14:34:40');
 INSERT INTO `category` VALUES ('1347795741317279745', '00000200', 'go', NULL, '2021-01-09 14:42:00', '2021-01-09 14:42:00');
 INSERT INTO `category` VALUES ('1347800117612130305', '00000200', '支付技术', NULL, '2021-01-09 14:59:24', '2021-01-09 14:59:24');
 INSERT INTO `category` VALUES ('1347810222948757505', '1347795498152505346', 'RocketMQ', NULL, '2021-01-09 15:39:33', '2021-01-16 11:36:08');
@@ -80,9 +80,9 @@ INSERT INTO `category` VALUES ('1348099061206487041', '00000200', '微服务', N
 INSERT INTO `category` VALUES ('1348100476045889537', '00000200', 'SpringCloud', NULL, '2021-01-10 10:52:55', '2021-01-16 17:24:17');
 INSERT INTO `category` VALUES ('1348104277695922177', '00000700', 'MongoDB', NULL, '2021-01-10 11:08:01', '2021-01-16 17:24:46');
 INSERT INTO `category` VALUES ('1348104300877840385', '00000700', 'Sql Server', NULL, '2021-01-10 11:08:07', '2021-01-16 17:24:39');
-INSERT INTO `category` VALUES ('1348104394968662018', '', '计算机基础', NULL, '2021-01-10 11:08:29', '2021-01-11 21:44:03');
-INSERT INTO `category` VALUES ('1348104422453936129', '1348104394968662018', '数据结构', NULL, '2021-01-10 11:08:36', '2021-01-10 11:08:36');
-INSERT INTO `category` VALUES ('1348104438253879298', '1348104394968662018', '算法', NULL, '2021-01-10 11:08:39', '2021-01-10 11:08:39');
+INSERT INTO `category` VALUES ('1348104394968662018', '', '计算机基础', 0, '2021-01-10 11:08:29', '2021-03-26 14:32:54');
+INSERT INTO `category` VALUES ('1348104422453936129', '1348104394968662018', '数据结构', 0, '2021-01-10 11:08:36', '2021-03-26 14:33:01');
+INSERT INTO `category` VALUES ('1348104438253879298', '1348104394968662018', '算法', 1, '2021-01-10 11:08:39', '2021-03-26 14:33:11');
 INSERT INTO `category` VALUES ('1348104477806166018', '1348104394968662018', '计算机组成原理', NULL, '2021-01-10 11:08:49', '2021-01-10 11:08:49');
 INSERT INTO `category` VALUES ('1348104497351622658', '1348104394968662018', '操作系统', NULL, '2021-01-10 11:08:53', '2021-01-10 11:08:53');
 INSERT INTO `category` VALUES ('1348104515328409602', '1348104394968662018', '计算机网络', NULL, '2021-01-10 11:08:58', '2021-01-10 11:08:58');
@@ -121,21 +121,22 @@ INSERT INTO `chapter` VALUES ('00000008', '1343041788956405761', '测试大章08
 INSERT INTO `chapter` VALUES ('00000009', '1343041788956405761', '测试大章09', NULL, NULL, NULL, 0);
 INSERT INTO `chapter` VALUES ('00000010', '1343041788956405761', '测试大章10', NULL, NULL, NULL, 0);
 INSERT INTO `chapter` VALUES ('00000011', '1343041788956405761', '测试大章11', NULL, NULL, NULL, 0);
-INSERT INTO `chapter` VALUES ('00000012', '000012123', '测试大章12', 2, NULL, '2021-03-14 11:36:30', 0);
+INSERT INTO `chapter` VALUES ('00000012', '000012123', '导论', 0, NULL, '2021-03-29 17:06:35', 0);
 INSERT INTO `chapter` VALUES ('00000013', '1343094701405794305', '测试大章13', NULL, NULL, '2020-12-15 15:36:26', 0);
-INSERT INTO `chapter` VALUES ('1348100676453928961', '000012123', '第三方支付——支付宝', 0, '2021-01-10 10:53:42', '2021-01-25 20:57:35', 0);
+INSERT INTO `chapter` VALUES ('1348100676453928961', '000012123', '支付宝对接', 1, '2021-01-10 10:53:42', '2021-03-29 17:06:52', 0);
 INSERT INTO `chapter` VALUES ('1348114393761611777', '1347880545798942721', '概论', 0, '2021-01-10 11:48:13', '2021-01-17 16:33:22', 0);
-INSERT INTO `chapter` VALUES ('1348461791998398466', '000012123', '第三方支付——接微信支付', 1, '2021-01-11 10:48:39', '2021-01-25 20:57:44', 0);
+INSERT INTO `chapter` VALUES ('1348461791998398466', '000012123', '微信支付对接', 1, '2021-01-11 10:48:39', '2021-03-29 17:06:59', 0);
 INSERT INTO `chapter` VALUES ('1348518999402500097', '1347880545798942721', '物理层', 1, '2021-01-11 14:35:58', '2021-01-17 16:33:27', 0);
 INSERT INTO `chapter` VALUES ('1348519035309936641', '1347880545798942721', '数据链路层', 2, '2021-01-11 14:36:07', '2021-01-17 16:33:17', 0);
-INSERT INTO `chapter` VALUES ('1348519740418576386', '00000001', '导论', NULL, '2021-01-11 14:38:55', '2021-01-11 14:38:55', 0);
-INSERT INTO `chapter` VALUES ('1348519767064989697', '00000001', '线性数据结构', NULL, '2021-01-11 14:39:01', '2021-01-11 14:39:01', 0);
+INSERT INTO `chapter` VALUES ('1348519740418576386', '00000001', '导论', 0, '2021-01-11 14:38:55', '2021-03-29 16:55:56', 0);
+INSERT INTO `chapter` VALUES ('1348519767064989697', '00000001', '线性数据结构', 1, '2021-01-11 14:39:01', '2021-03-29 16:56:00', 0);
 INSERT INTO `chapter` VALUES ('1355363441228996610', '1355363330293850114', '为什么需要消息队列', 0, '2021-01-30 11:53:20', '2021-01-30 11:53:20', 0);
 INSERT INTO `chapter` VALUES ('1355479248218902530', '1347880545798942721', '应用层', 3, '2021-01-30 19:33:31', '2021-01-30 19:33:31', 0);
-INSERT INTO `chapter` VALUES ('1359347981123342338', '1355363330293850114', 'RabbitMQ入门', 1, '2021-02-10 11:46:29', '2021-03-14 11:56:18', 0);
-INSERT INTO `chapter` VALUES ('1370946841574703105', '1355363330293850114', 'RocketMQ入门', 2, '2021-03-14 11:56:13', '2021-03-14 11:56:13', 0);
+INSERT INTO `chapter` VALUES ('1359347981123342338', '1355363330293850114', 'RabbitMQ介绍', 1, '2021-02-10 11:46:29', '2021-03-29 17:19:16', 0);
+INSERT INTO `chapter` VALUES ('1370946841574703105', '1355363330293850114', 'RocketMQ介绍', 2, '2021-03-14 11:56:13', '2021-03-29 17:19:12', 0);
 INSERT INTO `chapter` VALUES ('1370971839190290433', '1355363330293850114', 'ActiveMQ介绍', 3, '2021-03-14 13:35:33', '2021-03-14 13:35:33', 0);
 INSERT INTO `chapter` VALUES ('1370971887458340865', '1355363330293850114', 'Kafka介绍', 4, '2021-03-14 13:35:44', '2021-03-14 13:35:44', 1);
+INSERT INTO `chapter` VALUES ('1376463826762350594', '1355363330293850114', 'Kafka介绍', 4, '2021-03-29 17:18:44', '2021-03-29 17:18:44', 0);
 
 -- ----------------------------
 -- Table structure for course
@@ -163,12 +164,12 @@ CREATE TABLE `course`  (
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES ('00000001', '数据结构和算法精讲', '这是一门测试课程', 1113, 19.90, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/efc5c3c5-791d-49e7-a8b8-ea1543c537bb.jpg', '2', 'C', 'P', 100, 0, 0, '2020-11-29 13:33:54', '2021-03-14 11:52:46', '1348627420260974593');
-INSERT INTO `course` VALUES ('000012123', 'Java支付项目实战', '这是一门测试课程', 990, 19.90, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/a8c1d47a-4a57-43fb-9f46-613de92cfb6b.jpg', '1', 'C', 'P', 100, 0, 0, '2020-11-29 13:33:54', '2021-01-30 11:51:45', '1348547421621317633');
-INSERT INTO `course` VALUES ('1347880545798942721', '计算机网络精讲', '计算机网络知识梳理', 1727, 123.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png', '1', 'F', 'D', 123, NULL, 0, '2021-01-09 20:18:59', '2021-01-30 17:22:16', '1348627061677342722');
+INSERT INTO `course` VALUES ('00000001', '数据结构和算法精讲', '这是一门测试课程', 1980, 19.90, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f7c08f0e-7a3c-494c-b8e1-f7ebb3b8e1f2.jpg', '2', 'C', 'P', 101, 0, 0, '2020-11-29 13:33:54', '2021-03-31 18:03:53', '1348627420260974593');
+INSERT INTO `course` VALUES ('000012123', 'Java支付项目实战', '这是一门测试课程', 990, 19.90, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/a8c1d47a-4a57-43fb-9f46-613de92cfb6b.jpg', '1', 'C', 'P', 101, 0, 0, '2020-11-29 13:33:54', '2021-04-01 11:00:21', '1348547421621317633');
+INSERT INTO `course` VALUES ('1347880545798942721', '计算机网络精讲', '计算机网络知识梳理', 1980, 123.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png', '1', 'C', 'P', 124, NULL, 0, '2021-01-09 20:18:59', '2021-03-31 18:05:00', '1348627061677342722');
 INSERT INTO `course` VALUES ('1348551526196572161', '操作系统精讲', '1231', 123, 123.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/ae3c6623-e534-4ee6-9456-43e3d95c1b0a.jpg', '1', 'F', 'D', 0, NULL, 1, '2021-01-11 16:45:13', '2021-01-30 11:51:25', '1348627420260974593');
-INSERT INTO `course` VALUES ('1355363330293850114', '消息中间件精讲', '消息中间件精讲', 3678, 0.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/ae3c6623-e534-4ee6-9456-43e3d95c1b0a.jpg', '1', 'F', 'P', 0, NULL, 0, '2021-01-30 11:52:54', '2021-03-14 12:08:31', '1348627420260974593');
-INSERT INTO `course` VALUES ('1370289707725414401', 'Vue 从入门到实战', '课程从 Vue3 基础语法，到组件原理、动画、代码设计，再到新语法扩展，全面系统地梳理 Vue 知识点。学习过程中，老师将倾囊相授多年的“避坑经验” ，带你以企业级代码质量和工程开发流程完成“京东到家”应用，实现对框架的彻底掌握', 0, 123.00, NULL, '1', 'F', 'D', 0, NULL, 0, '2021-03-12 16:25:00', '2021-03-12 16:57:26', '1348536842768740353');
+INSERT INTO `course` VALUES ('1355363330293850114', '消息中间件精讲', '消息中间件精讲', 3678, 0.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/ae3c6623-e534-4ee6-9456-43e3d95c1b0a.jpg', '1', 'F', 'P', 1, NULL, 0, '2021-01-30 11:52:54', '2021-03-31 18:05:55', '1348627420260974593');
+INSERT INTO `course` VALUES ('1370289707725414401', 'Vue 从入门到实战', '课程从 Vue3 基础语法，到组件原理、动画、代码设计，再到新语法扩展，全面系统地梳理 Vue 知识点。学习过程中，老师将倾囊相授多年的“避坑经验” ，带你以企业级代码质量和工程开发流程完成“京东到家”应用，实现对框架的彻底掌握', 0, 123.00, 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5752753e-4348-4414-870e-ab85c4d18c28.jpg', '1', 'C', 'P', 0, NULL, 0, '2021-03-12 16:25:00', '2021-03-29 17:10:33', '1348536842768740353');
 
 -- ----------------------------
 -- Table structure for course_category
@@ -212,22 +213,22 @@ INSERT INTO `course_category` VALUES ('1355363039842492418', '000012123', '00000
 INSERT INTO `course_category` VALUES ('1355363039842492419', '000012123', '00000201', '2021-01-30 11:51:45', '2021-01-30 11:51:45');
 INSERT INTO `course_category` VALUES ('1355363039842492420', '000012123', '00000103', '2021-01-30 11:51:45', '2021-01-30 11:51:45');
 INSERT INTO `course_category` VALUES ('1355363039842492421', '000012123', '00000102', '2021-01-30 11:51:45', '2021-01-30 11:51:45');
-INSERT INTO `course_category` VALUES ('1355446219614212097', '1347880545798942721', '1348104515328409602', '2021-01-30 17:22:16', '2021-01-30 17:22:16');
-INSERT INTO `course_category` VALUES ('1370297870902157313', '1370289707725414401', '1362210423173672962', '2021-03-12 16:57:26', '2021-03-12 16:57:26');
-INSERT INTO `course_category` VALUES ('1370297870902157314', '1370289707725414401', '00000108', '2021-03-12 16:57:26', '2021-03-12 16:57:26');
-INSERT INTO `course_category` VALUES ('1370297870902157315', '1370289707725414401', '00000106', '2021-03-12 16:57:26', '2021-03-12 16:57:26');
-INSERT INTO `course_category` VALUES ('1370297870902157316', '1370289707725414401', '00000103', '2021-03-12 16:57:26', '2021-03-12 16:57:26');
-INSERT INTO `course_category` VALUES ('1370297870902157317', '1370289707725414401', '00000102', '2021-03-12 16:57:26', '2021-03-12 16:57:26');
-INSERT INTO `course_category` VALUES ('1370945975459315713', '00000001', '1348104438253879298', '2021-03-14 11:52:46', '2021-03-14 11:52:46');
-INSERT INTO `course_category` VALUES ('1370945975467704322', '00000001', '1348104422453936129', '2021-03-14 11:52:46', '2021-03-14 11:52:46');
-INSERT INTO `course_category` VALUES ('1370945975467704323', '00000001', '1348460862230253569', '2021-03-14 11:52:46', '2021-03-14 11:52:46');
-INSERT INTO `course_category` VALUES ('1370945975467704324', '00000001', '00000201', '2021-03-14 11:52:46', '2021-03-14 11:52:46');
 INSERT INTO `course_category` VALUES ('1370949938187403265', '1355363330293850114', '1347795498152505346', '2021-03-14 12:08:31', '2021-03-14 12:08:31');
 INSERT INTO `course_category` VALUES ('1370949938225152002', '1355363330293850114', '1367806101751353346', '2021-03-14 12:08:31', '2021-03-14 12:08:31');
 INSERT INTO `course_category` VALUES ('1370949938233540609', '1355363330293850114', '1347882076388483074', '2021-03-14 12:08:31', '2021-03-14 12:08:31');
 INSERT INTO `course_category` VALUES ('1370949938246123522', '1355363330293850114', '1347882057077907458', '2021-03-14 12:08:31', '2021-03-14 12:08:31');
 INSERT INTO `course_category` VALUES ('1370949938246123523', '1355363330293850114', '1347810222948757505', '2021-03-14 12:08:31', '2021-03-14 12:08:31');
 INSERT INTO `course_category` VALUES ('1370949938246123524', '1355363330293850114', '00000201', '2021-03-14 12:08:31', '2021-03-14 12:08:31');
+INSERT INTO `course_category` VALUES ('1375261749356802050', '00000001', '1348104438253879298', '2021-03-26 09:42:07', '2021-03-26 09:42:07');
+INSERT INTO `course_category` VALUES ('1375261749356802051', '00000001', '1348104422453936129', '2021-03-26 09:42:07', '2021-03-26 09:42:07');
+INSERT INTO `course_category` VALUES ('1375261749369384962', '00000001', '1348460862230253569', '2021-03-26 09:42:07', '2021-03-26 09:42:07');
+INSERT INTO `course_category` VALUES ('1375261749369384963', '00000001', '00000201', '2021-03-26 09:42:07', '2021-03-26 09:42:07');
+INSERT INTO `course_category` VALUES ('1376460010931372033', '1347880545798942721', '1348104515328409602', '2021-03-29 17:03:35', '2021-03-29 17:03:35');
+INSERT INTO `course_category` VALUES ('1376461767233257473', '1370289707725414401', '1362210423173672962', '2021-03-29 17:10:33', '2021-03-29 17:10:33');
+INSERT INTO `course_category` VALUES ('1376461767233257474', '1370289707725414401', '00000102', '2021-03-29 17:10:33', '2021-03-29 17:10:33');
+INSERT INTO `course_category` VALUES ('1376461767241646082', '1370289707725414401', '00000103', '2021-03-29 17:10:33', '2021-03-29 17:10:33');
+INSERT INTO `course_category` VALUES ('1376461767241646083', '1370289707725414401', '00000106', '2021-03-29 17:10:33', '2021-03-29 17:10:33');
+INSERT INTO `course_category` VALUES ('1376461767241646084', '1370289707725414401', '00000108', '2021-03-29 17:10:33', '2021-03-29 17:10:33');
 
 -- ----------------------------
 -- Table structure for course_content
@@ -245,9 +246,9 @@ CREATE TABLE `course_content`  (
 -- ----------------------------
 -- Records of course_content
 -- ----------------------------
-INSERT INTO `course_content` VALUES ('00000001', '<p></p><blockquote><p>数据结构和算法</p></blockquote><p><br></p><img src=\"http://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png?append&position=0\" class=\"fr-fic fr-dib\"><p></p>', 0, '2021-01-11 13:17:16', '2021-03-14 11:51:13');
-INSERT INTO `course_content` VALUES ('000012123', '<p><img src=\"http://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png?append&position=0\" class=\"fr-fic fr-dib\"><br></p><p><br></p><blockquote><p><strong>支付技术</strong></p></blockquote>', 0, NULL, '2021-03-14 11:50:44');
-INSERT INTO `course_content` VALUES ('1347880545798942721', '<p><img src=\"http://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/a8c1d47a-4a57-43fb-9f46-613de92cfb6b.jpg?append&position=0\" class=\"fr-fic fr-dib fr-rounded fr-shadow\" alt=\"123\"></p><p><br></p><p><img src=\"https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5c3f87b3-3078-4017-9b4d-cb1ac5769304.jpg\" style=\"width: 300px;\" class=\"fr-fic fr-dib\"><span style=\"color: rgb(147, 101, 184); font-family: sans-serif; font-size: 17.5px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;\"></span></p><blockquote><p style=\"text-align: left;\">123123<span style=\"color: rgb(94, 53, 177); font-family: sans-serif; font-size: 17.5px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">1</span></p></blockquote>', 0, '2021-01-11 15:03:17', '2021-01-30 21:19:43');
+INSERT INTO `course_content` VALUES ('00000001', '<p><br></p><blockquote><p>数据结构和算法</p></blockquote><p><br></p><p><img src=\"http://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png?append&position=0\" class=\"fr-fic fr-dib\"></p><p><br></p>', 0, '2021-01-11 13:17:16', '2021-03-27 19:19:55');
+INSERT INTO `course_content` VALUES ('000012123', '<blockquote><p></p><p><strong>支付技术</strong></p></blockquote><p><img src=\"http://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png?append&position=0\" class=\"fr-fic fr-dib\"></p><p></p><p></p><p><br></p>', 0, NULL, '2021-03-29 17:08:22');
+INSERT INTO `course_content` VALUES ('1347880545798942721', '<p><img src=\"http://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/a8c1d47a-4a57-43fb-9f46-613de92cfb6b.jpg?append&position=0\" class=\"fr-fic fr-dib fr-rounded fr-shadow\" alt=\"123\"></p><p><br></p><p><img src=\"https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5c3f87b3-3078-4017-9b4d-cb1ac5769304.jpg\" style=\"width: 300px;\" class=\"fr-fic fr-dib\"></p><blockquote><p>aaaaaaaaaaaaaaaaaaaaaaa</p></blockquote>', 0, '2021-01-11 15:03:17', '2021-03-30 09:26:42');
 INSERT INTO `course_content` VALUES ('1348551526196572161', '<p><img src=\"http://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5752753e-4348-4414-870e-ab85c4d18c28.jpg?append&position=0\" style=\"width: 300px;\" class=\"fr-fic fr-dib\"></p><p><span style=\"background-color: rgb(247, 218, 100); font-family: Georgia, serif; font-size: 48px; color: rgb(26, 188, 156);\">123123</span></p>', 1, '2021-01-26 19:47:50', '2021-01-29 21:45:07');
 INSERT INTO `course_content` VALUES ('1355363330293850114', '<blockquote><p>消息中间件</p></blockquote><p><br></p><p><img src=\"https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png\" class=\"fr-fic fr-dib fr-shadow fr-rounded\"></p><p><br></p><p><br></p>', 0, '2021-03-12 17:00:52', '2021-03-14 11:50:23');
 INSERT INTO `course_content` VALUES ('1370289707725414401', '<p></p><blockquote><p>开发单页面应用</p></blockquote><p><br></p><img src=\"https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/f310bea1-4293-4f14-8078-ae2d6552b45f.png\" class=\"fr-fic fr-dib fr-rounded fr-shadow\"><p></p>', 0, '2021-03-12 16:29:31', '2021-03-14 11:51:44');
@@ -301,7 +302,7 @@ DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member`  (
   `id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'id',
   `mobile` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '手机号',
-  `password` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `photo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像url',
   `register_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '注册时间',
@@ -315,7 +316,8 @@ CREATE TABLE `member`  (
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES ('00000000', '12345678901', 'e70e2222a9d67c4f2eae107533359aa4', '测试', NULL, '2020-11-29 13:33:54', '2020-12-03 13:44:16', NULL, NULL);
+INSERT INTO `member` VALUES ('000000001', '12345678901', '$2a$10$I4jfG12izVfZtsk4oYR8jemMyU/GTZazZGMgAXGlnL6ZPMn6m/qga', '关过江', NULL, '2020-11-29 13:33:54', '2020-12-03 13:44:16', NULL, 0);
+INSERT INTO `member` VALUES ('1377168664289095681', '98765432100', '$2a$10$5d8kvyrggZWnbXtjS13g4eBEPNo6lXTRzbosCm2IixKR8XvjCfqXu', '黄哈哈', 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5c3f87b3-3078-4017-9b4d-cb1ac5769304.jpg', '2021-03-31 15:59:31', '2021-03-31 15:59:31', '2021-03-31 15:59:31', 0);
 
 -- ----------------------------
 -- Table structure for member_course
@@ -328,7 +330,6 @@ CREATE TABLE `member_course`  (
   `at` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '报名时间',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-  `is_delete` int(1) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `member_course_unique`(`member_id`, `course_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员课程报名' ROW_FORMAT = Dynamic;
@@ -336,6 +337,10 @@ CREATE TABLE `member_course`  (
 -- ----------------------------
 -- Records of member_course
 -- ----------------------------
+INSERT INTO `member_course` VALUES ('1377199961896140801', '000000001', '00000001', '2021-03-31 18:03:53', '2021-03-31 18:03:53', '2021-03-31 18:03:53');
+INSERT INTO `member_course` VALUES ('1377200244814528514', '000000001', '1347880545798942721', '2021-03-31 18:05:00', '2021-03-31 18:05:00', '2021-03-31 18:05:00');
+INSERT INTO `member_course` VALUES ('1377200472703647746', '000000001', '1355363330293850114', '2021-03-31 18:05:54', '2021-03-31 18:05:54', '2021-03-31 18:05:54');
+INSERT INTO `member_course` VALUES ('1377455766345658370', '000000001', '000012123', '2021-04-01 11:00:21', '2021-04-01 11:00:21', '2021-04-01 11:00:21');
 
 -- ----------------------------
 -- Table structure for oauth_client_details
@@ -358,8 +363,8 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('auth_server', 'course-online', '$2a$10$mx9iAfhiAUc95R17NI1O3.ZpQtFvGDF/p2XDndRXcQLull/TnUrYu', 'app', 'authorization_code,refresh_token,password', 'http://localhost:8250/callback', NULL, 1800, NULL, NULL, 'true');
-INSERT INTO `oauth_client_details` VALUES ('yudi_client', 'course-online', '$2a$10$CQ6018J0hhboK7oyRKVfWOJNE2jh08o4fEveHL4EkbZbxb4g3Bxfm', 'app', 'authorization_code,refresh_token,password', 'http://127.0.0.1:9000/api/auth/callback', NULL, 1800, NULL, NULL, 'true');
+INSERT INTO `oauth_client_details` VALUES ('auth_server', 'course-online', '$2a$10$mx9iAfhiAUc95R17NI1O3.ZpQtFvGDF/p2XDndRXcQLull/TnUrYu', 'app', 'authorization_code,refresh_token,password', 'http://127.0.0.1:8250/callback', NULL, 86400, NULL, NULL, 'true');
+INSERT INTO `oauth_client_details` VALUES ('yudi_client', 'course-online', '$2a$10$CQ6018J0hhboK7oyRKVfWOJNE2jh08o4fEveHL4EkbZbxb4g3Bxfm', 'app', 'authorization_code,refresh_token,password', 'http://127.0.0.1:9000/api/auth/callback', NULL, 86400, NULL, NULL, 'true');
 
 -- ----------------------------
 -- Table structure for resource
@@ -655,34 +660,13 @@ CREATE TABLE `section`  (
 INSERT INTO `section` VALUES ('1348114448295952385', '概论', '1347880545798942721', '1348114393761611777', '', 990, 'F', 0, '2021-01-10 11:48:26', '2021-02-11 17:02:56', 'a604b029d7da4cfbbecd3be189aed805');
 INSERT INTO `section` VALUES ('1348115629302906881', '支付宝api与sdk', '000012123', '1348100676453928961', '', 990, 'C', 1, '2021-01-10 11:53:07', '2021-03-14 11:37:20', 'a604b029d7da4cfbbecd3be189aed805');
 INSERT INTO `section` VALUES ('1348519809431654401', '概述', '00000001', '1348519740418576386', '', 990, 'F', 0, '2021-01-11 14:39:12', '2021-03-12 16:44:29', 'a604b029d7da4cfbbecd3be189aed805');
-INSERT INTO `section` VALUES ('1348519862774812673', '数组', '00000001', '1348519767064989697', '', 123, 'F', NULL, '2021-01-11 14:39:24', '2021-01-11 14:39:24', '');
+INSERT INTO `section` VALUES ('1348519862774812673', '数组', '00000001', '1348519767064989697', '', 990, 'F', 0, '2021-01-11 14:39:24', '2021-03-31 17:44:07', 'a604b029d7da4cfbbecd3be189aed805');
 INSERT INTO `section` VALUES ('1355363707567300610', '概论', '1355363330293850114', '1355363441228996610', '', 990, 'F', 0, '2021-01-30 11:54:24', '2021-03-14 11:38:51', 'a604b029d7da4cfbbecd3be189aed805');
 INSERT INTO `section` VALUES ('1355363891990847489', '各大开源消息队列介绍', '1355363330293850114', '1355363441228996610', '', 566, 'F', 1, '2021-01-30 11:55:08', '2021-03-14 18:06:20', '5853386ddf58440cbeccf569b4225e5a');
-INSERT INTO `section` VALUES ('1355479493107535874', 'http协议', '1347880545798942721', '1355479248218902530', '', 737, 'C', 3, '2021-01-30 19:34:29', '2021-01-31 10:57:14', '');
+INSERT INTO `section` VALUES ('1355479493107535874', 'http协议', '1347880545798942721', '1355479248218902530', '', 990, 'C', 3, '2021-01-30 19:34:29', '2021-03-31 17:40:19', 'a604b029d7da4cfbbecd3be189aed805');
 INSERT INTO `section` VALUES ('1355796199969394689', 'MQ使用场景', '1355363330293850114', '1355363441228996610', '', 990, 'F', 2, '2021-01-31 16:32:58', '2021-03-14 11:39:37', 'a604b029d7da4cfbbecd3be189aed805');
-INSERT INTO `section` VALUES ('1359348333478432770', 'rabbitmq介绍', '1355363330293850114', '1359347981123342338', '', 566, 'F', 0, '2021-02-10 11:47:53', '2021-02-11 10:23:40', '5853386ddf58440cbeccf569b4225e5a');
-INSERT INTO `section` VALUES ('1359355427795513345', 'rabbitmq安装与配置', '1355363330293850114', '1359347981123342338', '', 566, 'F', 1, '2021-02-10 12:16:04', '2021-03-14 11:39:14', '5853386ddf58440cbeccf569b4225e5a');
-
--- ----------------------------
--- Table structure for sms
--- ----------------------------
-DROP TABLE IF EXISTS `sms`;
-CREATE TABLE `sms`  (
-  `id` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'id',
-  `mobile` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '手机号',
-  `code` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '验证码',
-  `use` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用途|枚举[SmsUseEnum]：REGISTER(R, 注册), FORGET(F, 忘记密码)',
-  `at` datetime(3) NOT NULL COMMENT '生成时间',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用途|枚举[SmsStatusEnum]：USED(U, 已使用), NOT_USED(N, 未使用)',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-  `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '短信验证码' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sms
--- ----------------------------
-INSERT INTO `sms` VALUES ('00000000', '12345678901', '123456', 'R', '2020-11-29 13:33:54.000', 'N', '2020-12-03 13:51:29', '2020-12-03 13:51:29');
+INSERT INTO `section` VALUES ('1359348333478432770', 'rabbitmq介绍', '1355363330293850114', '1359347981123342338', '', 566, 'F', 0, '2021-02-10 11:47:53', '2021-03-29 17:05:38', '5853386ddf58440cbeccf569b4225e5a');
+INSERT INTO `section` VALUES ('1359355427795513345', 'rabbitmq安装与配置', '1355363330293850114', '1359347981123342338', '', 566, 'F', 1, '2021-02-10 12:16:04', '2021-03-29 17:05:43', '5853386ddf58440cbeccf569b4225e5a');
 
 -- ----------------------------
 -- Table structure for teacher
@@ -707,8 +691,8 @@ CREATE TABLE `teacher`  (
 -- ----------------------------
 INSERT INTO `teacher` VALUES ('1348536842768740353', '张窟窿', 'cap', 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/63d34cfb-e317-4a22-9605-c9d05504d6cf.jpg', '前百度架构师', '哇哦', '中国科学院计算机技术研究所博士', 0, '2021-01-11 15:46:52', '2021-01-11 15:46:52');
 INSERT INTO `teacher` VALUES ('1348547421621317633', '黄哈哈', '神思者', 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5c3f87b3-3078-4017-9b4d-cb1ac5769304.jpg', '前美团架构师', '向前冲', '丰富的互联网项目经验，公司内部技术讲师，热爱技术，乐于分享；教学格言：把复杂的技术简单化，简单的技术极致化', 0, '2021-01-11 16:28:54', '2021-01-11 16:28:54');
-INSERT INTO `teacher` VALUES ('1348627061677342722', '关过江', 'lewis', 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/03/05/93df4540-6690-43b1-8e46-67098ecab6f0.jpg', 'Java高级工程师', '123', '中国科学院计算机技术研究所博士', 0, '2021-01-11 21:45:22', '2021-01-11 21:45:22');
-INSERT INTO `teacher` VALUES ('1348627420260974593', '赵撞柱', 'javaman', 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5c3f87b3-3078-4017-9b4d-cb1ac5769304.jpg', '资深全栈工程师', '啊啊啊啊啊啊啊啊', '中国科学院计算机技术研究所博士，拥有7年国内外IT公司工作和算法面试经验，在搜索、话题发现、社交网络方面、推荐算法等相关领域有所研究。曾为浙江大学、浙江省大学生程序设计竞赛的命题人，也是PAT 的命题人，国内ZOJ排名第一。', 0, '2021-01-11 21:46:47', '2021-01-11 21:46:47');
+INSERT INTO `teacher` VALUES ('1348627061677342722', '关过江', 'lewis', 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/03/05/93df4540-6690-43b1-8e46-67098ecab6f0.jpg', '高级系统架构师', '123', '中国科学院计算机技术研究所博士', 0, '2021-01-11 21:45:22', '2021-01-11 21:45:22');
+INSERT INTO `teacher` VALUES ('1348627420260974593', '赵撞柱', 'javaman', 'https://chaoslife.oss-cn-hangzhou.aliyuncs.com/2021/01/29/5c3f87b3-3078-4017-9b4d-cb1ac5769304.jpg', '资深Java高级工程师', '啊啊啊啊啊啊啊啊', '中国科学院计算机技术研究所博士，拥有7年国内外IT公司工作和算法面试经验，在搜索、话题发现、社交网络方面、推荐算法等相关领域有所研究。曾为浙江大学、浙江省大学生程序设计竞赛的命题人，也是PAT 的命题人，国内ZOJ排名第一。', 0, '2021-01-11 21:46:47', '2021-01-11 21:46:47');
 
 -- ----------------------------
 -- Table structure for user

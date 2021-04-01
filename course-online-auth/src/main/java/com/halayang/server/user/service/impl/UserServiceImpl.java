@@ -19,6 +19,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -27,9 +28,11 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -44,6 +47,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    private static final String TOKEN_PREFIX = "token_";
 
     @Override
     public boolean saveOrUpdateUser(UserPO userPo) {
@@ -64,7 +72,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
     public Map<String, Object> login(UserLoginDto userLoginDto) {
         try {
             //先要在redis中判断用户是否登录过，登录过就直接从redis里返回令牌
-
+            Map<String, Object> tokenMap = (Map<String, Object>) redisTemplate.opsForValue().get(TOKEN_PREFIX + userLoginDto.getUsername());
+            if (!ObjectUtils.isEmpty(tokenMap)) {
+                return tokenMap;
+            }
             HttpClientBuilder builder = HttpClients.custom()
                     //关闭自动处理重定向
                     .disableAutomaticRetries()
@@ -91,7 +102,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             paramMap.put("scope", "app");
             paramMap.put("code", code);
             //登录完成可以把token存入redis username为key 申请令牌中的expires_in为过期时间
-            return getMap(url, paramMap, userLoginDto.getClientId(), userLoginDto.getClientSecret());
+            Map<String, Object> map = getMap(url, paramMap, userLoginDto.getClientId(), userLoginDto.getClientSecret());
+            String expiresIn = String.valueOf(map.get("expires_in"));
+            redisTemplate.opsForValue().set(TOKEN_PREFIX + userLoginDto.getUsername(), map, Long.parseLong(expiresIn), TimeUnit.SECONDS);
+            return map;
         } catch (IOException e) {
             log.error("令牌请求失败", e);
             throw new IllegalArgumentException("登录失败");
