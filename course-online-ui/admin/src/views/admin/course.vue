@@ -22,7 +22,8 @@
                     <el-input v-model="courseDto.name" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="概述" :label-width="formLabelWidth" prop="summary">
-                    <el-input type="textarea" v-model="courseDto.summary" autocomplete="off"/>
+                    <el-input type="textarea" maxlength="150" show-word-limit v-model="courseDto.summary"
+                              autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="价格/元" :label-width="formLabelWidth" prop="price">
                     <el-input v-model="courseDto.price" autocomplete="off"/>

@@ -91,9 +91,9 @@
             </div>
             <el-dialog :title="title" :before-close="handleClose" :visible.sync="dialogVisible">
                 <div class="play-box">
-                    <ali-player width="100%" height="100%" v-if="vod" :get-play-auth="gateway+'/api/file/oss/getPlayAuth'"
-                                                  ref="player"
-                                                  :vod="vod"/>
+                    <ali-player width="100%" height="100%" v-if="vod"
+                                :get-play-auth="gateway+'/api/file/oss/getPlayAuth'"
+                                ref="player" :vod="vod"/>
                 </div>
 
             </el-dialog>
@@ -151,11 +151,7 @@
                         memberId: this.user.id,
                         courseId: this.$route.params.id
                     }).then(response => {
-                        if (response.data && response.data.code === 200) {
-                            this.join = true;
-                        } else {
-                            this.join = false;
-                        }
+                        this.join = response.data && response.data.code === 200;
                     });
                 }
             },

@@ -4,6 +4,7 @@ import com.halayang.common.exception.BusinessException;
 import com.halayang.common.utils.ContextHolder;
 import com.halayang.common.utils.JwtUtils;
 import com.halayang.common.utils.response.ResponseCode;
+import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -25,7 +26,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (StringUtils.isEmpty(authorization)) {
             throw new BusinessException(ResponseCode.UNAUTHORIZED);
         }

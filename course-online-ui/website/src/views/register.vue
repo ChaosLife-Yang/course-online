@@ -8,7 +8,8 @@
                 <el-form style="font-size: 8px" label-position="top" ref="ruleForm" :rules="rules" label-width="200px"
                          :model="register">
                     <el-form-item label="手机号" prop="mobile">
-                        <el-input placeholder="请输入手机号" v-model="register.mobile" autocomplete="off"></el-input>
+                        <el-input placeholder="请输入手机号" maxlength="11" minlength="11"
+                                  show-word-limit v-model="register.mobile" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="昵称" prop="name">
                         <el-input placeholder="请输入昵称" v-model="register.name"
