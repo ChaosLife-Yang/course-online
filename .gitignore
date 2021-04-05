@@ -52,3 +52,4 @@ pnpm-debug.log*
 *.sln
 *.sw?
 nacos-1.3.0
+nacos

@@ -25,7 +25,7 @@
 mybatis-plus 3.3.1,spring security oauth2.0 ,使用jwt作为令牌
 
 ## Nacos配置中心的配置文件
-有一些配置文件没有直接写在各个微服务的yml配置文件中，而是放在nacos中，在此列出来
+有一些配置文件没有直接写在各个微服务的yml配置文件中，而是放在nacos中，在此列出来, nacos的配置文件的group都是DEFAULT_GROUP
 
 jackson-dev.yml
 
