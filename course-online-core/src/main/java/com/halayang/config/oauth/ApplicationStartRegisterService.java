@@ -60,7 +60,7 @@ public class ApplicationStartRegisterService implements ApplicationRunner {
                 .scope("app")
                 .authorizedGrantTypes("authorization_code,refresh_token,password")
                 .webServerRedirectUri("http://127.0.0.1:9000/api/auth/callback")
-                .accessTokenValidity(1800)
+                .accessTokenValidity(86400)
                 .autoapprove("true")
                 .build();
         authFeign.addClientDetail(clientDetailDTO);
