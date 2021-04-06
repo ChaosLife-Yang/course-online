@@ -49,12 +49,12 @@
 
                                                 <div class="clearfix">
 
-                                                    <button type="button"
+                                                    <el-button type="button" :loading="loading"
                                                             class="width-35 pull-right btn btn-sm btn-primary"
                                                             @click="login()">
                                                         <i class="ace-icon fa fa-key"></i>
                                                         <span class="bigger-110">登录</span>
-                                                    </button>
+                                                    </el-button>
                                                 </div>
 
                                                 <div class="space-4"></div>
@@ -89,6 +89,7 @@
         data() {
             return {
                 gateway: process.env.VUE_APP_SERVER,
+                loading:false,
                 loginDto: {
                     username: '',
                     password: '',
@@ -99,11 +100,13 @@
         },
         methods: {
             login() {
+                this.loading = true;
                 this.$ajax.post(process.env.VUE_APP_SERVER + "/api/auth/login", this.loginDto)
                     .then((response) => {
                         if (response.data) {
                             let result = response.data;
                             if (result.code === 200) {
+                                this.loading = false;
                                 let token = result.data;
                                 //保存token和刷新token
                                 LocalStorage.set(ACCESS_TOKEN, token.access_token);
@@ -120,9 +123,12 @@
                                     type: 'error',
                                     message: result.msg
                                 });
+                                this.loading = false;
                             }
                         }
-                    });
+                    }).catch(error=>{
+                    this.loading = false;
+                });
             }
         }
     }
