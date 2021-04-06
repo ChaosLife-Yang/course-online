@@ -3,10 +3,11 @@
 ## 项目结构说明
 基于spring cloud + vue的前后端分离架构
 ```
-|——course-online-common    		通用模块
-|——course-online-core 			核心模块
-|——course-online-auth 			权限管理
-|——course-online-file 			文件模块
+|——course-online-common    		通用工具类模块
+|——course-online-core 			核心接口模块
+|——course-online-auth 			权限管理模块
+|——course-online-file 			文件管理模块
+|——course-online-front 			前台展示模块
 |——course-online-gateway		网关模块
 |——course-online-ui    	        前端工程
    |——admin                     后台管理页面
