@@ -1,7 +1,6 @@
 package com.halayang.config.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.halayang.common.utils.JacksonUtils;
 import com.halayang.common.utils.response.ResponseCode;
 import com.halayang.common.utils.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import javax.servlet.ServletException;

@@ -1,8 +1,7 @@
 package com.halayang.server.role.service;
 
-import com.halayang.server.role.po.RolePO;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
+import com.halayang.server.role.po.RolePO;
 
 import java.util.List;
 
@@ -20,9 +19,9 @@ public interface RoleService extends IService<RolePO> {
      * 获取用户角色
      *
      * @param userId id
+     * @return java.util.List<java.lang.String>
      * @author YangYudi
      * @date 2021/2/21 12:11
-     * @return java.util.List<java.lang.String>
      */
     List<String> getRoleByUserId(String userId);
 

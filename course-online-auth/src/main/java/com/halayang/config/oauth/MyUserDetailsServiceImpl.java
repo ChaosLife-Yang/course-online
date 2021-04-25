@@ -1,7 +1,6 @@
 package com.halayang.config.oauth;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.halayang.common.utils.CopyUtils;
 import com.halayang.server.resource.dto.ResourceAuthorityDTO;
 import com.halayang.server.resource.service.ResourceService;
 import com.halayang.server.user.po.UserPO;

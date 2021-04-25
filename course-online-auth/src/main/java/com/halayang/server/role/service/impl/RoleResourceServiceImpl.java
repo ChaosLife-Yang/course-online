@@ -1,17 +1,14 @@
 package com.halayang.server.role.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.halayang.server.role.dto.RoleResourceDTO;
-import com.halayang.server.role.po.RoleResourcePO;
-import com.halayang.server.role.mapper.RoleResourceMapper;
-import com.halayang.server.role.service.RoleResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.halayang.server.user.dto.RoleUserDTO;
-import com.halayang.server.user.po.RoleUserPO;
+import com.halayang.server.role.dto.RoleResourceDTO;
+import com.halayang.server.role.mapper.RoleResourceMapper;
+import com.halayang.server.role.po.RoleResourcePO;
+import com.halayang.server.role.service.RoleResourceService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.management.relation.Role;
 import java.util.List;
 import java.util.stream.Collectors;
 

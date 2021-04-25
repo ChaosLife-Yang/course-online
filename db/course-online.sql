@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 01/04/2021 13:31:44
+ Date: 22/04/2021 12:58:37
 */
 
 SET NAMES utf8mb4;
@@ -306,9 +306,9 @@ CREATE TABLE `member`  (
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `photo` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像url',
   `register_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '注册时间',
-  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-  `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
-  `is_delete` int(1) NULL DEFAULT 0,
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `edit_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+  `is_delete` int(1) NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `mobile_unique`(`mobile`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员' ROW_FORMAT = Dynamic;
