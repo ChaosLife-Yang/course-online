@@ -5,6 +5,7 @@ spring:
         # nacos地址
         server-addr: 127.0.0.1:8848
       config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
         # config 多配置文件
         extension-configs:
           - data-id: jackson-dev.yml
