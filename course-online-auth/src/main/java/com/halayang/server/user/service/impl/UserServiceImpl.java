@@ -76,7 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
                 return tokenMap;
             }
         } catch (Exception e) {
-            log.error("redis读取出错 {}", e);
+            log.warn("redis读取出错 " + e.getMessage());
         }
         try {
             HttpClientBuilder builder = HttpClients.custom()
@@ -119,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
         try {
             redisTemplate.opsForValue().set(TOKEN_PREFIX + username, map, Long.parseLong(expiresIn), TimeUnit.SECONDS);
         } catch (Exception e) {
-            log.error("redis存储出错{}", e);
+            log.warn("redis存储出错 " + e.getMessage());
         }
     }
 
