@@ -75,6 +75,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             if (!ObjectUtils.isEmpty(tokenMap)) {
                 return tokenMap;
             }
+        } catch (Exception e) {
+            log.error("redis读取出错 {}", e);
+        }
+        try {
             HttpClientBuilder builder = HttpClients.custom()
                     //关闭自动处理重定向
                     .disableAutomaticRetries()
@@ -103,11 +107,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             //登录完成可以把token存入redis username为key 申请令牌中的expires_in为过期时间
             Map<String, Object> map = getMap(url, paramMap, userLoginDto.getClientId(), userLoginDto.getClientSecret());
             String expiresIn = String.valueOf(map.get("expires_in"));
-            redisTemplate.opsForValue().set(TOKEN_PREFIX + userLoginDto.getUsername(), map, Long.parseLong(expiresIn), TimeUnit.SECONDS);
+            saveToken(userLoginDto.getUsername(), map, expiresIn);
             return map;
         } catch (IOException e) {
             log.error("令牌请求失败", e);
             throw new IllegalArgumentException("登录失败");
+        }
+    }
+
+    private void saveToken(String username, Map<String, Object> map, String expiresIn) {
+        try {
+            redisTemplate.opsForValue().set(TOKEN_PREFIX + username, map, Long.parseLong(expiresIn), TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.error("redis存储出错{}", e);
         }
     }
 
