@@ -23,7 +23,7 @@ spring:
       connection-test-query: SELECT 1
 
 security:
-  address: ${OAUTH_SERVER:127.0.0.1}:${OAUTH_PORT:9000}/api/auth
+  address: ${GATEWAY_SERVER:127.0.0.1}:${GATEWAY_PORT:9000}/api/auth
   oauth2:
     client:
       client-id: yudi_client

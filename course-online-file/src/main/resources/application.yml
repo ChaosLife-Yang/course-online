@@ -27,7 +27,7 @@ spring:
       max-request-size: 10GB
 
 security:
-  address: ${OAUTH_SERVER:127.0.0.1}:${OAUTH_PORT:9000}/api/auth
+  address: ${GATEWAY_SERVER:127.0.0.1}:${GATEWAY_PORT:9000}/api/auth
   oauth2:
     client:
       client-id: yudi_client
@@ -100,4 +100,4 @@ file:
     # 文件保存到磁盘的地址
     path: D:/file/
     # 用于页面展示的地址父路径 网关代理的路径 show是自定义的映射路径 最后一定要加/
-    show: http://localhost:9000/api/file/show/
+    show: http://${GATEWAY_SERVER:127.0.0.1}:${GATEWAY_PORT:9000}/api/file/show/
