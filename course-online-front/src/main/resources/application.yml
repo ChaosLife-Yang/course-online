@@ -8,11 +8,11 @@ spring:
   application:
     name: course-online-front
   datasource:
-    address: jdbc:mysql://localhost:3306/course-online
+    address: jdbc:mysql://${MYSQL_SERVER:localhost}:${MYSQL_PORT:3306}/course-online
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${spring.datasource.address}?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&serverTimezone=GMT%2B8
-    username: root
-    password: 1234
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PORT:1234}
     hikari:
       connection-timeout: 30000
       minimum-idle: 5

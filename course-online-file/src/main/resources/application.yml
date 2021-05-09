@@ -8,11 +8,11 @@ spring:
   application:
     name: yudi-file
   datasource:
-    address: jdbc:mysql://localhost:3306/course-online
+    address: jdbc:mysql://${MYSQL_SERVER:localhost}:${MYSQL_PORT:3306}/course-online
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${spring.datasource.address}?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&serverTimezone=GMT%2B8
-    username: root
-    password: 1234
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PORT:1234}
     hikari:
       connection-timeout: 30000
       minimum-idle: 5
@@ -27,7 +27,7 @@ spring:
       max-request-size: 10GB
 
 security:
-  address: 127.0.0.1:9000/api/auth
+  address: ${OAUTH_SERVER:127.0.0.1}:${OAUTH_PORT:9000}/api/auth
   oauth2:
     client:
       client-id: yudi_client
@@ -94,10 +94,10 @@ logging:
   file:
     path: ./logs/${spring.application.name}/${spring.application.name}.log
 
-# 文件本地映射的配置
+# 上传到本地的文件映射的配置
 file:
   upload:
     # 文件保存到磁盘的地址
     path: D:/file/
-    # 用于页面展示的地址父路径
+    # 用于页面展示的地址父路径 网关代理的路径 show是自定义的映射路径 最后一定要加/
     show: http://localhost:9000/api/file/show/
