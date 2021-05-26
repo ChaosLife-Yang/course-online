@@ -43,14 +43,29 @@ public class OauthServerConfig extends AuthorizationServerConfigurerAdapter {
      */
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * 签名
+     */
     private final JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    /**
+     * 令牌保存策略 采用jwt令牌
+     */
     private final TokenStore tokenStore;
 
+    /**
+     * jwt令牌扩展信息
+     */
     private final JwtTokenStoreConfig.JwtTokenEnhancer jwtTokenEnhancer;
 
+    /**
+     * 认证异常
+     */
     private final OauthExceptionEntryPoint oauthExceptionEntryPoint;
 
+    /**
+     * 自定义403返回
+     */
     private final OauthAccessDeniedHandler accessDeniedHandler;
 
     public OauthServerConfig(DataSource dataSource,
