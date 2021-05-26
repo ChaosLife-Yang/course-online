@@ -3,7 +3,7 @@
 ## 技术体系
 
 基于maven构建,
-使用 Spring Boot2.2.4.RELEASE, 
+主体框架使用 Spring Boot2.2.4.RELEASE, 
 整合 Spring Cloud Hoxton.RELEASE, Spring-Cloud-Alibaba 2.2.0.RELEASE,
 Mybatis-Plus 3.3.1,Spring Security Oauth2.0 ,使用jwt作为令牌
 
