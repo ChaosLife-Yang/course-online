@@ -1,5 +1,13 @@
 # 在线课程平台
 
+## 技术体系
+
+基于maven构建,
+使用 Spring Boot2.2.4.RELEASE, 
+整合 Spring Cloud Hoxton.RELEASE, Spring-Cloud-Alibaba 2.2.0.RELEASE,
+Mybatis-Plus 3.3.1,Spring Security Oauth2.0 ,使用jwt作为令牌
+
+
 ## 项目结构说明
 基于spring cloud + vue的前后端分离架构
 ```
@@ -20,14 +28,6 @@
 auth模块为oauth2的认证中心服务，core、file为资源服务、auth模块为认证中心的同时自己也是资源服务
 
 front模块的登录认证则是独立于oauth2的,没有接入security框架,自己实现的jwt令牌验证
-
-
-## 技术体系
-
-基于maven构建,
-使用 Spring Boot2.2.4.RELEASE, 
-整合 Spring Cloud Hoxton.RELEASE, Spring-Cloud-Alibaba 2.2.0.RELEASE,
-Mybatis-Plus 3.3.1,Spring Security Oauth2.0 ,使用jwt作为令牌
 
 ## Nacos配置中心的配置文件
 有一些配置文件没有直接写在各个微服务的yml配置文件中，而是放在nacos中，在此列出来, nacos的配置文件的group都是DEFAULT_GROUP
