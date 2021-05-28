@@ -54,6 +54,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .stateless(true);
     }
 
+    /**
+     * 表达式处理程序 不然配置access会报错
+     *
+     * @param applicationContext 上下文对象
+     * @return
+     */
     @Bean
     public OAuth2WebSecurityExpressionHandler oAuth2WebSecurityExpressionHandler(ApplicationContext applicationContext) {
         OAuth2WebSecurityExpressionHandler securityExpressionHandler = new OAuth2WebSecurityExpressionHandler();
