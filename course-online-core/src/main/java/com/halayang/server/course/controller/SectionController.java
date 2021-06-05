@@ -4,7 +4,7 @@ package com.halayang.server.course.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
+import com.halayang.common.vo.PageVO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
@@ -64,7 +64,7 @@ public class SectionController {
      */
     @ApiOperation(value = "小节分页查询", httpMethod = "POST", notes = "根据dto查询分页")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<SectionDTO>> sectionList(@RequestBody @Validated SectionPageDTO pageDTO) {
+    public ResponseObject<PageVO<SectionDTO>> sectionList(@RequestBody @Validated SectionPageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         LambdaQueryWrapper<SectionPO> wrapper = new LambdaQueryWrapper<SectionPO>()
@@ -74,7 +74,7 @@ public class SectionController {
         PageInfo<SectionPO> pageInfo = new PageInfo<>(sectionService.list(wrapper));
         List<SectionPO> list = pageInfo.getList();
         List<SectionDTO> dtoList = CopyUtils.copyList(list, SectionDTO.class);
-        PageDTO<SectionDTO> page = new PageDTO<SectionDTO>()
+        PageVO<SectionDTO> page = new PageVO<SectionDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())

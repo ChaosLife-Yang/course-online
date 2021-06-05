@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
+import com.halayang.common.dto.PageQueryDTO;
+import com.halayang.common.vo.PageVO;
 import com.halayang.common.utils.BCryptUtils;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
@@ -68,13 +69,13 @@ public class UserController {
      */
     @ApiOperation(value = "用户管理分页查询", httpMethod = "POST", notes = "用户管理分页查询")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<UserDTO>> userList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageVO<UserDTO>> userList(@RequestBody @Validated PageQueryDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<UserPO> pageInfo = new PageInfo<>(userService.list(new LambdaQueryWrapper<UserPO>().orderByDesc(UserPO::getId)));
         List<UserPO> list = pageInfo.getList();
         List<UserDTO> dtoList = CopyUtils.copyList(list, UserDTO.class);
-        PageDTO<UserDTO> page = new PageDTO<UserDTO>()
+        PageVO<UserDTO> page = new PageVO<UserDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())

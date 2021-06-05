@@ -2,8 +2,8 @@ package com.halayang.feign.fallback;
 
 import com.halayang.common.dto.*;
 import com.halayang.common.utils.response.ResponseObject;
-import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.common.vo.CourseWebVo;
+import com.halayang.common.vo.PageVO;
 import com.halayang.feign.CourseCoreFeign;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +46,7 @@ public class CourseCoreFeignFallback implements CourseCoreFeign {
     }
 
     @Override
-    public ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(CategoryCourseSearchDto categoryCourseSearchDto ) {
+    public ResponseObject<PageVO<CourseDTO>> getCategoryCourse(CategoryCourseSearchDto categoryCourseSearchDto ) {
         throw new IllegalArgumentException(ERR_MSG);
     }
 
@@ -61,7 +61,7 @@ public class CourseCoreFeignFallback implements CourseCoreFeign {
     }
 
     @Override
-    public ResponseObject<PageDTO<CourseDTO>> courseList(PageDTO<CourseDTO> pageDTO) {
+    public ResponseObject<PageVO<CourseDTO>> courseList(PageVO<CourseDTO> pageDTO) {
         throw new IllegalArgumentException(ERR_MSG);
     }
 }

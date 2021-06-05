@@ -3,7 +3,8 @@ package com.halayang.server.role.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
+import com.halayang.common.dto.PageQueryDTO;
+import com.halayang.common.vo.PageVO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
@@ -66,13 +67,13 @@ public class RoleController {
      */
     @ApiOperation(value = "角色分页查询", httpMethod = "POST", notes = "角色分页查询")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<RoleDTO>> roleList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageVO<RoleDTO>> roleList(@RequestBody @Validated PageQueryDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<RolePO> pageInfo = new PageInfo<>(roleService.list(new LambdaQueryWrapper<RolePO>().orderByDesc(RolePO::getId)));
         List<RolePO> list = pageInfo.getList();
         List<RoleDTO> dtoList = CopyUtils.copyList(list, RoleDTO.class);
-        PageDTO<RoleDTO> page = new PageDTO<RoleDTO>()
+        PageVO<RoleDTO> page = new PageVO<RoleDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())

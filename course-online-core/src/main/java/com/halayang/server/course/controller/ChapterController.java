@@ -4,7 +4,7 @@ package com.halayang.server.course.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
+import com.halayang.common.vo.PageVO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
@@ -63,7 +63,7 @@ public class ChapterController {
      */
     @ApiOperation(value = "大章分页查询", httpMethod = "POST", notes = "大章分页查询")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<ChapterDTO>> chapterList(@RequestBody @Validated ChapterPageDTO pageDTO) {
+    public ResponseObject<PageVO<ChapterDTO>> chapterList(@RequestBody @Validated ChapterPageDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         //根据courseId查询
@@ -73,7 +73,7 @@ public class ChapterController {
         PageInfo<ChapterPO> pageInfo = new PageInfo<>(chapterService.list(wrapper));
         List<ChapterPO> list = pageInfo.getList();
         List<ChapterDTO> dtoList = CopyUtils.copyList(list, ChapterDTO.class);
-        PageDTO<ChapterDTO> page = new PageDTO<ChapterDTO>()
+        PageVO<ChapterDTO> page = new PageVO<ChapterDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())

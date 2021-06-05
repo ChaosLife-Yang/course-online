@@ -4,6 +4,7 @@ import com.halayang.common.dto.*;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
 import com.halayang.common.vo.CourseWebVo;
+import com.halayang.common.vo.PageVO;
 import com.halayang.server.front.service.FrontService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,14 +51,14 @@ public class FrontController {
 
     @ApiOperation(value = "根据分类获取课程", httpMethod = "GET", notes = "根据分类id获取课程列表")
     @PostMapping("/categoryCourse")
-    public ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto ) {
+    public ResponseObject<PageVO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto ) {
         return ResponseResult.success(frontService.getCategoryCourse(categoryCourseSearchDto));
     }
 
     @ApiOperation(value = "课程列表展示", httpMethod = "POST", notes = "课程列表展示")
     @PostMapping("/coursePage/")
-    public ResponseObject<PageDTO<CourseDTO>> coursePage(@RequestBody PageDTO<CourseDTO> pageDTO) {
-        PageDTO<CourseDTO> page = frontService.courseList(pageDTO);
+    public ResponseObject<PageVO<CourseDTO>> coursePage(@RequestBody PageVO<CourseDTO> pageDTO) {
+        PageVO<CourseDTO> page = frontService.courseList(pageDTO);
         return ResponseResult.success(page.getTotal(), page);
     }
 

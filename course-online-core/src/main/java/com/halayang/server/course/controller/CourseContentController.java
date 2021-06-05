@@ -3,7 +3,7 @@ package com.halayang.server.course.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
+import com.halayang.common.vo.PageVO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
@@ -65,13 +65,13 @@ public class CourseContentController {
      */
     @ApiOperation(value = "课程内容分页查询", httpMethod = "POST", notes = "课程内容分页查询")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<CourseContentDTO>> courseContentList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageVO<CourseContentDTO>> courseContentList(@RequestBody @Validated PageQueryDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<CourseContentPO> pageInfo = new PageInfo<>(courseContentService.list(new LambdaQueryWrapper<CourseContentPO>().orderByDesc(CourseContentPO::getId)));
         List<CourseContentPO> list = pageInfo.getList();
         List<CourseContentDTO> dtoList = CopyUtils.copyList(list, CourseContentDTO.class);
-        PageDTO<CourseContentDTO> page = new PageDTO<CourseContentDTO>()
+        PageVO<CourseContentDTO> page = new PageVO<CourseContentDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())

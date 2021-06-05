@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.util.List;
 
 /**
  * copyright (C), 2020, 北京同创永益科技发展有限公司
@@ -16,7 +15,7 @@ import java.util.List;
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
- * YangYuDi               2020/12/13 12:56           1.0
+ * YangYuDi               2020/12/13 12:56           1.0                        分页查dto
  * @program course-online
  * @description
  * @create 2020/12/13 12:56
@@ -25,7 +24,7 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageDTO<T> {
+public class PageQueryDTO<T> {
 
     /**
      * 当前页
@@ -39,24 +38,6 @@ public class PageDTO<T> {
     @NotNull
     @Range(min = 1, message = "每页行数不小于1")
     private Long size;
-
-    /**
-     * 共多少页
-     */
-    @Null
-    private Integer pages;
-
-    /**
-     * 总条数
-     */
-    @Null
-    private Long total;
-
-    /**
-     * 数据
-     */
-    @Null
-    private List<T> list;
 
     /**
      * 查询条件

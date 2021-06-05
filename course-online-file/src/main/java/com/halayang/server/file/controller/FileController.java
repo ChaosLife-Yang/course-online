@@ -3,7 +3,8 @@ package com.halayang.server.file.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
+import com.halayang.common.dto.PageQueryDTO;
+import com.halayang.common.vo.PageVO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
@@ -61,13 +62,13 @@ public class FileController {
      */
     @ApiOperation(value = "文件管理分页查询", httpMethod = "POST", notes = "文件管理分页查询")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<FileDTO>> fileList(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageVO<FileDTO>> fileList(@RequestBody @Validated PageQueryDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<FilePO> pageInfo = new PageInfo<>(fileService.list(new LambdaQueryWrapper<FilePO>().orderByDesc(FilePO::getId)));
         List<FilePO> list = pageInfo.getList();
         List<FileDTO> dtoList = CopyUtils.copyList(list, FileDTO.class);
-        PageDTO<FileDTO> page = new PageDTO<FileDTO>()
+        PageVO<FileDTO> page = new PageVO<FileDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setPages(pageInfo.getPages())

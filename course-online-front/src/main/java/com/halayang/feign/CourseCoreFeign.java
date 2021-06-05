@@ -3,6 +3,7 @@ package com.halayang.feign;
 import com.halayang.common.dto.*;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.vo.CourseWebVo;
+import com.halayang.common.vo.PageVO;
 import com.halayang.feign.factory.CourseCoreFeignFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -38,13 +39,13 @@ public interface CourseCoreFeign {
     ResponseObject<CourseWebVo> getCourseWeb(@PathVariable String id);
 
     @PostMapping("/course/list")
-    ResponseObject<PageDTO<CourseDTO>> courseList(@RequestBody PageDTO<CourseDTO> pageDTO);
+    ResponseObject<PageVO<CourseDTO>> courseList(@RequestBody PageVO<CourseDTO> pageDTO);
 
     @GetMapping("/course/front")
     ResponseObject<PopularAndNewCourseDTO> popularAndNewCourseList();
 
     @PostMapping("/course/category")
-    ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto);
+    ResponseObject<PageVO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto);
 
     @GetMapping("/teacher/info/{id}")
     ResponseObject<TeacherDTO> getTeacherOne(@PathVariable String id);

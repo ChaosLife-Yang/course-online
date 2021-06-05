@@ -3,7 +3,8 @@ package com.halayang.server.${module}.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.PageDTO;
+import com.halayang.common.dto.PageQueryDTO;
+import com.halayang.common.vo.PageVO;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
@@ -51,12 +52,12 @@ public class ${classNamePrefix}Controller {
      * ${moduleName}分页查询
      *
      * @param pageDTO 分页数据
-     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.dto.PageDTO<com.halayang.server.${domain}.po.${classNamePrefix}PO>>
+     * @return com.halayang.common.utils.response.ResponseObject<com.halayang.common.vo.PageVO<com.halayang.server.${domain}.po.${classNamePrefix}PO>>
      * @author YangYudi
      * @date ${time}
      */
     @PostMapping("/list")
-    public ResponseObject<PageDTO<${classNamePrefix}DTO>> ${domain}List(@RequestBody @Validated PageDTO pageDTO) {
+    public ResponseObject<PageVO<${classNamePrefix}DTO>> ${domain}List(@RequestBody @Validated PageQueryDTO pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<${classNamePrefix}PO> pageInfo = new PageInfo<>(${domain}Service.list(new LambdaQueryWrapper<${classNamePrefix}PO>().orderByDesc(${classNamePrefix}PO::getId)));

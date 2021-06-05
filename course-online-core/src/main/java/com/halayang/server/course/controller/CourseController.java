@@ -4,14 +4,12 @@ package com.halayang.server.course.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.halayang.common.dto.CategoryCourseSearchDto;
-import com.halayang.common.dto.PageDTO;
-import com.halayang.common.dto.PopularAndNewCourseDTO;
+import com.halayang.common.dto.*;
 import com.halayang.common.utils.CopyUtils;
 import com.halayang.common.utils.response.ResponseObject;
 import com.halayang.common.utils.response.ResponseResult;
-import com.halayang.common.dto.CourseDTO;
 import com.halayang.common.vo.CourseWebVo;
+import com.halayang.common.vo.PageVO;
 import com.halayang.server.course.po.CoursePO;
 import com.halayang.server.course.service.CourseContentService;
 import com.halayang.server.course.service.CourseService;
@@ -69,10 +67,10 @@ public class CourseController {
 
     @ApiOperation(value = "根据分类获取课程", httpMethod = "POST", notes = "根据分类id获取课程列表")
     @PostMapping("/category")
-    public ResponseObject<PageDTO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto) {
+    public ResponseObject<PageVO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto) {
         PageHelper.startPage(categoryCourseSearchDto.getPage(), 40);
         PageInfo<CourseDTO> pageInfo = new PageInfo<>(courseService.getCourseByCategoryId(categoryCourseSearchDto.getLevel1(), categoryCourseSearchDto.getLevel2()));
-        PageDTO<CourseDTO> page = new PageDTO<CourseDTO>()
+        PageVO<CourseDTO> page = new PageVO<CourseDTO>()
                 .setPage(Long.valueOf(categoryCourseSearchDto.getPage()))
                 .setSize(40L)
                 .setTotal(pageInfo.getTotal())
@@ -97,13 +95,13 @@ public class CourseController {
      */
     @ApiOperation(value = "课程分页查询", httpMethod = "POST", notes = "课程分页查询")
     @PostMapping("/list")
-    public ResponseObject<PageDTO<CourseDTO>> courseList(@RequestBody @Validated PageDTO<CourseDTO> pageDTO) {
+    public ResponseObject<PageVO<CourseDTO>> courseList(@RequestBody @Validated PageQueryDTO<CourseDTO> pageDTO) {
         //startPage方法往下遇到的第一个sql语句执行分页操作
         PageHelper.startPage(pageDTO.getPage().intValue(), pageDTO.getSize().intValue());
         PageInfo<CoursePO> pageInfo = new PageInfo<>(courseService.list(new LambdaQueryWrapper<CoursePO>().orderByDesc(CoursePO::getId)));
         List<CoursePO> list = pageInfo.getList();
         List<CourseDTO> dtoList = CopyUtils.copyList(list, CourseDTO.class);
-        PageDTO<CourseDTO> page = new PageDTO<CourseDTO>()
+        PageVO<CourseDTO> page = new PageVO<CourseDTO>()
                 .setPage(pageDTO.getPage())
                 .setSize(pageDTO.getSize())
                 .setTotal(pageInfo.getTotal())
