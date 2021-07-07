@@ -1,6 +1,5 @@
 package com.halayang.config.log;
 
-import com.halayang.common.utils.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * copyright (C), 2020, 北京同创永益科技发展有限公司
  * <p>
  * 使用AOP打印日志
  *
@@ -37,9 +35,9 @@ public class LogAspect {
     /**
      * controller方法为切点
      *
+     * @return void
      * @author YangYudi
      * @date 2021/1/23 8:51
-     * @return void
      */
     @Pointcut("execution(public * com.halayang.server.*.controller.*Controller.*(..))")
     public void controllerPointcut() {
@@ -71,7 +69,7 @@ public class LogAspect {
         }
         if (flag) {
             log.info("接收请求");
-        }else {
+        } else {
             log.info("上传文件请求");
         }
         Object result = joinPoint.proceed(args);

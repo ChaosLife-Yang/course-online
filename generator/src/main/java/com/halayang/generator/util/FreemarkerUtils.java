@@ -1,6 +1,5 @@
 package com.halayang.generator.util;
 
-import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -15,8 +14,6 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * copyright (C), 2020, 北京同创永益科技发展有限公司
- *
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
@@ -59,7 +56,7 @@ public class FreemarkerUtils {
      */
     public static void generator(String fileName, Map<String, Object> map) throws IOException, TemplateException {
         File file = new File(fileName);
-        if (!file.getParentFile().exists()){
+        if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
         FileWriter fw = new FileWriter(fileName);

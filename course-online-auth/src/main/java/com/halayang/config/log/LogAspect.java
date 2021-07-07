@@ -16,7 +16,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * copyright (C), 2020, 北京同创永益科技发展有限公司
  * <p>
  * 使用AOP打印日志
  *

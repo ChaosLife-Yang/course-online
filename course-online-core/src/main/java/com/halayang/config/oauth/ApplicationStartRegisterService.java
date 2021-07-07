@@ -9,7 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * copyright (C), 2019, 北京同创永益科技发展有限公司
+ * copyright (C), 2019,
  *
  * @author WangMingShuai
  * @version 2.0.0

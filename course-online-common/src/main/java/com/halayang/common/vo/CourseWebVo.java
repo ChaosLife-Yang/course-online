@@ -10,14 +10,13 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
- * @program course-online
- * @description 
  * @author YangYuDi
- * @create 2021/3/14 11:05
  * @version 1.0.0
- *  <author>                <time>                  <version>                   <description>
- *  YangYuDi               2021/3/14 11:05           1.0                         
+ * <author>                <time>                  <version>                   <description>
+ * YangYuDi               2021/3/14 11:05           1.0
+ * @program course-online
+ * @description
+ * @create 2021/3/14 11:05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -7,14 +7,13 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
+ * @author YangYuDi
+ * @version 1.0.0
+ * <author>                <time>                  <version>                   <description>
+ * YangYuDi               2021/1/30 17:46           1.0                         上传成功后返回的封装对象
  * @program course-online
  * @description 上传成功后返回的封装对象
- * @author YangYuDi
  * @create 2021/1/30 17:46
- * @version 1.0.0
- *  <author>                <time>                  <version>                   <description>
- *  YangYuDi               2021/1/30 17:46           1.0                         上传成功后返回的封装对象
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

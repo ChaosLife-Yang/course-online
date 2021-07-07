@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
- *
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
@@ -42,7 +40,7 @@ public class UserController {
 
     @ApiOperation(value = "获取用户详情", httpMethod = "GET", notes = "获取用户详情")
     @GetMapping("/info/{id}")
-    public ResponseObject<MemberDTO> getInfo(@PathVariable String id){
+    public ResponseObject<MemberDTO> getInfo(@PathVariable String id) {
         MemberPO memberPO = memberService.getById(id);
         MemberDTO memberDTO = CopyUtils.copy(memberPO, MemberDTO.class);
         memberDTO.setPassword(null);

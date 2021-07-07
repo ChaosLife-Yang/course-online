@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * copyright (C), 2020, 北京同创永益科技发展有限公司
- *
  * @author yangyudi
  * @version 1.0.0
  * <author>         <time>                  <version>                   <description>

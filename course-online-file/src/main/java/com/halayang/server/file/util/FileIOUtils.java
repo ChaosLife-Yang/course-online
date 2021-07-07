@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
@@ -18,8 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
- *
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>

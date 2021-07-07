@@ -9,15 +9,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
- *
  * @author YangYuDi
  * @version 1.0.0
  * @program course-online
@@ -57,7 +58,7 @@ public class OssController {
 
     @ApiOperation(value = "获取播放凭证", httpMethod = "POST", notes = "获取播放凭证")
     @PostMapping("/getPlayAuth")
-    public ResponseObject<String> getPlayAuth(@RequestParam String vod){
+    public ResponseObject<String> getPlayAuth(@RequestParam String vod) {
         return ResponseResult.success(ossService.getVodAuth(vod));
     }
 

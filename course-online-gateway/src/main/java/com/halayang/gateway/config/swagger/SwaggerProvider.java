@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Copyright (C), 2020, 北京同创永益科技发展有限公司
- *
  * @author yangyudi
  * @version 1.0
  * <Author>                <Time>                  <Version>                   <Description>

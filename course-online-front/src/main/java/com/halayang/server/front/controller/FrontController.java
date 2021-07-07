@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
- *
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
@@ -37,6 +35,7 @@ public class FrontController {
     public ResponseObject<CourseDTO> getCourseOne(@PathVariable String id) {
         return ResponseResult.success(frontService.getCourseOne(id));
     }
+
     @ApiOperation(value = "获取课程详情", httpMethod = "GET", notes = "根据课程id获取课程详情")
     @GetMapping("/courseContent/{id}")
     public ResponseObject<CourseContentDTO> getCourseContent(@PathVariable String id) {
@@ -51,7 +50,7 @@ public class FrontController {
 
     @ApiOperation(value = "根据分类获取课程", httpMethod = "GET", notes = "根据分类id获取课程列表")
     @PostMapping("/categoryCourse")
-    public ResponseObject<PageVO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto ) {
+    public ResponseObject<PageVO<CourseDTO>> getCategoryCourse(@RequestBody CategoryCourseSearchDto categoryCourseSearchDto) {
         return ResponseResult.success(frontService.getCategoryCourse(categoryCourseSearchDto));
     }
 

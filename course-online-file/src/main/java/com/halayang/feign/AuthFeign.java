@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
- *
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
@@ -42,9 +40,9 @@ public interface AuthFeign {
      * 添加oauth2被管理客户端信息
      *
      * @param clientDetail oauth2客户端信息dto
+     * @return void
      * @author YangYudi
      * @date 2021/2/26 13:49
-     * @return void
      */
     @PostMapping("/client")
     ResponseObject<String> addClientDetail(@RequestBody OauthClientDetailsDTO clientDetail);

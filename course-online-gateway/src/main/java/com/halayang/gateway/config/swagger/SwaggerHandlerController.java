@@ -9,16 +9,15 @@ import reactor.core.publisher.Mono;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
 /**
- * Copyright (C), 2020, 北京同创永益科技发展有限公司
+ * @author yangyudi
+ * @version 1.0
+ * <Author>                <Time>                  <Version>                   <Description>
+ * yangyudi              2020/1/2 14:51             1.0                          自定义建立相应的swagger-resource端点控制类
  * @description 自定义建立相应的swagger-resource端点控制类
  * @program hatech-framework
  * @package cn.com.hatechframework.config.swagger
  * @className SwaggerHandlerController
- * @author yangyudi
  * @create 2020/1/2 14:51
- * @version 1.0
- * <Author>                <Time>                  <Version>                   <Description>
- * yangyudi              2020/1/2 14:51             1.0                          自定义建立相应的swagger-resource端点控制类
  */
 @RestController
 public class SwaggerHandlerController {

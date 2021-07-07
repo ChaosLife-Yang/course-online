@@ -2,7 +2,9 @@ package com.halayang.server.file.service.impl;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.model.*;
+import com.aliyun.oss.model.AppendObjectRequest;
+import com.aliyun.oss.model.AppendObjectResult;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.GetMezzanineInfoResponse;
 import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
@@ -31,8 +33,6 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 /**
- * copyright (C), 2021, 北京同创永益科技发展有限公司
- *
  * @author YangYuDi
  * @version 1.0.0
  * <author>                <time>                  <version>                   <description>
